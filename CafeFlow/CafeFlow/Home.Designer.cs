@@ -12,6 +12,7 @@
         /// </summary>
         ///<param name="disposing">yönetilen kaynaklar dispose edilmeliyse doğru; aksi halde yanlış.</param>
         /////
+        /////asıl değişiklik bu
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
