@@ -299,7 +299,7 @@
             this.navLbl.ForeColor = System.Drawing.Color.Gainsboro;
             this.navLbl.Location = new System.Drawing.Point(55, 30);
             this.navLbl.Name = "navLbl";
-            this.navLbl.Size = new System.Drawing.Size(17, 17);
+            this.navLbl.Size = new System.Drawing.Size(15, 13);
             this.navLbl.TabIndex = 2;
             this.navLbl.Text = ">";
             // 
@@ -310,7 +310,7 @@
             this.lblTitleChildForm.ForeColor = System.Drawing.Color.Gainsboro;
             this.lblTitleChildForm.Location = new System.Drawing.Point(76, 31);
             this.lblTitleChildForm.Name = "lblTitleChildForm";
-            this.lblTitleChildForm.Size = new System.Drawing.Size(45, 17);
+            this.lblTitleChildForm.Size = new System.Drawing.Size(38, 13);
             this.lblTitleChildForm.TabIndex = 1;
             this.lblTitleChildForm.Text = "Home";
             // 
@@ -369,6 +369,7 @@
             this.Controls.Add(this.panelMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Home";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home";
             this.panelMenu.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
