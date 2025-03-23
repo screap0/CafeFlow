@@ -39,22 +39,22 @@
             this.panelLogo = new System.Windows.Forms.Panel();
             this.btnLogo = new System.Windows.Forms.PictureBox();
             this.panelTitleBar = new System.Windows.Forms.Panel();
+            this.minimizeBtn = new FontAwesome.Sharp.IconButton();
+            this.maximizeBtn = new FontAwesome.Sharp.IconButton();
+            this.exitBtn = new FontAwesome.Sharp.IconButton();
+            this.navLbl = new System.Windows.Forms.Label();
             this.lblTitleChildForm = new System.Windows.Forms.Label();
             this.iconCurrentChildForm = new FontAwesome.Sharp.IconPictureBox();
             this.panelShadow = new System.Windows.Forms.Panel();
-            this.panelDesktop = new System.Windows.Forms.Panel();
-            this.navLbl = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.exitBtn = new FontAwesome.Sharp.IconButton();
-            this.maximizeBtn = new FontAwesome.Sharp.IconButton();
-            this.minimizeBtn = new FontAwesome.Sharp.IconButton();
+            this.panelDesktop = new System.Windows.Forms.Panel();
             this.panelMenu.SuspendLayout();
             this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnLogo)).BeginInit();
             this.panelTitleBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconCurrentChildForm)).BeginInit();
-            this.panelDesktop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelDesktop.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelMenu
@@ -244,6 +244,65 @@
             this.panelTitleBar.TabIndex = 1;
             this.panelTitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTitleBar_MouseDown);
             // 
+            // minimizeBtn
+            // 
+            this.minimizeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.minimizeBtn.FlatAppearance.BorderSize = 0;
+            this.minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.minimizeBtn.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            this.minimizeBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.minimizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.minimizeBtn.IconSize = 15;
+            this.minimizeBtn.Location = new System.Drawing.Point(892, 8);
+            this.minimizeBtn.Name = "minimizeBtn";
+            this.minimizeBtn.Size = new System.Drawing.Size(15, 20);
+            this.minimizeBtn.TabIndex = 5;
+            this.minimizeBtn.UseVisualStyleBackColor = true;
+            this.minimizeBtn.Click += new System.EventHandler(this.minimizeBtn_Click);
+            // 
+            // maximizeBtn
+            // 
+            this.maximizeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.maximizeBtn.FlatAppearance.BorderSize = 0;
+            this.maximizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.maximizeBtn.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
+            this.maximizeBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.maximizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.maximizeBtn.IconSize = 15;
+            this.maximizeBtn.Location = new System.Drawing.Point(914, 8);
+            this.maximizeBtn.Name = "maximizeBtn";
+            this.maximizeBtn.Size = new System.Drawing.Size(15, 20);
+            this.maximizeBtn.TabIndex = 4;
+            this.maximizeBtn.UseVisualStyleBackColor = true;
+            this.maximizeBtn.Click += new System.EventHandler(this.maximizeBtn_Click);
+            // 
+            // exitBtn
+            // 
+            this.exitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.exitBtn.FlatAppearance.BorderSize = 0;
+            this.exitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exitBtn.IconChar = FontAwesome.Sharp.IconChar.X;
+            this.exitBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.exitBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.exitBtn.IconSize = 15;
+            this.exitBtn.Location = new System.Drawing.Point(937, 8);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(15, 20);
+            this.exitBtn.TabIndex = 3;
+            this.exitBtn.UseVisualStyleBackColor = true;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            // 
+            // navLbl
+            // 
+            this.navLbl.AutoSize = true;
+            this.navLbl.Font = new System.Drawing.Font("Nirmala UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.navLbl.ForeColor = System.Drawing.Color.Gainsboro;
+            this.navLbl.Location = new System.Drawing.Point(55, 30);
+            this.navLbl.Name = "navLbl";
+            this.navLbl.Size = new System.Drawing.Size(17, 17);
+            this.navLbl.TabIndex = 2;
+            this.navLbl.Text = ">";
+            // 
             // lblTitleChildForm
             // 
             this.lblTitleChildForm.AutoSize = true;
@@ -279,27 +338,6 @@
             this.panelShadow.Size = new System.Drawing.Size(962, 9);
             this.panelShadow.TabIndex = 2;
             // 
-            // panelDesktop
-            // 
-            this.panelDesktop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
-            this.panelDesktop.Controls.Add(this.pictureBox1);
-            this.panelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDesktop.Location = new System.Drawing.Point(220, 84);
-            this.panelDesktop.Name = "panelDesktop";
-            this.panelDesktop.Size = new System.Drawing.Size(962, 539);
-            this.panelDesktop.TabIndex = 3;
-            // 
-            // navLbl
-            // 
-            this.navLbl.AutoSize = true;
-            this.navLbl.Font = new System.Drawing.Font("Nirmala UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.navLbl.ForeColor = System.Drawing.Color.Gainsboro;
-            this.navLbl.Location = new System.Drawing.Point(55, 30);
-            this.navLbl.Name = "navLbl";
-            this.navLbl.Size = new System.Drawing.Size(17, 17);
-            this.navLbl.TabIndex = 2;
-            this.navLbl.Text = ">";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -311,58 +349,19 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // exitBtn
+            // panelDesktop
             // 
-            this.exitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.exitBtn.FlatAppearance.BorderSize = 0;
-            this.exitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exitBtn.IconChar = FontAwesome.Sharp.IconChar.X;
-            this.exitBtn.IconColor = System.Drawing.Color.Gainsboro;
-            this.exitBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.exitBtn.IconSize = 15;
-            this.exitBtn.Location = new System.Drawing.Point(937, 8);
-            this.exitBtn.Name = "exitBtn";
-            this.exitBtn.Size = new System.Drawing.Size(15, 20);
-            this.exitBtn.TabIndex = 3;
-            this.exitBtn.UseVisualStyleBackColor = true;
-            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
-            // 
-            // maximizeBtn
-            // 
-            this.maximizeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.maximizeBtn.FlatAppearance.BorderSize = 0;
-            this.maximizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.maximizeBtn.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
-            this.maximizeBtn.IconColor = System.Drawing.Color.Gainsboro;
-            this.maximizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.maximizeBtn.IconSize = 15;
-            this.maximizeBtn.Location = new System.Drawing.Point(914, 8);
-            this.maximizeBtn.Name = "maximizeBtn";
-            this.maximizeBtn.Size = new System.Drawing.Size(15, 20);
-            this.maximizeBtn.TabIndex = 4;
-            this.maximizeBtn.UseVisualStyleBackColor = true;
-            this.maximizeBtn.Click += new System.EventHandler(this.maximizeBtn_Click);
-            // 
-            // minimizeBtn
-            // 
-            this.minimizeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.minimizeBtn.FlatAppearance.BorderSize = 0;
-            this.minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.minimizeBtn.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
-            this.minimizeBtn.IconColor = System.Drawing.Color.Gainsboro;
-            this.minimizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.minimizeBtn.IconSize = 15;
-            this.minimizeBtn.Location = new System.Drawing.Point(892, 8);
-            this.minimizeBtn.Name = "minimizeBtn";
-            this.minimizeBtn.Size = new System.Drawing.Size(15, 20);
-            this.minimizeBtn.TabIndex = 5;
-            this.minimizeBtn.UseVisualStyleBackColor = true;
-            this.minimizeBtn.Click += new System.EventHandler(this.minimizeBtn_Click);
+            this.panelDesktop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.panelDesktop.Controls.Add(this.pictureBox1);
+            this.panelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDesktop.Location = new System.Drawing.Point(220, 84);
+            this.panelDesktop.Name = "panelDesktop";
+            this.panelDesktop.Size = new System.Drawing.Size(962, 539);
+            this.panelDesktop.TabIndex = 3;
             // 
             // Home
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1182, 623);
             this.Controls.Add(this.panelDesktop);
             this.Controls.Add(this.panelShadow);
@@ -370,7 +369,6 @@
             this.Controls.Add(this.panelMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Home";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home";
             this.panelMenu.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
@@ -378,8 +376,8 @@
             this.panelTitleBar.ResumeLayout(false);
             this.panelTitleBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconCurrentChildForm)).EndInit();
-            this.panelDesktop.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panelDesktop.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -399,12 +397,12 @@
         private FontAwesome.Sharp.IconPictureBox iconCurrentChildForm;
         private System.Windows.Forms.Label lblTitleChildForm;
         private System.Windows.Forms.Panel panelShadow;
-        private System.Windows.Forms.Panel panelDesktop;
         private System.Windows.Forms.Label navLbl;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private FontAwesome.Sharp.IconButton exitBtn;
         private FontAwesome.Sharp.IconButton minimizeBtn;
         private FontAwesome.Sharp.IconButton maximizeBtn;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panelDesktop;
     }
 }
 
