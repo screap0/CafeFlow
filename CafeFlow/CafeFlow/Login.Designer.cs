@@ -38,7 +38,6 @@
             this.txt_kullaniciadi = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lnk_kayitol = new System.Windows.Forms.LinkLabel();
-            this.closelabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -145,17 +144,6 @@
             this.lnk_kayitol.Text = "Kayıt Ol";
             this.lnk_kayitol.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_kayitol_LinkClicked);
             // 
-            // closelabel
-            // 
-            this.closelabel.AutoSize = true;
-            this.closelabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.closelabel.Location = new System.Drawing.Point(453, 10);
-            this.closelabel.Name = "closelabel";
-            this.closelabel.Size = new System.Drawing.Size(17, 17);
-            this.closelabel.TabIndex = 8;
-            this.closelabel.Text = "X";
-            this.closelabel.Click += new System.EventHandler(this.label4_Click);
-            // 
             // Login
             // 
             this.AcceptButton = this.bnt_girisyap;
@@ -163,7 +151,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(30)))), ((int)(((byte)(68)))));
             this.ClientSize = new System.Drawing.Size(481, 457);
-            this.Controls.Add(this.closelabel);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -176,7 +163,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -191,6 +177,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel lnk_kayitol;
         private System.Windows.Forms.TextBox txt_kullaniciadi;
-        private System.Windows.Forms.Label closelabel;
     }
 }
