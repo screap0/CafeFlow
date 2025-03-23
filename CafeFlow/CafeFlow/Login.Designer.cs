@@ -94,7 +94,7 @@
             this.bnt_girisyap.Location = new System.Drawing.Point(184, 128);
             this.bnt_girisyap.Name = "bnt_girisyap";
             this.bnt_girisyap.Size = new System.Drawing.Size(160, 48);
-            this.bnt_girisyap.TabIndex = 6;
+            this.bnt_girisyap.TabIndex = 10;
             this.bnt_girisyap.Text = "Giriş Yap";
             this.bnt_girisyap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bnt_girisyap.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@
             this.label3.Location = new System.Drawing.Point(168, 217);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(154, 17);
-            this.label3.TabIndex = 8;
+            this.label3.TabIndex = 12;
             this.label3.Text = "Hala Kayıt Olmadın mı?";
             // 
             // lnk_kayitol
@@ -139,7 +139,7 @@
             this.lnk_kayitol.Location = new System.Drawing.Point(359, 217);
             this.lnk_kayitol.Name = "lnk_kayitol";
             this.lnk_kayitol.Size = new System.Drawing.Size(57, 17);
-            this.lnk_kayitol.TabIndex = 7;
+            this.lnk_kayitol.TabIndex = 11;
             this.lnk_kayitol.TabStop = true;
             this.lnk_kayitol.Text = "Kayıt Ol";
             this.lnk_kayitol.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_kayitol_LinkClicked);
