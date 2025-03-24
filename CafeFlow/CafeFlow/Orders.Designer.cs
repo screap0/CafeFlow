@@ -28,12 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.orderLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.SuspendLayout();
+            // 
+            // orderLayoutPanel
+            // 
+            this.orderLayoutPanel.Location = new System.Drawing.Point(13, 13);
+            this.orderLayoutPanel.Name = "orderLayoutPanel";
+            this.orderLayoutPanel.Size = new System.Drawing.Size(434, 425);
+            this.orderLayoutPanel.TabIndex = 0;
+            // 
+            // Orders
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.orderLayoutPanel);
+            this.Name = "Orders";
             this.Text = "Orders";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.FlowLayoutPanel orderLayoutPanel;
     }
 }
