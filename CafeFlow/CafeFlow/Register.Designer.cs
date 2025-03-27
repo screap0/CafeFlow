@@ -30,7 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Register));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.lbl_bosbirakilamaz = new System.Windows.Forms.Label();
+            this.lbl_sifrehata = new System.Windows.Forms.Label();
+            this.txt_kullaniciadi = new System.Windows.Forms.TextBox();
             this.btn_kayitol = new FontAwesome.Sharp.IconButton();
             this.txt_sifretekrar = new System.Windows.Forms.TextBox();
             this.txt_sifre = new System.Windows.Forms.TextBox();
@@ -48,7 +51,10 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.linkLabel1);
+            this.panel1.Controls.Add(this.lbl_bosbirakilamaz);
+            this.panel1.Controls.Add(this.lbl_sifrehata);
+            this.panel1.Controls.Add(this.txt_kullaniciadi);
             this.panel1.Controls.Add(this.btn_kayitol);
             this.panel1.Controls.Add(this.txt_sifretekrar);
             this.panel1.Controls.Add(this.txt_sifre);
@@ -63,15 +69,48 @@
             this.panel1.Location = new System.Drawing.Point(0, 152);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(481, 292);
+            this.panel1.Size = new System.Drawing.Size(515, 315);
             this.panel1.TabIndex = 9;
             // 
-            // textBox1
+            // linkLabel1
             // 
-            this.textBox1.Location = new System.Drawing.Point(189, 95);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(146, 27);
-            this.textBox1.TabIndex = 17;
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.LinkColor = System.Drawing.Color.AliceBlue;
+            this.linkLabel1.Location = new System.Drawing.Point(385, 269);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(97, 20);
+            this.linkLabel1.TabIndex = 20;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Giriş Ekranı";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // lbl_bosbirakilamaz
+            // 
+            this.lbl_bosbirakilamaz.AutoSize = true;
+            this.lbl_bosbirakilamaz.ForeColor = System.Drawing.Color.Red;
+            this.lbl_bosbirakilamaz.Location = new System.Drawing.Point(147, 199);
+            this.lbl_bosbirakilamaz.Name = "lbl_bosbirakilamaz";
+            this.lbl_bosbirakilamaz.Size = new System.Drawing.Size(39, 20);
+            this.lbl_bosbirakilamaz.TabIndex = 19;
+            this.lbl_bosbirakilamaz.Text = "      ";
+            // 
+            // lbl_sifrehata
+            // 
+            this.lbl_sifrehata.AutoSize = true;
+            this.lbl_sifrehata.ForeColor = System.Drawing.Color.Red;
+            this.lbl_sifrehata.Location = new System.Drawing.Point(345, 163);
+            this.lbl_sifrehata.Name = "lbl_sifrehata";
+            this.lbl_sifrehata.Size = new System.Drawing.Size(39, 20);
+            this.lbl_sifrehata.TabIndex = 18;
+            this.lbl_sifrehata.Text = "      ";
+            // 
+            // txt_kullaniciadi
+            // 
+            this.txt_kullaniciadi.Location = new System.Drawing.Point(189, 95);
+            this.txt_kullaniciadi.Name = "txt_kullaniciadi";
+            this.txt_kullaniciadi.Size = new System.Drawing.Size(146, 27);
+            this.txt_kullaniciadi.TabIndex = 17;
+            this.txt_kullaniciadi.Click += new System.EventHandler(this.txt_kullaniciadi_Click);
             // 
             // btn_kayitol
             // 
@@ -82,7 +121,7 @@
             this.btn_kayitol.IconColor = System.Drawing.Color.WhiteSmoke;
             this.btn_kayitol.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.btn_kayitol.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_kayitol.Location = new System.Drawing.Point(186, 214);
+            this.btn_kayitol.Location = new System.Drawing.Point(186, 232);
             this.btn_kayitol.Margin = new System.Windows.Forms.Padding(4);
             this.btn_kayitol.Name = "btn_kayitol";
             this.btn_kayitol.Size = new System.Drawing.Size(149, 60);
@@ -99,6 +138,7 @@
             this.txt_sifretekrar.PasswordChar = '*';
             this.txt_sifretekrar.Size = new System.Drawing.Size(146, 27);
             this.txt_sifretekrar.TabIndex = 16;
+            this.txt_sifretekrar.Click += new System.EventHandler(this.txt_sifretekrar_Click);
             // 
             // txt_sifre
             // 
@@ -107,6 +147,7 @@
             this.txt_sifre.PasswordChar = '*';
             this.txt_sifre.Size = new System.Drawing.Size(146, 27);
             this.txt_sifre.TabIndex = 15;
+            this.txt_sifre.Click += new System.EventHandler(this.txt_sifre_Click);
             // 
             // txt_soyad
             // 
@@ -114,6 +155,7 @@
             this.txt_soyad.Name = "txt_soyad";
             this.txt_soyad.Size = new System.Drawing.Size(146, 27);
             this.txt_soyad.TabIndex = 13;
+            this.txt_soyad.Click += new System.EventHandler(this.txt_soyad_Click);
             // 
             // txt_ad
             // 
@@ -121,6 +163,7 @@
             this.txt_ad.Name = "txt_ad";
             this.txt_ad.Size = new System.Drawing.Size(146, 27);
             this.txt_ad.TabIndex = 12;
+            this.txt_ad.Click += new System.EventHandler(this.txt_ad_Click);
             // 
             // label5
             // 
@@ -179,7 +222,7 @@
             this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(481, 152);
+            this.pictureBox2.Size = new System.Drawing.Size(515, 152);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
@@ -189,7 +232,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(30)))), ((int)(((byte)(68)))));
-            this.ClientSize = new System.Drawing.Size(481, 457);
+            this.ClientSize = new System.Drawing.Size(515, 477);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox2);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -219,6 +262,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_kullaniciadi;
+        private System.Windows.Forms.Label lbl_bosbirakilamaz;
+        private System.Windows.Forms.Label lbl_sifrehata;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

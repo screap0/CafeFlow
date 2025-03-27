@@ -35,9 +35,13 @@
             this.txt_sifre = new System.Windows.Forms.TextBox();
             this.bnt_girisyap = new FontAwesome.Sharp.IconButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lbl_hata = new System.Windows.Forms.Label();
             this.txt_kullaniciadi = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lnk_kayitol = new System.Windows.Forms.LinkLabel();
+            this.minimizeBtn = new FontAwesome.Sharp.IconButton();
+            this.maximizeBtn = new FontAwesome.Sharp.IconButton();
+            this.exitBtn = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +85,7 @@
             this.txt_sifre.PasswordChar = '*';
             this.txt_sifre.Size = new System.Drawing.Size(146, 27);
             this.txt_sifre.TabIndex = 9;
+            this.txt_sifre.Click += new System.EventHandler(this.txt_sifre_Click);
             // 
             // bnt_girisyap
             // 
@@ -92,7 +97,7 @@
             this.bnt_girisyap.IconColor = System.Drawing.Color.WhiteSmoke;
             this.bnt_girisyap.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.bnt_girisyap.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.bnt_girisyap.Location = new System.Drawing.Point(184, 128);
+            this.bnt_girisyap.Location = new System.Drawing.Point(184, 142);
             this.bnt_girisyap.Name = "bnt_girisyap";
             this.bnt_girisyap.Size = new System.Drawing.Size(160, 48);
             this.bnt_girisyap.TabIndex = 10;
@@ -103,6 +108,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lbl_hata);
             this.panel1.Controls.Add(this.txt_kullaniciadi);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.lnk_kayitol);
@@ -116,12 +122,23 @@
             this.panel1.Size = new System.Drawing.Size(481, 260);
             this.panel1.TabIndex = 7;
             // 
+            // lbl_hata
+            // 
+            this.lbl_hata.AutoSize = true;
+            this.lbl_hata.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbl_hata.Location = new System.Drawing.Point(273, 112);
+            this.lbl_hata.Name = "lbl_hata";
+            this.lbl_hata.Size = new System.Drawing.Size(54, 20);
+            this.lbl_hata.TabIndex = 13;
+            this.lbl_hata.Text = "         ";
+            // 
             // txt_kullaniciadi
             // 
             this.txt_kullaniciadi.Location = new System.Drawing.Point(198, 23);
             this.txt_kullaniciadi.Name = "txt_kullaniciadi";
             this.txt_kullaniciadi.Size = new System.Drawing.Size(146, 27);
             this.txt_kullaniciadi.TabIndex = 4;
+            this.txt_kullaniciadi.Click += new System.EventHandler(this.txt_kullaniciadi_Click);
             // 
             // label3
             // 
@@ -145,6 +162,54 @@
             this.lnk_kayitol.Text = "Kayıt Ol";
             this.lnk_kayitol.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_kayitol_LinkClicked);
             // 
+            // minimizeBtn
+            // 
+            this.minimizeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.minimizeBtn.FlatAppearance.BorderSize = 0;
+            this.minimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.minimizeBtn.IconChar = FontAwesome.Sharp.IconChar.WindowMinimize;
+            this.minimizeBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.minimizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.minimizeBtn.IconSize = 15;
+            this.minimizeBtn.Location = new System.Drawing.Point(408, 12);
+            this.minimizeBtn.Name = "minimizeBtn";
+            this.minimizeBtn.Size = new System.Drawing.Size(15, 20);
+            this.minimizeBtn.TabIndex = 10;
+            this.minimizeBtn.UseVisualStyleBackColor = true;
+            this.minimizeBtn.Click += new System.EventHandler(this.minimizeBtn_Click);
+            // 
+            // maximizeBtn
+            // 
+            this.maximizeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.maximizeBtn.FlatAppearance.BorderSize = 0;
+            this.maximizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.maximizeBtn.IconChar = FontAwesome.Sharp.IconChar.WindowMaximize;
+            this.maximizeBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.maximizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.maximizeBtn.IconSize = 15;
+            this.maximizeBtn.Location = new System.Drawing.Point(430, 12);
+            this.maximizeBtn.Name = "maximizeBtn";
+            this.maximizeBtn.Size = new System.Drawing.Size(15, 20);
+            this.maximizeBtn.TabIndex = 9;
+            this.maximizeBtn.UseVisualStyleBackColor = true;
+            this.maximizeBtn.Click += new System.EventHandler(this.maximizeBtn_Click);
+            // 
+            // exitBtn
+            // 
+            this.exitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.exitBtn.FlatAppearance.BorderSize = 0;
+            this.exitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exitBtn.IconChar = FontAwesome.Sharp.IconChar.X;
+            this.exitBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.exitBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.exitBtn.IconSize = 15;
+            this.exitBtn.Location = new System.Drawing.Point(453, 12);
+            this.exitBtn.Name = "exitBtn";
+            this.exitBtn.Size = new System.Drawing.Size(15, 20);
+            this.exitBtn.TabIndex = 8;
+            this.exitBtn.UseVisualStyleBackColor = true;
+            this.exitBtn.Click += new System.EventHandler(this.exitBtn_Click);
+            // 
             // Login
             // 
             this.AcceptButton = this.bnt_girisyap;
@@ -152,6 +217,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(30)))), ((int)(((byte)(68)))));
             this.ClientSize = new System.Drawing.Size(481, 457);
+            this.Controls.Add(this.minimizeBtn);
+            this.Controls.Add(this.maximizeBtn);
+            this.Controls.Add(this.exitBtn);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -178,5 +246,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel lnk_kayitol;
         private System.Windows.Forms.TextBox txt_kullaniciadi;
+        private System.Windows.Forms.Label lbl_hata;
+        private FontAwesome.Sharp.IconButton minimizeBtn;
+        private FontAwesome.Sharp.IconButton maximizeBtn;
+        private FontAwesome.Sharp.IconButton exitBtn;
     }
 }

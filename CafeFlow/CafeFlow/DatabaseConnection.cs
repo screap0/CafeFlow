@@ -2,6 +2,7 @@
 using System.Data.Common;
 using System.Windows;
 using MySql.Data.MySqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 public class DatabaseConnection
 {
@@ -44,12 +45,33 @@ public class DatabaseConnection
             }
         }
     }
-    public void KullaniciKayit()
+    public void KullaniciKayit(string ad,string soyad,string username,string password)
     {
-        MySqlConnection conn = dbConnection.GetConnection();
-        conn.Open();
-        string query = "insert into Kullanicilar(Ad,Soyad,KullaniciAdi,Sifre) values(@ad,@soyad,@kullaniciadi,@sifre)";
-        MySqlCommand cmd = new MySqlCommand(query, conn);
+        using (MySqlConnection connection = GetConnection())
+        {
+            try
+            {
+                connection.Open();
+                string query = "insert into Kullanicilar(Ad,Soyad,KullaniciAdi,Sifre) values(@ad,@soyad,@kullaniciadi,@sifre)";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ad", ad);
+                    command.Parameters.AddWithValue("@soyad", soyad);
+                    command.Parameters.AddWithValue("@kullaniciadi", username);
+                    command.Parameters.AddWithValue("@sifre", password);
+
+                    command.ExecuteNonQuery(); 
+                    MessageBox.Show("Tebrikler. Başarılı bir şekilde kaydoldunuz!");
+                }
+
+
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Hata: " + ex);
+                
+            }
+        }
     }
 }
 
