@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Register));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn_kayitol = new FontAwesome.Sharp.IconButton();
             this.txt_sifretekrar = new System.Windows.Forms.TextBox();
             this.txt_sifre = new System.Windows.Forms.TextBox();
             this.txt_soyad = new System.Windows.Forms.TextBox();
@@ -39,9 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn_kayitol = new FontAwesome.Sharp.IconButton();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -65,6 +65,32 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(481, 292);
             this.panel1.TabIndex = 9;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(189, 95);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(146, 27);
+            this.textBox1.TabIndex = 17;
+            // 
+            // btn_kayitol
+            // 
+            this.btn_kayitol.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_kayitol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btn_kayitol.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btn_kayitol.IconChar = FontAwesome.Sharp.IconChar.AddressCard;
+            this.btn_kayitol.IconColor = System.Drawing.Color.WhiteSmoke;
+            this.btn_kayitol.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btn_kayitol.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_kayitol.Location = new System.Drawing.Point(186, 214);
+            this.btn_kayitol.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_kayitol.Name = "btn_kayitol";
+            this.btn_kayitol.Size = new System.Drawing.Size(149, 60);
+            this.btn_kayitol.TabIndex = 6;
+            this.btn_kayitol.Text = "Kayıt Ol";
+            this.btn_kayitol.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_kayitol.UseVisualStyleBackColor = true;
+            this.btn_kayitol.Click += new System.EventHandler(this.btn_kayitol_Click);
             // 
             // txt_sifretekrar
             // 
@@ -146,25 +172,6 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Ad:";
             // 
-            // btn_kayitol
-            // 
-            this.btn_kayitol.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_kayitol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btn_kayitol.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btn_kayitol.IconChar = FontAwesome.Sharp.IconChar.AddressCard;
-            this.btn_kayitol.IconColor = System.Drawing.Color.WhiteSmoke;
-            this.btn_kayitol.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btn_kayitol.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_kayitol.Location = new System.Drawing.Point(186, 214);
-            this.btn_kayitol.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_kayitol.Name = "btn_kayitol";
-            this.btn_kayitol.Size = new System.Drawing.Size(149, 60);
-            this.btn_kayitol.TabIndex = 6;
-            this.btn_kayitol.Text = "Kayıt Ol";
-            this.btn_kayitol.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_kayitol.UseVisualStyleBackColor = true;
-            this.btn_kayitol.Click += new System.EventHandler(this.btn_kayitol_Click);
-            // 
             // pictureBox2
             // 
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -176,13 +183,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(189, 95);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(146, 27);
-            this.textBox1.TabIndex = 17;
             // 
             // Register
             // 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using System.Windows;
 using MySql.Data.MySqlClient;
 
@@ -31,8 +32,9 @@ public class DatabaseConnection
                     command.Parameters.AddWithValue("@password", password);
 
                     int count = Convert.ToInt32(command.ExecuteScalar());
-
+                    connection.Close();
                     return count == 1;
+                    
                 }
             }
             catch (Exception ex)
@@ -41,6 +43,13 @@ public class DatabaseConnection
                 return false; 
             }
         }
+    }
+    public void KullaniciKayit()
+    {
+        MySqlConnection conn = dbConnection.GetConnection();
+        conn.Open();
+        string query = "insert into Kullanicilar(Ad,Soyad,KullaniciAdi,Sifre) values(@ad,@soyad,@kullaniciadi,@sifre)";
+        MySqlCommand cmd = new MySqlCommand(query, conn);
     }
 }
 

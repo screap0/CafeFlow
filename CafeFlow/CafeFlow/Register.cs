@@ -20,6 +20,8 @@ namespace CafeFlow
         private void btn_kayitol_Click(object sender, EventArgs e)
         {
 
+
+
         }
     }
 }
