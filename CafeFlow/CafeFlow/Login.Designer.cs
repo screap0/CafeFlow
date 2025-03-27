@@ -60,7 +60,7 @@
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label1.Location = new System.Drawing.Point(86, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 17);
+            this.label1.Size = new System.Drawing.Size(106, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Kullanıcı Adı:";
             // 
@@ -70,7 +70,7 @@
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label2.Location = new System.Drawing.Point(143, 75);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 17);
+            this.label2.Size = new System.Drawing.Size(49, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Şifre:";
             // 
@@ -79,11 +79,12 @@
             this.txt_sifre.Location = new System.Drawing.Point(198, 72);
             this.txt_sifre.Name = "txt_sifre";
             this.txt_sifre.PasswordChar = '*';
-            this.txt_sifre.Size = new System.Drawing.Size(146, 23);
+            this.txt_sifre.Size = new System.Drawing.Size(146, 27);
             this.txt_sifre.TabIndex = 9;
             // 
             // bnt_girisyap
             // 
+            this.bnt_girisyap.FlatAppearance.BorderSize = 0;
             this.bnt_girisyap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bnt_girisyap.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.bnt_girisyap.ForeColor = System.Drawing.SystemColors.ButtonFace;
@@ -119,16 +120,16 @@
             // 
             this.txt_kullaniciadi.Location = new System.Drawing.Point(198, 23);
             this.txt_kullaniciadi.Name = "txt_kullaniciadi";
-            this.txt_kullaniciadi.Size = new System.Drawing.Size(146, 23);
+            this.txt_kullaniciadi.Size = new System.Drawing.Size(146, 27);
             this.txt_kullaniciadi.TabIndex = 4;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label3.Location = new System.Drawing.Point(168, 217);
+            this.label3.Location = new System.Drawing.Point(160, 217);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(154, 17);
+            this.label3.Size = new System.Drawing.Size(185, 20);
             this.label3.TabIndex = 12;
             this.label3.Text = "Hala Kayıt Olmadın mı?";
             // 
@@ -136,9 +137,9 @@
             // 
             this.lnk_kayitol.AutoSize = true;
             this.lnk_kayitol.LinkColor = System.Drawing.Color.AliceBlue;
-            this.lnk_kayitol.Location = new System.Drawing.Point(359, 217);
+            this.lnk_kayitol.Location = new System.Drawing.Point(351, 217);
             this.lnk_kayitol.Name = "lnk_kayitol";
-            this.lnk_kayitol.Size = new System.Drawing.Size(57, 17);
+            this.lnk_kayitol.Size = new System.Drawing.Size(68, 20);
             this.lnk_kayitol.TabIndex = 11;
             this.lnk_kayitol.TabStop = true;
             this.lnk_kayitol.Text = "Kayıt Ol";
@@ -147,7 +148,7 @@
             // Login
             // 
             this.AcceptButton = this.bnt_girisyap;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(30)))), ((int)(((byte)(68)))));
             this.ClientSize = new System.Drawing.Size(481, 457);
