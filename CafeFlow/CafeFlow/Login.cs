@@ -32,7 +32,7 @@ namespace CafeFlow
             }
             else
             {
-                MessageBox.Show("Kullancı Bilgileri Hatalı");
+                lbl_hata.Text = "Kullancı Bilgileri Hatalı!";
             }
         }
 
@@ -45,6 +45,37 @@ namespace CafeFlow
 
         }
 
-     
+        private void txt_kullaniciadi_Click(object sender, EventArgs e)
+        {
+            lbl_hata.Text = "";
+        }
+
+        private void txt_sifre_Click(object sender, EventArgs e)
+        {
+            lbl_hata.Text = "";
+
+        }
+
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void maximizeBtn_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Maximized;
+            }
+            else
+            {
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void minimizeBtn_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
     }
 }
