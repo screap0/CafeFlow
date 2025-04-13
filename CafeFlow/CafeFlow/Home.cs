@@ -16,7 +16,7 @@ namespace CafeFlow
 {
     public partial class Home : Form
     {
-        // Fields
+        // Fieldss
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
