@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeFlow", "CafeFlow\CafeFlow.csproj", "{97A0F7E3-2F7E-4E46-8D71-232D5B8140C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeFlowApi", "CafeFlowApi\CafeFlowApi.csproj", "{287C966F-EE08-49C8-81E7-27F7CCAE68B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{97A0F7E3-2F7E-4E46-8D71-232D5B8140C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A0F7E3-2F7E-4E46-8D71-232D5B8140C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97A0F7E3-2F7E-4E46-8D71-232D5B8140C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{287C966F-EE08-49C8-81E7-27F7CCAE68B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{287C966F-EE08-49C8-81E7-27F7CCAE68B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{287C966F-EE08-49C8-81E7-27F7CCAE68B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{287C966F-EE08-49C8-81E7-27F7CCAE68B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
