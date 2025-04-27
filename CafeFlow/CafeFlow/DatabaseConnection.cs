@@ -10,7 +10,7 @@ public class DatabaseConnection
 
     public DatabaseConnection()
     {
-        ConnectionString = "Server=www.cafeflow.com.tr;Database=caf28dowcomtr_CafeDB;Uid=caf28dowcomtr_cafedb;Pwd=Deneme21*.;";
+        ConnectionString = "Server=www.cafeflow.com.tr;Database=caf2bbowcomtr_CafeDB;Uid=caf2bbowcomtr_cafedb;Pwd=Deneme21*.;";
     }
 
     public MySqlConnection GetConnection()
