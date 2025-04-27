@@ -26,18 +26,16 @@ namespace CafeFlowApi.Controllers
                 using (var connection = _dbConnection.GetConnection())
                 {
                     await connection.OpenAsync();
-
                     string query = "INSERT INTO Siparisler (isim, masa_no, telefon, siparis_aciklamasi, toplam_tutar, siparis_tarihi) " +
                                    "VALUES (@isim, @masaNo, @telefon, @aciklama, @toplamTutar, @siparisTarihi)";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@isim", order.Isim);
                         command.Parameters.AddWithValue("@masaNo", order.MasaNo);
-                        command.Parameters.AddWithValue("@ telefon", order.Telefon ?? (object)DBNull.Value); // NULL olabilir
+                        command.Parameters.AddWithValue("@telefon", order.Telefon ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@aciklama", order.SiparisAciklamasi);
                         command.Parameters.AddWithValue("@toplamTutar", order.ToplamTutar);
                         command.Parameters.AddWithValue("@siparisTarihi", order.SiparisTarihi);
-
                         await command.ExecuteNonQueryAsync();
 
                         // Yeni eklenen siparişin ID'sini al
@@ -46,6 +44,7 @@ namespace CafeFlowApi.Controllers
 
                         // SignalR ile istemcilere bildir
                         await _hubContext.Clients.All.SendAsync("ReceiveOrderUpdate", orderId, order.Isim, order.MasaNo, order.Telefon, order.SiparisAciklamasi, order.ToplamTutar, order.SiparisTarihi);
+                        Console.WriteLine($"Sipariş #{orderId} için bildirim gönderildi: {order.Isim}, {order.SiparisTarihi}"); // Log ekle
                     }
                 }
                 return Ok(new { message = "Sipariş eklendi" });
@@ -55,15 +54,16 @@ namespace CafeFlowApi.Controllers
                 return BadRequest(new { message = "Hata: " + ex.Message });
             }
         }
-    }
 
-    public class Order
-    {
-        public string Isim { get; set; }
-        public int MasaNo { get; set; }
-        public string Telefon { get; set; }
-        public string SiparisAciklamasi { get; set; }
-        public decimal ToplamTutar { get; set; }
-        public DateTime SiparisTarihi { get; set; }
+        public class Order
+        {
+            public string Isim { get; set; }
+            public int MasaNo { get; set; }
+            public string Telefon { get; set; }
+            public string SiparisAciklamasi { get; set; }
+            public decimal ToplamTutar { get; set; }
+            public DateTime SiparisTarihi { get; set; }
+          
+        }
     }
 }

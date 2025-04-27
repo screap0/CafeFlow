@@ -5,12 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // SignalR servisini ekle
-builder.Services.AddSignalR();
+builder.Services.AddSignalR().AddJsonProtocol(); // JSON protokolünü kullan
 
 // DatabaseConnection'ý servis olarak ekle
 builder.Services.AddSingleton<DatabaseConnection>();
@@ -20,9 +19,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
     {
-        builder.AllowAnyOrigin()
+        builder.WithOrigins("https://localhost:7222") // API'nin çalýþtýðý adres
                .AllowAnyMethod()
-               .AllowAnyHeader();
+               .AllowAnyHeader()
+               .AllowCredentials(); // SignalR için gerekli
     });
 });
 
@@ -36,12 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-// CORS'u etkinleþtir
 app.UseCors("AllowAll");
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 // SignalR Hub için endpoint

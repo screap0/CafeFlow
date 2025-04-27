@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CafeFlow
 {
@@ -16,22 +18,44 @@ namespace CafeFlow
             InitializeComponent();
             dbConnection = new DatabaseConnection();
             SetupSignalR();
-            LoadInitialOrders(); // Form açıldığında mevcut siparişleri yükle
+            LoadInitialOrders();
         }
 
         private async void SetupSignalR()
         {
-            // SignalR Hub bağlantısını kur
             hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://www.cafeflow.com.tr/orderHub") // Sunucu adresin (test için localhost kullanıyorsan: https://localhost:5001/orderHub)
+                .WithUrl("https://localhost:7222/orderHub", options =>
+                {
+                    options.UseDefaultCredentials = true;
+                })
+                .AddJsonProtocol()
+                .WithAutomaticReconnect()
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddDebug();
+                    logging.SetMinimumLevel(LogLevel.Debug);
+                })
                 .Build();
 
-            // Yeni sipariş bildirimi alındığında çalışacak metod
+            // Bağlantı durumu değiştiğinde log ekle
+            hubConnection.Closed += async (error) =>
+            {
+                MessageBox.Show("SignalR bağlantısı kapandı: " + (error?.Message ?? "Bilinmeyen hata"));
+                await Task.Delay(5000); // 5 saniye bekle ve yeniden bağlanmayı dene
+                await hubConnection.StartAsync();
+            };
+
+            hubConnection.Reconnected += async (connectionId) =>
+            {
+                MessageBox.Show("SignalR bağlantısı yeniden kuruldu: " + connectionId);
+            };
+
             hubConnection.On<int, string, int, string, string, decimal, DateTime>("ReceiveOrderUpdate", (orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi) =>
             {
                 this.Invoke((Action)(() =>
                 {
                     AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi);
+                    MessageBox.Show($"Yeni sipariş alındı: #{orderId} - {isim}"); // Test için
                 }));
             });
 
@@ -46,6 +70,7 @@ namespace CafeFlow
             }
         }
 
+        // LoadInitialOrders ve AddOrderToPanel metodları aynı kalabilir
         private async Task LoadInitialOrders()
         {
             try
@@ -61,13 +86,13 @@ namespace CafeFlow
                         {
                             while (await reader.ReadAsync())
                             {
-                                int orderId = reader.GetInt32(0); // id
-                                string isim = reader.GetString(1); // isim
-                                int masaNo = reader.GetInt32(2); // masa_no (int olarak güncellendi)
-                                string telefon = reader.IsDBNull(3) ? "Yok" : reader.GetString(3); // telefon (NULL olabilir)
-                                string aciklama = reader.GetString(4); // siparis_aciklamasi
-                                decimal toplamTutar = reader.GetDecimal(5); // toplam_tutar
-                                DateTime siparisTarihi = reader.GetDateTime(6); // siparis_tarihi
+                                int orderId = reader.GetInt32(0);
+                                string isim = reader.GetString(1);
+                                int masaNo = reader.GetInt32(2);
+                                string telefon = reader.IsDBNull(3) ? "Yok" : reader.GetString(3);
+                                string aciklama = reader.GetString(4);
+                                decimal toplamTutar = reader.GetDecimal(5);
+                                DateTime siparisTarihi = reader.GetDateTime(6);
 
                                 AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi);
                             }
@@ -85,7 +110,7 @@ namespace CafeFlow
         {
             Panel orderPanel = new Panel
             {
-                Size = new System.Drawing.Size(200, 120), // Telefon için daha fazla yer ayırdık
+                Size = new System.Drawing.Size(200, 120),
                 BorderStyle = BorderStyle.FixedSingle,
                 Margin = new Padding(5)
             };
@@ -134,10 +159,13 @@ namespace CafeFlow
             orderPanel.Controls.Add(lblTutar);
             orderPanel.Controls.Add(lblTarih);
 
+            // Yeni siparişi en üste ekle
             orderLayoutPanel.Controls.Add(orderPanel);
+            orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0); // En üste taşı
+            orderLayoutPanel.Refresh();
+            orderLayoutPanel.Invalidate(); // Paneli yeniden çiz
         }
 
-        // Form kapatıldığında SignalR bağlantısını kapat
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             hubConnection?.StopAsync().Wait();
