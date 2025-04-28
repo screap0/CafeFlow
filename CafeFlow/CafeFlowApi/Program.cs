@@ -13,13 +13,15 @@ builder.Services.AddSignalR().AddJsonProtocol(); // JSON protokolünü kullan
 
 // DatabaseConnection'ý servis olarak ekle
 builder.Services.AddSingleton<DatabaseConnection>();
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
 
 // CORS ayarlarý (Windows Forms istemcisi için)
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowClient", builder =>
     {
-        builder.WithOrigins("https://localhost:7222") // API'nin çalýþtýðý adres
+        builder.WithOrigins("http://cafeflow.com.tr", "https://cafeflow.com.tr") // Windows Forms'un çalýþtýðý adres
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials(); // SignalR için gerekli
@@ -36,7 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+app.UseCors("AllowClient"); // Politikayý "AllowAll" yerine "AllowClient" yap
 app.UseAuthorization();
 app.MapControllers();
 
