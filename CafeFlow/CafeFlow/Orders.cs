@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 
 namespace CafeFlow
 {
@@ -24,19 +25,21 @@ namespace CafeFlow
         private async void SetupSignalR()
         {
             hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7222/orderHub", options =>
-                {
-                    options.UseDefaultCredentials = true;
-                })
-                .AddJsonProtocol()
-                .WithAutomaticReconnect()
-                .ConfigureLogging(logging =>
-                {
-                    logging.AddDebug();
-                    logging.SetMinimumLevel(LogLevel.Debug);
-                })
-                .Build();
+     .WithUrl("https://31.57.33.58/orderHub", options =>
+     {
+         options.HttpMessageHandlerFactory = (handler) => {
+             if (handler is HttpClientHandler clientHandler)
+                 clientHandler.ServerCertificateCustomValidationCallback =
+                     (sender, certificate, chain, sslPolicyErrors) => true;
+             return handler;
+         };
+     })
+     .AddJsonProtocol()
+     .WithAutomaticReconnect()
+     .Build();
 
+            hubConnection.ServerTimeout = TimeSpan.FromSeconds(300);
+            hubConnection.KeepAliveInterval = TimeSpan.FromSeconds(15);
             // Bağlantı durumu değiştiğinde log ekle
             hubConnection.Closed += async (error) =>
             {

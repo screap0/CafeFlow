@@ -19,12 +19,13 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
     {
-        builder.WithOrigins("https://localhost:7222") // API'nin çalýþtýðý adres
+        builder.WithOrigins("https://www.cafeflow.com.tr") // PHP sitenizin adresi
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials(); // SignalR için gerekli
     });
 });
+
 
 var app = builder.Build();
 
