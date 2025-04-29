@@ -70,7 +70,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.lbl_kazanc);
@@ -125,7 +125,7 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.panel2.Controls.Add(this.pictureBox2);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.lbl_musterisayisi);
@@ -188,7 +188,7 @@
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.orderChart);
             this.panel3.Controls.Add(this.label9);
@@ -221,7 +221,7 @@
             // 
             // pnl_encoksiparis
             // 
-            this.pnl_encoksiparis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.pnl_encoksiparis.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.pnl_encoksiparis.Controls.Add(this.pictureBox3);
             this.pnl_encoksiparis.Controls.Add(this.lbl_encoksiparis);
             this.pnl_encoksiparis.Controls.Add(this.label11);
@@ -264,7 +264,7 @@
             // 
             // pnl_ensadikmusteri
             // 
-            this.pnl_ensadikmusteri.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.pnl_ensadikmusteri.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.pnl_ensadikmusteri.Controls.Add(this.pictureBox4);
             this.pnl_ensadikmusteri.Controls.Add(this.lbl_ensadikmusteri);
             this.pnl_ensadikmusteri.Controls.Add(this.label12);
@@ -307,7 +307,7 @@
             // 
             // pnl_ortsiparissuresi
             // 
-            this.pnl_ortsiparissuresi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(42)))), ((int)(((byte)(64)))));
+            this.pnl_ortsiparissuresi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.pnl_ortsiparissuresi.Controls.Add(this.pictureBox5);
             this.pnl_ortsiparissuresi.Controls.Add(this.lbl_ortsiparissuresi);
             this.pnl_ortsiparissuresi.Controls.Add(this.label14);
