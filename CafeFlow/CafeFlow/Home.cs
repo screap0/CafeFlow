@@ -161,9 +161,10 @@ namespace CafeFlow
             WindowState = FormWindowState.Minimized;
         }
 
-        private void ıconButton4_Click(object sender, EventArgs e)
+        private void menuBtn_Click(object sender, EventArgs e)
         {
-
+            ActivateButton(sender, RGBColors.color3);
+            OpenChildForm(new Menu());
         }
     }
 }
