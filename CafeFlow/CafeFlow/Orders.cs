@@ -24,7 +24,7 @@ namespace CafeFlow
         private async void SetupSignalR()
         {
             hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7222/orderHub", options =>
+                .WithUrl("http://31.57.33.58/orderHub", options =>
                 {
                     options.UseDefaultCredentials = true;
                 })

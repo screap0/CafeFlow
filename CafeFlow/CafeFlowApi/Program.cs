@@ -19,13 +19,17 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
     {
-        builder.WithOrigins("https://localhost:7222") // API'nin çalýþtýðý adres
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials(); // SignalR için gerekli
+        builder.WithOrigins(
+                "https://31.57.33.58", // VPS'in IP adresi
+                "http://31.57.33.58",  // HTTP versiyonu
+                "https://www.barisgolcuk.com", // Web sitenizin canlý adresi
+                "http://www.barisgolcuk.com"    // HTTP versiyonu
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials(); // SignalR için gerekli
     });
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();

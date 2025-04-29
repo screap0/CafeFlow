@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using MySql.Data.MySqlClient;
 using CafeFlowApi.Hubs;
+using Newtonsoft.Json;
 
 namespace CafeFlowApi.Controllers
 {
@@ -11,16 +12,27 @@ namespace CafeFlowApi.Controllers
     {
         private readonly IHubContext<OrderHub> _hubContext;
         private readonly DatabaseConnection _dbConnection;
+        private readonly ILogger<OrdersController> _logger;
 
-        public OrdersController(IHubContext<OrderHub> hubContext, DatabaseConnection dbConnection)
+        public OrdersController(IHubContext<OrderHub> hubContext, DatabaseConnection dbConnection, ILogger<OrdersController> logger)
         {
             _hubContext = hubContext;
             _dbConnection = dbConnection;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> AddOrder([FromBody] Order order)
         {
+            Console.WriteLine("Executed: " + order.Isim);
+            _logger.LogInformation("Sipariş alındı: {Isim}, Masa No: {MasaNo}, Telefon: {Telefon}, Açıklama: {Aciklama}, Toplam Tutar: {ToplamTutar}, Tarih: {SiparisTarihi}",
+                order.Isim, order.MasaNo, order.Telefon, order.SiparisAciklamasi, order.ToplamTutar, order.SiparisTarihi);
+
+            if (order == null)
+            {
+                return BadRequest(new { message = "Sipariş bilgileri eksik" });
+            }
+
             try
             {
                 using (var connection = _dbConnection.GetConnection())
@@ -58,6 +70,7 @@ namespace CafeFlowApi.Controllers
         public class Order
         {
             public string Isim { get; set; }
+
             public int MasaNo { get; set; }
             public string Telefon { get; set; }
             public string SiparisAciklamasi { get; set; }
