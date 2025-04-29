@@ -105,7 +105,7 @@
             // 
             this.lbl_kazanc.AutoSize = true;
             this.lbl_kazanc.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_kazanc.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_kazanc.ForeColor = System.Drawing.Color.Gold;
             this.lbl_kazanc.Location = new System.Drawing.Point(78, 53);
             this.lbl_kazanc.Name = "lbl_kazanc";
             this.lbl_kazanc.Size = new System.Drawing.Size(72, 25);
@@ -160,7 +160,7 @@
             // 
             this.lbl_musterisayisi.AutoSize = true;
             this.lbl_musterisayisi.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_musterisayisi.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_musterisayisi.ForeColor = System.Drawing.Color.Lime;
             this.lbl_musterisayisi.Location = new System.Drawing.Point(57, 53);
             this.lbl_musterisayisi.Name = "lbl_musterisayisi";
             this.lbl_musterisayisi.Size = new System.Drawing.Size(60, 25);
