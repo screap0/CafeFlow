@@ -3,56 +3,72 @@ using LiveCharts.WinForms;
 using LiveCharts.Wpf;
 using System.Windows.Forms;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CafeFlow
 {
     public partial class Dashboard : Form
     {
-        LiveCharts.WinForms.CartesianChart orderChart;
+
+        
 
         public Dashboard()
         {
             InitializeComponent();
 
-           
+
         }
+        private DatabaseConnection db = new DatabaseConnection();
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
-            // Yeni bir WPF CartesianChart nesnesi oluşturuyoruz
-            var cartesianChart = new LiveCharts.Wpf.CartesianChart();
+            try
+            {
+                lbl_encoksiparis.Text = db.EnCokSiparisVerilenUrun();
+                //lbl_ortsiparissuresi.Text = db.OrtalamaSiparisSuresi() + " dk";
+                //lbl_ensadikmusteri.Text = db.EnSadikMusteri();
+                decimal kazanc = db.AylikKazancGetir();
+                int musteriSayisi = db.AylikMusteriSayisiGetir();
+                lbl_kazanc.Text = kazanc.ToString("C2"); 
+                lbl_musterisayisi.Text = musteriSayisi.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Dashboard verileri çekilemedi: " + ex.Message);
+            }
+            List<DateTime> siparisTarihleri = db.SiparisTarihleriGetir();
 
-            // Saatler ve sipariş sayılarını örnek verilerle ayarlıyoruz
-            cartesianChart.Series = new SeriesCollection
+            int[] saatlikSiparisSayilari = new int[24];
+
+            foreach (var tarih in siparisTarihleri)
+            {
+                saatlikSiparisSayilari[tarih.Hour]++;
+            }
+
+            orderChart.Series = new SeriesCollection
     {
         new ColumnSeries
         {
-            Title = "Siparişler",
-            Values = new ChartValues<int> { 12, 18, 5, 9, 15, 22,6,13,45,64,12,35,43,23 } // burada kendi verilerini koyacaksın
+            Title = "Sipariş Sayısı",
+            Values = new ChartValues<int>(saatlikSiparisSayilari)
         }
     };
 
-            cartesianChart.AxisX.Add(new Axis
+            orderChart.AxisX.Clear();
+            orderChart.AxisX.Add(new Axis
             {
                 Title = "Saat",
-                Labels = new[] { "10:00", "11:00", "12:00", "13:00", "14:00", "15:00","16:00","17:00","18:00", "19:00","20:00","21:00","22:00","22.00"}
+                Labels = Enumerable.Range(0, 24).Select(h => h.ToString("00:00")).ToArray()
             });
 
-            cartesianChart.AxisY.Add(new Axis
+            orderChart.AxisY.Clear();
+            orderChart.AxisY.Add(new Axis
             {
-                Title = "Sipariş Sayısı",
-                LabelFormatter = value => value.ToString()
+                Title = "Sipariş Adedi"
             });
-
-            // ElementHost'un içine bu cartesian chart'ı yerleştiriyoruz
-            if (elementHost1 != null)
-            {
-                elementHost1.Child = cartesianChart;
-            }
-            else
-            {
-                MessageBox.Show("ElementHost başlatılamadı!");
-            }
         }
+
+       
     }
 }
