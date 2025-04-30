@@ -30,6 +30,7 @@ namespace CafeFlow
                 return;
             }
             menuItemTemplate.Visible = false; // Şablon paneli gizli tut
+            kategoricb.Items.AddRange(new[] { "Sicak Icecekler", "Soguk Icecekler", "Ozel Secim" });
         }
 
             
@@ -56,7 +57,7 @@ namespace CafeFlow
                 using (MySqlConnection conn = dbConnection.GetConnection())
                 {
                     conn.Open();
-                    string query = "SELECT Urun_ismi, kategori, aciklama, tutar, resim_yolu FROM Menu ORDER BY kategori, Urun_ismi";
+                    string query = "SELECT Urun_ismi, kategori, aciklama, tutar, resim_yolu FROM Menu ORDER BY FIELD(kategori, 'Sicak Icecekler', 'Soguk Icecekler', 'Ozel Secim'), Urun_ismi";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
                         using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -328,11 +329,11 @@ namespace CafeFlow
                     string query = "UPDATE Menu SET Urun_ismi = @urunIsmi, kategori = @kategori, aciklama = @aciklama, tutar = @tutar WHERE Urun_ismi = @oldUrunIsmi";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@urunIsmi", uruntxt.Text);
-                        cmd.Parameters.AddWithValue("@kategori", kategoricb.SelectedItem.ToString());
-                        cmd.Parameters.AddWithValue("@aciklama", aciklamatxt.Text);
-                        cmd.Parameters.AddWithValue("@tutar", tutar);
-                        cmd.Parameters.AddWithValue("@oldUrunIsmi", oldData.UrunIsmi);
+                        cmd.Parameters.Add("@urunIsmi", MySqlDbType.VarChar).Value = uruntxt.Text;
+                        cmd.Parameters.Add("@kategori", MySqlDbType.VarChar).Value = kategoricb.SelectedItem.ToString();
+                        cmd.Parameters.Add("@aciklama", MySqlDbType.VarChar).Value = aciklamatxt.Text;
+                        cmd.Parameters.Add("@tutar", MySqlDbType.Decimal).Value = tutar;
+                        cmd.Parameters.Add("@oldUrunIsmi", MySqlDbType.VarChar).Value = oldData.UrunIsmi;
                         cmd.ExecuteNonQuery();
                     }
                 }

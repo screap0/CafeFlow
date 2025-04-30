@@ -29,7 +29,16 @@
         private void InitializeComponent()
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.menuItem = new System.Windows.Forms.Panel();
+            this.tutarLabel = new System.Windows.Forms.Label();
+            this.kategoriLabel = new System.Windows.Forms.Label();
+            this.aciklamaLabel = new System.Windows.Forms.Label();
+            this.urunIsmiLabel = new System.Windows.Forms.Label();
+            this.picturebox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.yenilebtn = new System.Windows.Forms.Button();
+            this.silBtn = new System.Windows.Forms.Button();
+            this.resimsecbtn = new FontAwesome.Sharp.IconButton();
             this.menuguncellebtn = new System.Windows.Forms.Button();
             this.kategoricb = new System.Windows.Forms.ComboBox();
             this.tutartxt = new System.Windows.Forms.TextBox();
@@ -44,23 +53,14 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.menuItem = new System.Windows.Forms.Panel();
-            this.tutarLabel = new System.Windows.Forms.Label();
-            this.kategoriLabel = new System.Windows.Forms.Label();
-            this.aciklamaLabel = new System.Windows.Forms.Label();
-            this.urunIsmiLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.resimsecbtn = new FontAwesome.Sharp.IconButton();
-            this.picturebox = new System.Windows.Forms.PictureBox();
-            this.silBtn = new System.Windows.Forms.Button();
-            this.yenilebtn = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
+            this.menuItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picturebox)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.menuItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picturebox)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -74,6 +74,70 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(525, 648);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.WrapContents = false;
+            // 
+            // menuItem
+            // 
+            this.menuItem.BackColor = System.Drawing.Color.Transparent;
+            this.menuItem.Controls.Add(this.tutarLabel);
+            this.menuItem.Controls.Add(this.kategoriLabel);
+            this.menuItem.Controls.Add(this.aciklamaLabel);
+            this.menuItem.Controls.Add(this.urunIsmiLabel);
+            this.menuItem.Controls.Add(this.picturebox);
+            this.menuItem.Location = new System.Drawing.Point(3, 3);
+            this.menuItem.Name = "menuItem";
+            this.menuItem.Size = new System.Drawing.Size(491, 178);
+            this.menuItem.TabIndex = 0;
+            this.menuItem.Visible = false;
+            // 
+            // tutarLabel
+            // 
+            this.tutarLabel.AutoSize = true;
+            this.tutarLabel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.tutarLabel.ForeColor = System.Drawing.Color.Gold;
+            this.tutarLabel.Location = new System.Drawing.Point(374, 65);
+            this.tutarLabel.Name = "tutarLabel";
+            this.tutarLabel.Size = new System.Drawing.Size(103, 23);
+            this.tutarLabel.TabIndex = 4;
+            this.tutarLabel.Text = "Tutar: 120₺";
+            // 
+            // kategoriLabel
+            // 
+            this.kategoriLabel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.kategoriLabel.ForeColor = System.Drawing.Color.SaddleBrown;
+            this.kategoriLabel.Location = new System.Drawing.Point(112, 56);
+            this.kategoriLabel.Name = "kategoriLabel";
+            this.kategoriLabel.Size = new System.Drawing.Size(236, 32);
+            this.kategoriLabel.TabIndex = 3;
+            this.kategoriLabel.Text = "Sıcak İçecekler";
+            // 
+            // aciklamaLabel
+            // 
+            this.aciklamaLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.aciklamaLabel.ForeColor = System.Drawing.Color.White;
+            this.aciklamaLabel.Location = new System.Drawing.Point(112, 83);
+            this.aciklamaLabel.Name = "aciklamaLabel";
+            this.aciklamaLabel.Size = new System.Drawing.Size(256, 78);
+            this.aciklamaLabel.TabIndex = 2;
+            this.aciklamaLabel.Text = "Açıklama: Fincan Çay";
+            // 
+            // urunIsmiLabel
+            // 
+            this.urunIsmiLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.urunIsmiLabel.ForeColor = System.Drawing.Color.LightCoral;
+            this.urunIsmiLabel.Location = new System.Drawing.Point(110, 25);
+            this.urunIsmiLabel.Name = "urunIsmiLabel";
+            this.urunIsmiLabel.Size = new System.Drawing.Size(265, 38);
+            this.urunIsmiLabel.TabIndex = 1;
+            this.urunIsmiLabel.Text = "Çay";
+            // 
+            // picturebox
+            // 
+            this.picturebox.Location = new System.Drawing.Point(9, 36);
+            this.picturebox.Name = "picturebox";
+            this.picturebox.Size = new System.Drawing.Size(95, 89);
+            this.picturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picturebox.TabIndex = 0;
+            this.picturebox.TabStop = false;
             // 
             // panel1
             // 
@@ -97,6 +161,48 @@
             this.panel1.Size = new System.Drawing.Size(497, 648);
             this.panel1.TabIndex = 1;
             // 
+            // yenilebtn
+            // 
+            this.yenilebtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.yenilebtn.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.yenilebtn.ForeColor = System.Drawing.Color.White;
+            this.yenilebtn.Location = new System.Drawing.Point(107, 562);
+            this.yenilebtn.Name = "yenilebtn";
+            this.yenilebtn.Size = new System.Drawing.Size(86, 67);
+            this.yenilebtn.TabIndex = 14;
+            this.yenilebtn.Text = "Yenile";
+            this.yenilebtn.UseVisualStyleBackColor = false;
+            this.yenilebtn.Click += new System.EventHandler(this.yenilebtn_Click);
+            // 
+            // silBtn
+            // 
+            this.silBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.silBtn.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.silBtn.ForeColor = System.Drawing.Color.White;
+            this.silBtn.Location = new System.Drawing.Point(390, 562);
+            this.silBtn.Name = "silBtn";
+            this.silBtn.Size = new System.Drawing.Size(88, 67);
+            this.silBtn.TabIndex = 13;
+            this.silBtn.Text = "Sil";
+            this.silBtn.UseVisualStyleBackColor = false;
+            this.silBtn.Click += new System.EventHandler(this.silBtn_Click);
+            // 
+            // resimsecbtn
+            // 
+            this.resimsecbtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.resimsecbtn.IconChar = FontAwesome.Sharp.IconChar.Image;
+            this.resimsecbtn.IconColor = System.Drawing.Color.Black;
+            this.resimsecbtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.resimsecbtn.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.resimsecbtn.Location = new System.Drawing.Point(154, 490);
+            this.resimsecbtn.Name = "resimsecbtn";
+            this.resimsecbtn.Size = new System.Drawing.Size(172, 56);
+            this.resimsecbtn.TabIndex = 12;
+            this.resimsecbtn.Text = "Resim Seç";
+            this.resimsecbtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.resimsecbtn.UseVisualStyleBackColor = true;
+            this.resimsecbtn.Click += new System.EventHandler(this.resimsecbtn_Click);
+            // 
             // menuguncellebtn
             // 
             this.menuguncellebtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
@@ -116,10 +222,6 @@
             this.kategoricb.Font = new System.Drawing.Font("Segoe UI Semibold", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.kategoricb.ForeColor = System.Drawing.Color.White;
             this.kategoricb.FormattingEnabled = true;
-            this.kategoricb.Items.AddRange(new object[] {
-            "Sıcak İçecekler",
-            "Soğuk İçecekler",
-            "Özel Seçim"});
             this.kategoricb.Location = new System.Drawing.Point(140, 420);
             this.kategoricb.Name = "kategoricb";
             this.kategoricb.Size = new System.Drawing.Size(334, 45);
@@ -253,6 +355,16 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::CafeFlow.Properties.Resources.icons8_refresh_80;
+            this.pictureBox1.Location = new System.Drawing.Point(40, 76);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(141, 117);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -264,122 +376,6 @@
             this.label6.TabIndex = 2;
             this.label6.Text = "Ekle";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // menuItem
-            // 
-            this.menuItem.BackColor = System.Drawing.Color.Transparent;
-            this.menuItem.Controls.Add(this.tutarLabel);
-            this.menuItem.Controls.Add(this.kategoriLabel);
-            this.menuItem.Controls.Add(this.aciklamaLabel);
-            this.menuItem.Controls.Add(this.urunIsmiLabel);
-            this.menuItem.Controls.Add(this.picturebox);
-            this.menuItem.Location = new System.Drawing.Point(3, 3);
-            this.menuItem.Name = "menuItem";
-            this.menuItem.Size = new System.Drawing.Size(491, 178);
-            this.menuItem.TabIndex = 0;
-            this.menuItem.Visible = false;
-            // 
-            // tutarLabel
-            // 
-            this.tutarLabel.AutoSize = true;
-            this.tutarLabel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tutarLabel.ForeColor = System.Drawing.Color.Gold;
-            this.tutarLabel.Location = new System.Drawing.Point(374, 65);
-            this.tutarLabel.Name = "tutarLabel";
-            this.tutarLabel.Size = new System.Drawing.Size(103, 23);
-            this.tutarLabel.TabIndex = 4;
-            this.tutarLabel.Text = "Tutar: 120₺";
-            // 
-            // kategoriLabel
-            // 
-            this.kategoriLabel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.kategoriLabel.ForeColor = System.Drawing.Color.SaddleBrown;
-            this.kategoriLabel.Location = new System.Drawing.Point(112, 56);
-            this.kategoriLabel.Name = "kategoriLabel";
-            this.kategoriLabel.Size = new System.Drawing.Size(236, 23);
-            this.kategoriLabel.TabIndex = 3;
-            this.kategoriLabel.Text = "Sıcak İçecekler";
-            // 
-            // aciklamaLabel
-            // 
-            this.aciklamaLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.aciklamaLabel.ForeColor = System.Drawing.Color.White;
-            this.aciklamaLabel.Location = new System.Drawing.Point(112, 83);
-            this.aciklamaLabel.Name = "aciklamaLabel";
-            this.aciklamaLabel.Size = new System.Drawing.Size(256, 78);
-            this.aciklamaLabel.TabIndex = 2;
-            this.aciklamaLabel.Text = "Açıklama: Fincan Çay";
-            // 
-            // urunIsmiLabel
-            // 
-            this.urunIsmiLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.urunIsmiLabel.ForeColor = System.Drawing.Color.LightCoral;
-            this.urunIsmiLabel.Location = new System.Drawing.Point(110, 25);
-            this.urunIsmiLabel.Name = "urunIsmiLabel";
-            this.urunIsmiLabel.Size = new System.Drawing.Size(265, 38);
-            this.urunIsmiLabel.TabIndex = 1;
-            this.urunIsmiLabel.Text = "Çay";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::CafeFlow.Properties.Resources.icons8_refresh_80;
-            this.pictureBox1.Location = new System.Drawing.Point(40, 76);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(141, 117);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
-            // resimsecbtn
-            // 
-            this.resimsecbtn.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.resimsecbtn.IconChar = FontAwesome.Sharp.IconChar.Image;
-            this.resimsecbtn.IconColor = System.Drawing.Color.Black;
-            this.resimsecbtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.resimsecbtn.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.resimsecbtn.Location = new System.Drawing.Point(154, 490);
-            this.resimsecbtn.Name = "resimsecbtn";
-            this.resimsecbtn.Size = new System.Drawing.Size(172, 56);
-            this.resimsecbtn.TabIndex = 12;
-            this.resimsecbtn.Text = "Resim Seç";
-            this.resimsecbtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.resimsecbtn.UseVisualStyleBackColor = true;
-            this.resimsecbtn.Click += new System.EventHandler(this.resimsecbtn_Click);
-            // 
-            // picturebox
-            // 
-            this.picturebox.Location = new System.Drawing.Point(9, 36);
-            this.picturebox.Name = "picturebox";
-            this.picturebox.Size = new System.Drawing.Size(95, 89);
-            this.picturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picturebox.TabIndex = 0;
-            this.picturebox.TabStop = false;
-            // 
-            // silBtn
-            // 
-            this.silBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
-            this.silBtn.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.silBtn.ForeColor = System.Drawing.Color.White;
-            this.silBtn.Location = new System.Drawing.Point(390, 562);
-            this.silBtn.Name = "silBtn";
-            this.silBtn.Size = new System.Drawing.Size(88, 67);
-            this.silBtn.TabIndex = 13;
-            this.silBtn.Text = "Sil";
-            this.silBtn.UseVisualStyleBackColor = false;
-            this.silBtn.Click += new System.EventHandler(this.silBtn_Click);
-            // 
-            // yenilebtn
-            // 
-            this.yenilebtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
-            this.yenilebtn.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.yenilebtn.ForeColor = System.Drawing.Color.White;
-            this.yenilebtn.Location = new System.Drawing.Point(107, 562);
-            this.yenilebtn.Name = "yenilebtn";
-            this.yenilebtn.Size = new System.Drawing.Size(86, 67);
-            this.yenilebtn.TabIndex = 14;
-            this.yenilebtn.Text = "Yenile";
-            this.yenilebtn.UseVisualStyleBackColor = false;
-            this.yenilebtn.Click += new System.EventHandler(this.yenilebtn_Click);
             // 
             // Menu
             // 
@@ -395,14 +391,14 @@
             this.Text = "Menu";
             this.Load += new System.EventHandler(this.Menu_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.menuItem.ResumeLayout(false);
+            this.menuItem.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picturebox)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.menuItem.ResumeLayout(false);
-            this.menuItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picturebox)).EndInit();
             this.ResumeLayout(false);
 
         }

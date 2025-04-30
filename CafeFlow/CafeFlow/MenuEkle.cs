@@ -25,7 +25,7 @@ namespace CafeFlow
             dbConnection = new DatabaseConnection();
             // tutartxt için giriş kısıtlamaları
             // tutartxt için giriş kısıtlamaları
-            kategoricb.Items.AddRange(new[] { "Sıcak İçecekler", "Soğuk İçecekler", "Özel Seçim" });
+            kategoricb.Items.AddRange(new[] { "Sicak Icecekler", "Soguk Icecekler", "Ozel Secim" });
         }
 
         private void minimizeBtn_Click(object sender, EventArgs e)
