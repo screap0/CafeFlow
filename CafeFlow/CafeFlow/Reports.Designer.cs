@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.orderReportPnl = new System.Windows.Forms.FlowLayoutPanel();
+            this.dailyTurnoverPnl = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // orderReportPnl
@@ -38,11 +39,19 @@
             this.orderReportPnl.Size = new System.Drawing.Size(261, 426);
             this.orderReportPnl.TabIndex = 1;
             // 
+            // dailyTurnoverPnl
+            // 
+            this.dailyTurnoverPnl.Location = new System.Drawing.Point(279, 12);
+            this.dailyTurnoverPnl.Name = "dailyTurnoverPnl";
+            this.dailyTurnoverPnl.Size = new System.Drawing.Size(261, 426);
+            this.dailyTurnoverPnl.TabIndex = 2;
+            // 
             // Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.dailyTurnoverPnl);
             this.Controls.Add(this.orderReportPnl);
             this.Name = "Reports";
             this.Text = "Reports";
@@ -52,5 +61,6 @@
 
         #endregion
         private System.Windows.Forms.FlowLayoutPanel orderReportPnl;
+        private System.Windows.Forms.FlowLayoutPanel dailyTurnoverPnl;
     }
 }
