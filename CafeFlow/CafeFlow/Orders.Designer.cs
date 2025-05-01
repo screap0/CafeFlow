@@ -33,9 +33,11 @@
             // 
             // orderLayoutPanel
             // 
-            this.orderLayoutPanel.Location = new System.Drawing.Point(13, 13);
+            this.orderLayoutPanel.AutoScroll = true;
+            this.orderLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.orderLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.orderLayoutPanel.Name = "orderLayoutPanel";
-            this.orderLayoutPanel.Size = new System.Drawing.Size(434, 425);
+            this.orderLayoutPanel.Size = new System.Drawing.Size(800, 450);
             this.orderLayoutPanel.TabIndex = 0;
             // 
             // Orders

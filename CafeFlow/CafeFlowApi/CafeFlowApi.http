@@ -1,4 +1,4 @@
-@CafeFlowApi_HostAddress = http://localhost:5014
+@CafeFlowApi_HostAddress = http://31.57.33.58:5014
 
 GET {{CafeFlowApi_HostAddress}}/weatherforecast/
 Accept: application/json
