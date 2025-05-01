@@ -70,8 +70,9 @@
             this.flowLayoutPanel1.Controls.Add(this.menuItem);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(525, 648);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(394, 526);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -83,9 +84,10 @@
             this.menuItem.Controls.Add(this.aciklamaLabel);
             this.menuItem.Controls.Add(this.urunIsmiLabel);
             this.menuItem.Controls.Add(this.picturebox);
-            this.menuItem.Location = new System.Drawing.Point(3, 3);
+            this.menuItem.Location = new System.Drawing.Point(2, 2);
+            this.menuItem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.menuItem.Name = "menuItem";
-            this.menuItem.Size = new System.Drawing.Size(491, 178);
+            this.menuItem.Size = new System.Drawing.Size(368, 145);
             this.menuItem.TabIndex = 0;
             this.menuItem.Visible = false;
             // 
@@ -94,9 +96,10 @@
             this.tutarLabel.AutoSize = true;
             this.tutarLabel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.tutarLabel.ForeColor = System.Drawing.Color.Gold;
-            this.tutarLabel.Location = new System.Drawing.Point(374, 65);
+            this.tutarLabel.Location = new System.Drawing.Point(280, 53);
+            this.tutarLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tutarLabel.Name = "tutarLabel";
-            this.tutarLabel.Size = new System.Drawing.Size(103, 23);
+            this.tutarLabel.Size = new System.Drawing.Size(84, 19);
             this.tutarLabel.TabIndex = 4;
             this.tutarLabel.Text = "Tutar: 120₺";
             // 
@@ -104,9 +107,10 @@
             // 
             this.kategoriLabel.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.kategoriLabel.ForeColor = System.Drawing.Color.SaddleBrown;
-            this.kategoriLabel.Location = new System.Drawing.Point(112, 56);
+            this.kategoriLabel.Location = new System.Drawing.Point(84, 46);
+            this.kategoriLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.kategoriLabel.Name = "kategoriLabel";
-            this.kategoriLabel.Size = new System.Drawing.Size(236, 32);
+            this.kategoriLabel.Size = new System.Drawing.Size(177, 26);
             this.kategoriLabel.TabIndex = 3;
             this.kategoriLabel.Text = "Sıcak İçecekler";
             // 
@@ -114,9 +118,10 @@
             // 
             this.aciklamaLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.aciklamaLabel.ForeColor = System.Drawing.Color.White;
-            this.aciklamaLabel.Location = new System.Drawing.Point(112, 83);
+            this.aciklamaLabel.Location = new System.Drawing.Point(84, 67);
+            this.aciklamaLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.aciklamaLabel.Name = "aciklamaLabel";
-            this.aciklamaLabel.Size = new System.Drawing.Size(256, 78);
+            this.aciklamaLabel.Size = new System.Drawing.Size(192, 63);
             this.aciklamaLabel.TabIndex = 2;
             this.aciklamaLabel.Text = "Açıklama: Fincan Çay";
             // 
@@ -124,17 +129,19 @@
             // 
             this.urunIsmiLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.urunIsmiLabel.ForeColor = System.Drawing.Color.LightCoral;
-            this.urunIsmiLabel.Location = new System.Drawing.Point(110, 25);
+            this.urunIsmiLabel.Location = new System.Drawing.Point(82, 20);
+            this.urunIsmiLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.urunIsmiLabel.Name = "urunIsmiLabel";
-            this.urunIsmiLabel.Size = new System.Drawing.Size(265, 38);
+            this.urunIsmiLabel.Size = new System.Drawing.Size(199, 31);
             this.urunIsmiLabel.TabIndex = 1;
             this.urunIsmiLabel.Text = "Çay";
             // 
             // picturebox
             // 
-            this.picturebox.Location = new System.Drawing.Point(9, 36);
+            this.picturebox.Location = new System.Drawing.Point(7, 29);
+            this.picturebox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.picturebox.Name = "picturebox";
-            this.picturebox.Size = new System.Drawing.Size(95, 89);
+            this.picturebox.Size = new System.Drawing.Size(71, 72);
             this.picturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picturebox.TabIndex = 0;
             this.picturebox.TabStop = false;
@@ -156,9 +163,10 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Location = new System.Drawing.Point(554, 0);
+            this.panel1.Location = new System.Drawing.Point(416, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(497, 648);
+            this.panel1.Size = new System.Drawing.Size(373, 526);
             this.panel1.TabIndex = 1;
             // 
             // yenilebtn
@@ -166,9 +174,10 @@
             this.yenilebtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.yenilebtn.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.yenilebtn.ForeColor = System.Drawing.Color.White;
-            this.yenilebtn.Location = new System.Drawing.Point(107, 562);
+            this.yenilebtn.Location = new System.Drawing.Point(80, 457);
+            this.yenilebtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.yenilebtn.Name = "yenilebtn";
-            this.yenilebtn.Size = new System.Drawing.Size(86, 67);
+            this.yenilebtn.Size = new System.Drawing.Size(64, 54);
             this.yenilebtn.TabIndex = 14;
             this.yenilebtn.Text = "Yenile";
             this.yenilebtn.UseVisualStyleBackColor = false;
@@ -179,9 +188,10 @@
             this.silBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.silBtn.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.silBtn.ForeColor = System.Drawing.Color.White;
-            this.silBtn.Location = new System.Drawing.Point(390, 562);
+            this.silBtn.Location = new System.Drawing.Point(292, 457);
+            this.silBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.silBtn.Name = "silBtn";
-            this.silBtn.Size = new System.Drawing.Size(88, 67);
+            this.silBtn.Size = new System.Drawing.Size(66, 54);
             this.silBtn.TabIndex = 13;
             this.silBtn.Text = "Sil";
             this.silBtn.UseVisualStyleBackColor = false;
@@ -194,9 +204,10 @@
             this.resimsecbtn.IconColor = System.Drawing.Color.Black;
             this.resimsecbtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.resimsecbtn.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.resimsecbtn.Location = new System.Drawing.Point(154, 490);
+            this.resimsecbtn.Location = new System.Drawing.Point(116, 398);
+            this.resimsecbtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.resimsecbtn.Name = "resimsecbtn";
-            this.resimsecbtn.Size = new System.Drawing.Size(172, 56);
+            this.resimsecbtn.Size = new System.Drawing.Size(129, 46);
             this.resimsecbtn.TabIndex = 12;
             this.resimsecbtn.Text = "Resim Seç";
             this.resimsecbtn.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -208,9 +219,10 @@
             this.menuguncellebtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.menuguncellebtn.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.menuguncellebtn.ForeColor = System.Drawing.Color.White;
-            this.menuguncellebtn.Location = new System.Drawing.Point(199, 562);
+            this.menuguncellebtn.Location = new System.Drawing.Point(149, 457);
+            this.menuguncellebtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.menuguncellebtn.Name = "menuguncellebtn";
-            this.menuguncellebtn.Size = new System.Drawing.Size(185, 67);
+            this.menuguncellebtn.Size = new System.Drawing.Size(139, 54);
             this.menuguncellebtn.TabIndex = 11;
             this.menuguncellebtn.Text = "Güncelle";
             this.menuguncellebtn.UseVisualStyleBackColor = false;
@@ -222,9 +234,10 @@
             this.kategoricb.Font = new System.Drawing.Font("Segoe UI Semibold", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.kategoricb.ForeColor = System.Drawing.Color.White;
             this.kategoricb.FormattingEnabled = true;
-            this.kategoricb.Location = new System.Drawing.Point(140, 420);
+            this.kategoricb.Location = new System.Drawing.Point(105, 341);
+            this.kategoricb.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.kategoricb.Name = "kategoricb";
-            this.kategoricb.Size = new System.Drawing.Size(334, 45);
+            this.kategoricb.Size = new System.Drawing.Size(252, 38);
             this.kategoricb.TabIndex = 10;
             this.kategoricb.Text = "Kategori Seçiniz...";
             // 
@@ -233,10 +246,11 @@
             this.tutartxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.tutartxt.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.tutartxt.ForeColor = System.Drawing.Color.White;
-            this.tutartxt.Location = new System.Drawing.Point(140, 349);
+            this.tutartxt.Location = new System.Drawing.Point(105, 284);
+            this.tutartxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tutartxt.Multiline = true;
             this.tutartxt.Name = "tutartxt";
-            this.tutartxt.Size = new System.Drawing.Size(334, 50);
+            this.tutartxt.Size = new System.Drawing.Size(252, 41);
             this.tutartxt.TabIndex = 9;
             // 
             // aciklamatxt
@@ -244,10 +258,11 @@
             this.aciklamatxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.aciklamatxt.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.aciklamatxt.ForeColor = System.Drawing.Color.White;
-            this.aciklamatxt.Location = new System.Drawing.Point(140, 210);
+            this.aciklamatxt.Location = new System.Drawing.Point(105, 171);
+            this.aciklamatxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.aciklamatxt.Multiline = true;
             this.aciklamatxt.Name = "aciklamatxt";
-            this.aciklamatxt.Size = new System.Drawing.Size(334, 107);
+            this.aciklamatxt.Size = new System.Drawing.Size(252, 88);
             this.aciklamatxt.TabIndex = 8;
             // 
             // uruntxt
@@ -255,20 +270,23 @@
             this.uruntxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.uruntxt.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.uruntxt.ForeColor = System.Drawing.Color.White;
-            this.uruntxt.Location = new System.Drawing.Point(140, 136);
+            this.uruntxt.Location = new System.Drawing.Point(105, 110);
+            this.uruntxt.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.uruntxt.Multiline = true;
             this.uruntxt.Name = "uruntxt";
-            this.uruntxt.Size = new System.Drawing.Size(334, 45);
+            this.uruntxt.Size = new System.Drawing.Size(252, 37);
             this.uruntxt.TabIndex = 7;
+            this.uruntxt.TextChanged += new System.EventHandler(this.uruntxt_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label5.Location = new System.Drawing.Point(40, 502);
+            this.label5.Location = new System.Drawing.Point(30, 408);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 28);
+            this.label5.Size = new System.Drawing.Size(58, 21);
             this.label5.TabIndex = 6;
             this.label5.Text = "Resim:";
             // 
@@ -277,9 +295,10 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label4.Location = new System.Drawing.Point(10, 428);
+            this.label4.Location = new System.Drawing.Point(8, 348);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(93, 28);
+            this.label4.Size = new System.Drawing.Size(77, 21);
             this.label4.TabIndex = 5;
             this.label4.Text = "Kategori:";
             // 
@@ -288,9 +307,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(37, 360);
+            this.label3.Location = new System.Drawing.Point(28, 292);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 28);
+            this.label3.Size = new System.Drawing.Size(52, 21);
             this.label3.TabIndex = 4;
             this.label3.Text = "Tutar:";
             // 
@@ -299,9 +319,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label2.Location = new System.Drawing.Point(3, 213);
+            this.label2.Location = new System.Drawing.Point(2, 173);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 28);
+            this.label2.Size = new System.Drawing.Size(79, 21);
             this.label2.TabIndex = 3;
             this.label2.Text = "Açıklama:";
             // 
@@ -310,9 +331,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(3, 136);
+            this.label1.Location = new System.Drawing.Point(2, 110);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 28);
+            this.label1.Size = new System.Drawing.Size(49, 21);
             this.label1.TabIndex = 2;
             this.label1.Text = "Ürün:";
             // 
@@ -321,9 +343,10 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label7.Location = new System.Drawing.Point(148, 28);
+            this.label7.Location = new System.Drawing.Point(111, 23);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(193, 31);
+            this.label7.Size = new System.Drawing.Size(162, 25);
             this.label7.TabIndex = 1;
             this.label7.Text = "Menüyü Güncelle";
             // 
@@ -337,9 +360,10 @@
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Location = new System.Drawing.Point(1059, 180);
+            this.panel2.Location = new System.Drawing.Point(794, 146);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(216, 306);
+            this.panel2.Size = new System.Drawing.Size(162, 249);
             this.panel2.TabIndex = 2;
             // 
             // button1
@@ -347,9 +371,10 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(100)))));
             this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(24, 199);
+            this.button1.Location = new System.Drawing.Point(18, 162);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(170, 86);
+            this.button1.Size = new System.Drawing.Size(128, 70);
             this.button1.TabIndex = 12;
             this.button1.Text = "Göster";
             this.button1.UseVisualStyleBackColor = false;
@@ -358,9 +383,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::CafeFlow.Properties.Resources.icons8_refresh_80;
-            this.pictureBox1.Location = new System.Drawing.Point(40, 76);
+            this.pictureBox1.Location = new System.Drawing.Point(30, 62);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(141, 117);
+            this.pictureBox1.Size = new System.Drawing.Size(106, 95);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
@@ -370,23 +396,25 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI Semibold", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label6.Location = new System.Drawing.Point(70, 31);
+            this.label6.Location = new System.Drawing.Point(52, 25);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 31);
+            this.label6.Size = new System.Drawing.Size(47, 25);
             this.label6.TabIndex = 2;
             this.label6.Text = "Ekle";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Menu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
-            this.ClientSize = new System.Drawing.Size(1287, 660);
+            this.ClientSize = new System.Drawing.Size(965, 536);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Menu";
             this.Text = "Menu";
             this.Load += new System.EventHandler(this.Menu_Load);
