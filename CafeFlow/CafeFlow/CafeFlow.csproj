@@ -283,7 +283,6 @@
     <Compile Include="Register.Designer.cs">
       <DependentUpon>Register.cs</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Stok.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -295,13 +294,6 @@
     </Compile>
     <Compile Include="StokEkle.Designer.cs">
       <DependentUpon>StokEkle.cs</DependentUpon>
-=======
-    <Compile Include="Reports.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Reports.Designer.cs">
-      <DependentUpon>Reports.cs</DependentUpon>
->>>>>>> 1.05.25.Barış-Can.V3
     </Compile>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
@@ -334,16 +326,11 @@
     <EmbeddedResource Include="Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
     <EmbeddedResource Include="Stok.resx">
       <DependentUpon>Stok.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StokEkle.resx">
       <DependentUpon>StokEkle.cs</DependentUpon>
-=======
-    <EmbeddedResource Include="Reports.resx">
-      <DependentUpon>Reports.cs</DependentUpon>
->>>>>>> 1.05.25.Barış-Can.V3
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -111,12 +112,6 @@ namespace CafeFlow
             OpenChildForm(new Dashboard());
         }
 
-        private void menuBtn_Click(object sender, EventArgs e)
-        {
-            ActivateButton(sender, RGBColors.color3);
-            OpenChildForm(new Menu());
-        }
-
         private void btnLogo_Click(object sender, EventArgs e)
         {
             Reset();
@@ -167,10 +162,10 @@ namespace CafeFlow
             WindowState = FormWindowState.Minimized;
         }
 
-        private void reportsBtn_Click(object sender, EventArgs e)
+        private void menuBtn_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender, RGBColors.color4);
-            OpenChildForm(new Reports());
+            ActivateButton(sender, RGBColors.color3);
+            OpenChildForm(new Menu());
         }
 
         private void ıconButton5_Click(object sender, EventArgs e)
