@@ -22,8 +22,8 @@ builder.Services.AddCors(options =>
         builder.WithOrigins(
                 "https://31.57.33.58", // VPS'in IP adresi
                 "http://31.57.33.58",  // HTTP versiyonu
-                "https://www.barisgolcuk.com", // Web sitenizin canlý adresi
-                "http://www.barisgolcuk.com"    // HTTP versiyonu
+                "https://www.cafeflow.com.tr", // Web sitenizin canlý adresi
+                "http://www.cafeflow.com.tr"    // HTTP versiyonu
             )
             .AllowAnyMethod()
             .AllowAnyHeader()

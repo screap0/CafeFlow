@@ -24,42 +24,30 @@ namespace CafeFlowApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddOrder([FromBody] Order order)
         {
-            Console.WriteLine("Executed: " + order.Isim);
-            _logger.LogInformation("Sipariş alındı: {Isim}, Masa No: {MasaNo}, Telefon: {Telefon}, Açıklama: {Aciklama}, Toplam Tutar: {ToplamTutar}, Tarih: {SiparisTarihi}",
-                order.Isim, order.MasaNo, order.Telefon, order.SiparisAciklamasi, order.ToplamTutar, order.SiparisTarihi);
+            Console.WriteLine("Bildirim alındı: " + order.Isim);
+            _logger.LogInformation("Bildirim (SignalR): {Isim}, Masa No: {MasaNo}, Tutar: {ToplamTutar}, Tarih: {SiparisTarihi}, Durum: {Durum}",
+                order.Isim, order.MasaNo, order.ToplamTutar, order.SiparisTarihi, order.Durum);
 
             if (order == null)
             {
-                return BadRequest(new { message = "Sipariş bilgileri eksik" });
+                return BadRequest(new { message = "Veri eksik" });
             }
 
             try
             {
-                using (var connection = _dbConnection.GetConnection())
-                {
-                    await connection.OpenAsync();
-                    string query = "INSERT INTO Siparisler (isim, masa_no, telefon, siparis_aciklamasi, toplam_tutar, siparis_tarihi) " +
-                                   "VALUES (@isim, @masaNo, @telefon, @aciklama, @toplamTutar, @siparisTarihi)";
-                    using (var command = new MySqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@isim", order.Isim);
-                        command.Parameters.AddWithValue("@masaNo", order.MasaNo);
-                        command.Parameters.AddWithValue("@telefon", order.Telefon ?? (object)DBNull.Value);
-                        command.Parameters.AddWithValue("@aciklama", order.SiparisAciklamasi);
-                        command.Parameters.AddWithValue("@toplamTutar", order.ToplamTutar);
-                        command.Parameters.AddWithValue("@siparisTarihi", order.SiparisTarihi);
-                        await command.ExecuteNonQueryAsync();
+                // Veritabanına kayıt yapılmıyor!
+                // Sadece istemcilere SignalR ile bildirim gönderiliyor.
+                await _hubContext.Clients.All.SendAsync("ReceiveOrderUpdate",
+                    0, // ID bilinmediğinden 0 gönderiliyor veya hiç gönderme
+                    order.Isim,
+                    order.MasaNo,
+                    order.Telefon,
+                    order.SiparisAciklamasi,
+                    order.ToplamTutar,
+                    order.SiparisTarihi,
+                    order.Durum ?? "Ödeme Tamamlandı");
 
-                        // Yeni eklenen siparişin ID'sini al
-                        command.CommandText = "SELECT LAST_INSERT_ID()";
-                        int orderId = Convert.ToInt32(await command.ExecuteScalarAsync());
-
-                        // SignalR ile istemcilere bildir
-                        await _hubContext.Clients.All.SendAsync("ReceiveOrderUpdate", orderId, order.Isim, order.MasaNo, order.Telefon, order.SiparisAciklamasi, order.ToplamTutar, order.SiparisTarihi);
-                        Console.WriteLine($"Sipariş #{orderId} için bildirim gönderildi: {order.Isim}, {order.SiparisTarihi}"); // Log ekle
-                    }
-                }
-                return Ok(new { message = "Sipariş eklendi" });
+                return Ok(new { message = "Bildirim gönderildi" });
             }
             catch (Exception ex)
             {
@@ -70,13 +58,12 @@ namespace CafeFlowApi.Controllers
         public class Order
         {
             public string Isim { get; set; }
-
             public int MasaNo { get; set; }
             public string Telefon { get; set; }
             public string SiparisAciklamasi { get; set; }
             public decimal ToplamTutar { get; set; }
             public DateTime SiparisTarihi { get; set; }
-          
+            public string Durum { get; set; }
         }
     }
 }

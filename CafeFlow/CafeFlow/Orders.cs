@@ -50,12 +50,12 @@ namespace CafeFlow
                 MessageBox.Show("SignalR bağlantısı yeniden kuruldu: " + connectionId);
             };
 
-            hubConnection.On<int, string, int, string, string, decimal, DateTime>("ReceiveOrderUpdate", (orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi) =>
+            hubConnection.On<int, string, int, string, string, decimal, DateTime, string>("ReceiveOrderUpdate", (orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi, durum) =>
             {
                 this.Invoke((Action)(() =>
                 {
-                    AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi);
-                    MessageBox.Show($"Yeni sipariş alındı: #{orderId} - {isim}"); // Test için
+                    AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi, durum);
+                    MessageBox.Show($"Yeni sipariş alındı: #{orderId} - {isim}, Durum: {durum}"); // Test için
                 }));
             });
 
@@ -70,7 +70,6 @@ namespace CafeFlow
             }
         }
 
-        // LoadInitialOrders ve AddOrderToPanel metodları aynı kalabilir
         private async Task LoadInitialOrders()
         {
             try
@@ -78,7 +77,7 @@ namespace CafeFlow
                 using (var connection = dbConnection.GetConnection())
                 {
                     await connection.OpenAsync();
-                    string query = "SELECT id, isim, masa_no, telefon, siparis_aciklamasi, toplam_tutar, siparis_tarihi " +
+                    string query = "SELECT id, isim, masa_no, telefon, siparis_aciklamasi, toplam_tutar, siparis_tarihi, durum " +
                                   "FROM Siparisler ORDER BY siparis_tarihi DESC LIMIT 50";
                     using (var command = new MySqlCommand(query, connection))
                     {
@@ -93,8 +92,9 @@ namespace CafeFlow
                                 string aciklama = reader.GetString(4);
                                 decimal toplamTutar = reader.GetDecimal(5);
                                 DateTime siparisTarihi = reader.GetDateTime(6);
+                                string durum = reader.GetString(7);
 
-                                AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi);
+                                AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi, durum);
                             }
                         }
                     }
@@ -106,11 +106,11 @@ namespace CafeFlow
             }
         }
 
-        private void AddOrderToPanel(int orderId, string isim, int masaNo, string telefon, string aciklama, decimal toplamTutar, DateTime siparisTarihi)
+        private void AddOrderToPanel(int orderId, string isim, int masaNo, string telefon, string aciklama, decimal toplamTutar, DateTime siparisTarihi, string durum)
         {
             Panel orderPanel = new Panel
             {
-                Size = new System.Drawing.Size(200, 120),
+                Size = new System.Drawing.Size(200, 160), // Genişliği 200'den 150'ye düşürdüm
                 BorderStyle = BorderStyle.FixedSingle,
                 Margin = new Padding(5)
             };
@@ -151,6 +151,12 @@ namespace CafeFlow
                 Location = new System.Drawing.Point(5, 105),
                 AutoSize = true
             };
+            Label lblDurum = new Label
+            {
+                Text = $"Durum: {durum}",
+                Location = new System.Drawing.Point(5, 125),
+                AutoSize = true
+            };
 
             orderPanel.Controls.Add(lblIsim);
             orderPanel.Controls.Add(lblMasaNo);
@@ -158,10 +164,11 @@ namespace CafeFlow
             orderPanel.Controls.Add(lblAciklama);
             orderPanel.Controls.Add(lblTutar);
             orderPanel.Controls.Add(lblTarih);
+            orderPanel.Controls.Add(lblDurum);
 
-            // Yeni siparişi en üste ekle
+            // Yeni siparişi ekle (SetChildIndex kaldırılarak FlowLayoutPanel'in doğal sıralaması kullanılır)
             orderLayoutPanel.Controls.Add(orderPanel);
-            orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0); // En üste taşı
+            // orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0); // Bu satırı kaldırın veya yorum satırına alın
             orderLayoutPanel.Refresh();
             orderLayoutPanel.Invalidate(); // Paneli yeniden çiz
         }
