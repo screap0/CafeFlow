@@ -45,11 +45,6 @@ namespace CafeFlow
                 await hubConnection.StartAsync();
             };
 
-            hubConnection.Reconnected += async (connectionId) =>
-            {
-                MessageBox.Show("SignalR bağlantısı yeniden kuruldu: " + connectionId);
-            };
-
             hubConnection.On<int, string, int, string, string, decimal, DateTime, string>("ReceiveOrderUpdate", (orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi, durum) =>
             {
                 this.Invoke((Action)(() =>
@@ -62,7 +57,6 @@ namespace CafeFlow
             try
             {
                 await hubConnection.StartAsync();
-                MessageBox.Show("SignalR bağlantısı kuruldu.");
             }
             catch (Exception ex)
             {
@@ -106,11 +100,11 @@ namespace CafeFlow
             }
         }
 
-        private void AddOrderToPanel(int orderId, string isim, int masaNo, string telefon, string aciklama, decimal toplamTutar, DateTime siparisTarihi, string durum)
+        private async void AddOrderToPanel(int orderId, string isim, int masaNo, string telefon, string aciklama, decimal toplamTutar, DateTime siparisTarihi, string durum)
         {
             Panel orderPanel = new Panel
             {
-                Size = new System.Drawing.Size(200, 140), // Durum için ekstra alan
+                Size = new System.Drawing.Size(300, 220),
                 BorderStyle = BorderStyle.FixedSingle,
                 Margin = new Padding(5)
             };
@@ -119,43 +113,136 @@ namespace CafeFlow
             {
                 Text = $"İsim: {isim}",
                 Location = new System.Drawing.Point(5, 5),
-                AutoSize = true
+                AutoSize = true,
+                ForeColor = System.Drawing.Color.White
             };
             Label lblMasaNo = new Label
             {
                 Text = $"Masa: {masaNo}",
                 Location = new System.Drawing.Point(5, 25),
-                AutoSize = true
+                AutoSize = true,
+                ForeColor = System.Drawing.Color.White
             };
             Label lblTelefon = new Label
             {
                 Text = $"Telefon: {telefon}",
                 Location = new System.Drawing.Point(5, 45),
-                AutoSize = true
+                AutoSize = true,
+                ForeColor = System.Drawing.Color.White
             };
             Label lblAciklama = new Label
             {
                 Text = $"Açıklama: {aciklama}",
                 Location = new System.Drawing.Point(5, 65),
-                AutoSize = true
+                AutoSize = true,
+                ForeColor = System.Drawing.Color.White
             };
             Label lblTutar = new Label
             {
                 Text = $"Tutar: {toplamTutar} TL",
                 Location = new System.Drawing.Point(5, 85),
-                AutoSize = true
+                AutoSize = true,
+                ForeColor = System.Drawing.Color.White
             };
             Label lblTarih = new Label
             {
                 Text = $"Tarih: {siparisTarihi.ToString("dd/MM/yyyy HH:mm")}",
                 Location = new System.Drawing.Point(5, 105),
-                AutoSize = true
+                AutoSize = true,
+                ForeColor = System.Drawing.Color.White
             };
             Label lblDurum = new Label
             {
                 Text = $"Durum: {durum}",
-                Location = new System.Drawing.Point(5, 125),
-                AutoSize = true
+                Location = new System.Drawing.Point(5, 135),
+                AutoSize = true,
+                ForeColor = System.Drawing.Color.White
+            };
+
+            // Add ComboBox for status selection
+            ComboBox statusComboBox = new ComboBox
+            {
+                Location = new System.Drawing.Point(5, 170),
+                Size = new System.Drawing.Size(150, 40),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            statusComboBox.Items.AddRange(new string[] { "Ödeme Tamamlandı", "Hazırlanıyor", "Sipariş Hazır" });
+
+            // Durum değerini temizle ve eşleştir
+            string cleanedDurum = durum?.Trim(); // Boşlukları temizle
+            if (cleanedDurum != null)
+            {
+                // Görünmeyen karakterleri temizle (örneğin, yeni satır veya fazladan boşluklar)
+                cleanedDurum = cleanedDurum.Replace("\r", "").Replace("\n", "").Trim();
+            }
+
+            string matchedDurum = null;
+            foreach (string item in statusComboBox.Items)
+            {
+                if (string.Equals(item, cleanedDurum, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    matchedDurum = item; // Eşleşen durumu bul
+                    break;
+                }
+            }
+
+            // Eşleşme varsa combobox'ta seç, yoksa varsayılan olarak "Ödeme Tamamlandı" seç
+            if (matchedDurum != null)
+            {
+                statusComboBox.SelectedItem = matchedDurum;
+            }
+            else
+            {
+                // Eşleşme başarısızsa, durumu manuel olarak standart bir formata çevirmeyi dene
+                if (cleanedDurum != null)
+                {
+                    if (cleanedDurum.ToLower().Contains("hazirlaniyor"))
+                        matchedDurum = "Hazırlanıyor";
+                    else if (cleanedDurum.ToLower().Contains("siparis hazir"))
+                        matchedDurum = "Sipariş Hazır";
+                    else if (cleanedDurum.ToLower().Contains("odeme tamamlandi"))
+                        matchedDurum = "Ödeme Tamamlandı";
+                }
+
+                if (matchedDurum != null)
+                {
+                    statusComboBox.SelectedItem = matchedDurum;
+                }
+                else
+                {
+                    statusComboBox.SelectedIndex = 0; // İlk seçenek: "Ödeme Tamamlandı"
+                    MessageBox.Show($"Sipariş #{orderId} için durum '{durum}' eşleşmedi. Varsayılan olarak 'Ödeme Tamamlandı' seçildi. Veritabanı durumu: '{durum}'");
+                }
+            }
+
+            // lblDurum ile statusComboBox'ın tutarlı olduğundan emin ol
+            lblDurum.Text = $"Durum: {statusComboBox.SelectedItem.ToString()}";
+
+            // Handle status change
+            statusComboBox.SelectedIndexChanged += async (sender, e) =>
+            {
+                string newStatus = statusComboBox.SelectedItem.ToString();
+                lblDurum.Text = $"Durum: {newStatus}";
+
+                try
+                {
+                    // Update the status in the database
+                    using (var connection = dbConnection.GetConnection())
+                    {
+                        await connection.OpenAsync();
+                        string query = "UPDATE Siparisler SET durum = @durum WHERE id = @orderId";
+                        using (var command = new MySqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@durum", newStatus);
+                            command.Parameters.AddWithValue("@orderId", orderId);
+                            await command.ExecuteNonQueryAsync();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Durum güncellenirken hata: " + ex.Message);
+                }
             };
 
             orderPanel.Controls.Add(lblIsim);
@@ -165,12 +252,13 @@ namespace CafeFlow
             orderPanel.Controls.Add(lblTutar);
             orderPanel.Controls.Add(lblTarih);
             orderPanel.Controls.Add(lblDurum);
+            orderPanel.Controls.Add(statusComboBox);
 
-            // Yeni siparişi en üste ekle
+            // Add the panel to FlowLayoutPanel (side by side, wraps to next row)
             orderLayoutPanel.Controls.Add(orderPanel);
-            orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0); // En üste taşı
+            orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0);
             orderLayoutPanel.Refresh();
-            orderLayoutPanel.Invalidate(); // Paneli yeniden çiz
+            orderLayoutPanel.Invalidate(); // Redraw the panel
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
