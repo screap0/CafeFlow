@@ -51,7 +51,7 @@ namespace CafeFlow
                 DisableButton();
                 // Button
                 currentBtn = (IconButton)senderBtn;
-                currentBtn.BackColor = System.Drawing.Color.FromArgb(37,36,81);
+                currentBtn.BackColor = System.Drawing.Color.FromArgb(37, 36, 81);
                 currentBtn.ForeColor = color;
                 currentBtn.TextAlign = ContentAlignment.MiddleLeft;
                 currentBtn.IconColor = color;
@@ -59,7 +59,7 @@ namespace CafeFlow
                 currentBtn.ImageAlign = ContentAlignment.MiddleRight;
                 // Left Border Button
                 leftBorderBtn.BackColor = color;
-                leftBorderBtn.Location = new Point(0,currentBtn.Location.Y);
+                leftBorderBtn.Location = new Point(0, currentBtn.Location.Y);
                 leftBorderBtn.Visible = true;
                 leftBorderBtn.BringToFront();
                 // Icon Current Child Form
@@ -109,6 +109,12 @@ namespace CafeFlow
         {
             ActivateButton(sender, RGBColors.color2);
             OpenChildForm(new Dashboard());
+        }
+
+        private void menuBtn_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBColors.color3);
+            OpenChildForm(new Menu());
         }
 
         private void btnLogo_Click(object sender, EventArgs e)
@@ -161,10 +167,10 @@ namespace CafeFlow
             WindowState = FormWindowState.Minimized;
         }
 
-        private void menuBtn_Click(object sender, EventArgs e)
+        private void reportsBtn_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender, RGBColors.color3);
-            OpenChildForm(new Menu());
+            ActivateButton(sender, RGBColors.color4);
+            OpenChildForm(new Reports());
         }
     }
 }
