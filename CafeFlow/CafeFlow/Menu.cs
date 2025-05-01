@@ -443,6 +443,11 @@ namespace CafeFlow
         {
             Menu_Load(sender, e);
         }
+
+        private void uruntxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 
