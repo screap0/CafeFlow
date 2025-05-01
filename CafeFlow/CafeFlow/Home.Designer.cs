@@ -33,7 +33,7 @@
             this.ıconButton6 = new FontAwesome.Sharp.IconButton();
             this.ıconButton5 = new FontAwesome.Sharp.IconButton();
             this.menuBtn = new FontAwesome.Sharp.IconButton();
-            this.ıconButton3 = new FontAwesome.Sharp.IconButton();
+            this.reportBtn = new FontAwesome.Sharp.IconButton();
             this.dashboardBtn = new FontAwesome.Sharp.IconButton();
             this.orderBtn = new FontAwesome.Sharp.IconButton();
             this.panelLogo = new System.Windows.Forms.Panel();
@@ -63,7 +63,7 @@
             this.panelMenu.Controls.Add(this.ıconButton6);
             this.panelMenu.Controls.Add(this.ıconButton5);
             this.panelMenu.Controls.Add(this.menuBtn);
-            this.panelMenu.Controls.Add(this.ıconButton3);
+            this.panelMenu.Controls.Add(this.reportBtn);
             this.panelMenu.Controls.Add(this.dashboardBtn);
             this.panelMenu.Controls.Add(this.orderBtn);
             this.panelMenu.Controls.Add(this.panelLogo);
@@ -141,27 +141,28 @@
             this.menuBtn.UseVisualStyleBackColor = true;
             this.menuBtn.Click += new System.EventHandler(this.menuBtn_Click);
             // 
-            // ıconButton3
+            // reportBtn
             // 
-            this.ıconButton3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ıconButton3.FlatAppearance.BorderSize = 0;
-            this.ıconButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ıconButton3.Font = new System.Drawing.Font("Nirmala UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ıconButton3.ForeColor = System.Drawing.Color.Gainsboro;
-            this.ıconButton3.IconChar = FontAwesome.Sharp.IconChar.House;
-            this.ıconButton3.IconColor = System.Drawing.Color.Gainsboro;
-            this.ıconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.ıconButton3.IconSize = 40;
-            this.ıconButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ıconButton3.Location = new System.Drawing.Point(0, 260);
-            this.ıconButton3.Name = "ıconButton3";
-            this.ıconButton3.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
-            this.ıconButton3.Size = new System.Drawing.Size(220, 60);
-            this.ıconButton3.TabIndex = 3;
-            this.ıconButton3.Text = "ıconButton3";
-            this.ıconButton3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ıconButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.ıconButton3.UseVisualStyleBackColor = true;
+            this.reportBtn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.reportBtn.FlatAppearance.BorderSize = 0;
+            this.reportBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reportBtn.Font = new System.Drawing.Font("Nirmala UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reportBtn.ForeColor = System.Drawing.Color.Gainsboro;
+            this.reportBtn.IconChar = FontAwesome.Sharp.IconChar.ChartLine;
+            this.reportBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.reportBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.reportBtn.IconSize = 40;
+            this.reportBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.reportBtn.Location = new System.Drawing.Point(0, 260);
+            this.reportBtn.Name = "reportBtn";
+            this.reportBtn.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.reportBtn.Size = new System.Drawing.Size(220, 60);
+            this.reportBtn.TabIndex = 3;
+            this.reportBtn.Text = "Reports";
+            this.reportBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.reportBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.reportBtn.UseVisualStyleBackColor = true;
+            this.reportBtn.Click += new System.EventHandler(this.reportBtn_Click);
             // 
             // dashboardBtn
             // 
@@ -301,7 +302,7 @@
             this.navLbl.ForeColor = System.Drawing.Color.Gainsboro;
             this.navLbl.Location = new System.Drawing.Point(55, 30);
             this.navLbl.Name = "navLbl";
-            this.navLbl.Size = new System.Drawing.Size(15, 13);
+            this.navLbl.Size = new System.Drawing.Size(17, 17);
             this.navLbl.TabIndex = 2;
             this.navLbl.Text = ">";
             // 
@@ -312,7 +313,7 @@
             this.lblTitleChildForm.ForeColor = System.Drawing.Color.Gainsboro;
             this.lblTitleChildForm.Location = new System.Drawing.Point(76, 31);
             this.lblTitleChildForm.Name = "lblTitleChildForm";
-            this.lblTitleChildForm.Size = new System.Drawing.Size(38, 13);
+            this.lblTitleChildForm.Size = new System.Drawing.Size(45, 17);
             this.lblTitleChildForm.TabIndex = 1;
             this.lblTitleChildForm.Text = "Home";
             // 
@@ -393,7 +394,7 @@
         private FontAwesome.Sharp.IconButton ıconButton6;
         private FontAwesome.Sharp.IconButton ıconButton5;
         private FontAwesome.Sharp.IconButton menuBtn;
-        private FontAwesome.Sharp.IconButton ıconButton3;
+        private FontAwesome.Sharp.IconButton reportBtn;
         private FontAwesome.Sharp.IconButton dashboardBtn;
         private System.Windows.Forms.PictureBox btnLogo;
         private System.Windows.Forms.Panel panelTitleBar;

@@ -154,7 +154,7 @@ namespace CafeFlow
 
             this.Resize += (s, e) =>
             {
-                dailyTurnoverPnl.Width = this.ClientSize.Width - 300;                                                                  
+                dailyTurnoverPnl.Width = this.ClientSize.Width - 300;
             };
 
             using (MySqlConnection connection = db.GetConnection())
