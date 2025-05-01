@@ -33,7 +33,6 @@
             this.ıconButton6 = new FontAwesome.Sharp.IconButton();
             this.ıconButton5 = new FontAwesome.Sharp.IconButton();
             this.menuBtn = new FontAwesome.Sharp.IconButton();
-            this.ıconButton3 = new FontAwesome.Sharp.IconButton();
             this.reportsBtn = new FontAwesome.Sharp.IconButton();
             this.dashboardBtn = new FontAwesome.Sharp.IconButton();
             this.orderBtn = new FontAwesome.Sharp.IconButton();
@@ -64,7 +63,6 @@
             this.panelMenu.Controls.Add(this.ıconButton6);
             this.panelMenu.Controls.Add(this.ıconButton5);
             this.panelMenu.Controls.Add(this.menuBtn);
-            this.panelMenu.Controls.Add(this.ıconButton3);
             this.panelMenu.Controls.Add(this.reportsBtn);
             this.panelMenu.Controls.Add(this.dashboardBtn);
             this.panelMenu.Controls.Add(this.orderBtn);
