@@ -70,7 +70,7 @@
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(220, 623);
+            this.panelMenu.Size = new System.Drawing.Size(220, 750);
             this.panelMenu.TabIndex = 0;
             // 
             // ıconButton6
@@ -243,7 +243,7 @@
             this.panelTitleBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTitleBar.Location = new System.Drawing.Point(220, 0);
             this.panelTitleBar.Name = "panelTitleBar";
-            this.panelTitleBar.Size = new System.Drawing.Size(962, 75);
+            this.panelTitleBar.Size = new System.Drawing.Size(1030, 75);
             this.panelTitleBar.TabIndex = 1;
             this.panelTitleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panelTitleBar_MouseDown);
             // 
@@ -256,7 +256,7 @@
             this.minimizeBtn.IconColor = System.Drawing.Color.Gainsboro;
             this.minimizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.minimizeBtn.IconSize = 15;
-            this.minimizeBtn.Location = new System.Drawing.Point(892, 8);
+            this.minimizeBtn.Location = new System.Drawing.Point(960, 8);
             this.minimizeBtn.Name = "minimizeBtn";
             this.minimizeBtn.Size = new System.Drawing.Size(15, 20);
             this.minimizeBtn.TabIndex = 5;
@@ -272,7 +272,7 @@
             this.maximizeBtn.IconColor = System.Drawing.Color.Gainsboro;
             this.maximizeBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.maximizeBtn.IconSize = 15;
-            this.maximizeBtn.Location = new System.Drawing.Point(914, 8);
+            this.maximizeBtn.Location = new System.Drawing.Point(982, 8);
             this.maximizeBtn.Name = "maximizeBtn";
             this.maximizeBtn.Size = new System.Drawing.Size(15, 20);
             this.maximizeBtn.TabIndex = 4;
@@ -288,7 +288,7 @@
             this.exitBtn.IconColor = System.Drawing.Color.Gainsboro;
             this.exitBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
             this.exitBtn.IconSize = 15;
-            this.exitBtn.Location = new System.Drawing.Point(937, 8);
+            this.exitBtn.Location = new System.Drawing.Point(1005, 8);
             this.exitBtn.Name = "exitBtn";
             this.exitBtn.Size = new System.Drawing.Size(15, 20);
             this.exitBtn.TabIndex = 3;
@@ -302,7 +302,7 @@
             this.navLbl.ForeColor = System.Drawing.Color.Gainsboro;
             this.navLbl.Location = new System.Drawing.Point(55, 30);
             this.navLbl.Name = "navLbl";
-            this.navLbl.Size = new System.Drawing.Size(17, 17);
+            this.navLbl.Size = new System.Drawing.Size(15, 13);
             this.navLbl.TabIndex = 2;
             this.navLbl.Text = ">";
             // 
@@ -313,7 +313,7 @@
             this.lblTitleChildForm.ForeColor = System.Drawing.Color.Gainsboro;
             this.lblTitleChildForm.Location = new System.Drawing.Point(76, 31);
             this.lblTitleChildForm.Name = "lblTitleChildForm";
-            this.lblTitleChildForm.Size = new System.Drawing.Size(45, 17);
+            this.lblTitleChildForm.Size = new System.Drawing.Size(38, 13);
             this.lblTitleChildForm.TabIndex = 1;
             this.lblTitleChildForm.Text = "Home";
             // 
@@ -338,7 +338,7 @@
             this.panelShadow.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelShadow.Location = new System.Drawing.Point(220, 75);
             this.panelShadow.Name = "panelShadow";
-            this.panelShadow.Size = new System.Drawing.Size(962, 9);
+            this.panelShadow.Size = new System.Drawing.Size(1030, 9);
             this.panelShadow.TabIndex = 2;
             // 
             // panelDesktop
@@ -348,14 +348,14 @@
             this.panelDesktop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelDesktop.Location = new System.Drawing.Point(220, 84);
             this.panelDesktop.Name = "panelDesktop";
-            this.panelDesktop.Size = new System.Drawing.Size(962, 539);
+            this.panelDesktop.Size = new System.Drawing.Size(1030, 666);
             this.panelDesktop.TabIndex = 3;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.Image = global::CafeFlow.Properties.Resources.CafeFlow_Logo;
-            this.pictureBox1.Location = new System.Drawing.Point(164, 56);
+            this.pictureBox1.Location = new System.Drawing.Point(198, 120);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(615, 399);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -365,7 +365,7 @@
             // Home
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1182, 623);
+            this.ClientSize = new System.Drawing.Size(1250, 750);
             this.Controls.Add(this.panelDesktop);
             this.Controls.Add(this.panelShadow);
             this.Controls.Add(this.panelTitleBar);

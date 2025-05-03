@@ -30,6 +30,7 @@
         {
             this.orderReportPnl = new System.Windows.Forms.FlowLayoutPanel();
             this.dailyTurnoverPnl = new System.Windows.Forms.FlowLayoutPanel();
+            this.refreshReportsBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // orderReportPnl
@@ -46,11 +47,22 @@
             this.dailyTurnoverPnl.Size = new System.Drawing.Size(413, 283);
             this.dailyTurnoverPnl.TabIndex = 1;
             // 
+            // refreshReportsBtn
+            // 
+            this.refreshReportsBtn.Location = new System.Drawing.Point(681, 404);
+            this.refreshReportsBtn.Name = "refreshReportsBtn";
+            this.refreshReportsBtn.Size = new System.Drawing.Size(107, 34);
+            this.refreshReportsBtn.TabIndex = 2;
+            this.refreshReportsBtn.Text = "Refresh";
+            this.refreshReportsBtn.UseVisualStyleBackColor = true;
+            this.refreshReportsBtn.Click += new System.EventHandler(this.refreshReportsBtn_Click);
+            // 
             // Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.refreshReportsBtn);
             this.Controls.Add(this.dailyTurnoverPnl);
             this.Controls.Add(this.orderReportPnl);
             this.Name = "Reports";
@@ -63,5 +75,6 @@
 
         private System.Windows.Forms.FlowLayoutPanel orderReportPnl;
         private System.Windows.Forms.FlowLayoutPanel dailyTurnoverPnl;
+        private System.Windows.Forms.Button refreshReportsBtn;
     }
 }
