@@ -5,70 +5,70 @@ using System.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Common;
+using MySql.Data.MySqlClient;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CafeFlow
 {
     public partial class Dashboard : Form
     {
-
-        
+        private DatabaseConnection db = new DatabaseConnection();
 
         public Dashboard()
         {
             InitializeComponent();
-
-
+            this.Load += new EventHandler(Dashboard_Load);
         }
-        private DatabaseConnection db = new DatabaseConnection();
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
+            int totalOrders = db.GetTotalOrderCount();
+            ordersNumberLbl.Text = totalOrders.ToString();
+
+            int completeOrders = db.GetCompletedOrderCount();
+            completedOrderNumLbl.Text = completeOrders.ToString();
+
+            string mostOrderedProduct = db.GetMostOrderedProduct();
+            mostOrderedProdLbl.Text = mostOrderedProduct;
+
+            string leastOrderedProduct = db.GetLeastOrderedProduct();
+            leastOrderedProdLbl.Text = leastOrderedProduct;
+
+            string mostSaleDayOfWeek = db.GetMostSaleDayOfWeek();
+            mostSaleDayLbl.Text = mostSaleDayOfWeek;
+
             try
             {
-                lbl_encoksiparis.Text = db.EnCokSiparisVerilenUrun();
-                //lbl_ortsiparissuresi.Text = db.OrtalamaSiparisSuresi() + " dk";
-                //lbl_ensadikmusteri.Text = db.EnSadikMusteri();
-                decimal kazanc = db.AylikKazancGetir();
-                int musteriSayisi = db.AylikMusteriSayisiGetir();
-                lbl_kazanc.Text = kazanc.ToString("C2"); 
-                lbl_musterisayisi.Text = musteriSayisi.ToString();
+                var topFiveProducts = db.GetTopFiveProducts();
+
+                mostSaleProdctsChart.Series.Clear();
+                mostSaleProdctsChart.ChartAreas.Clear();
+
+                ChartArea chartArea = new ChartArea();
+                mostSaleProdctsChart.ChartAreas.Add(chartArea);
+
+                System.Windows.Forms.DataVisualization.Charting.Series series = new System.Windows.Forms.DataVisualization.Charting.Series
+                {
+                    Name = "En Çok Satan Ürünler",
+                    ChartType = SeriesChartType.Column
+                };
+
+                // Verileri ekle
+                foreach (var product in topFiveProducts)
+                {
+                    series.Points.AddXY(product.Key, product.Value);
+                }
+
+                mostSaleProdctsChart.Series.Add(series);
+
+                // Ekseni özelleştir
+                mostSaleProdctsChart.ChartAreas[0].AxisY.Title = "Satış Sayısı";
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Dashboard verileri çekilemedi: " + ex.Message);
+                MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
             }
-            List<DateTime> siparisTarihleri = db.SiparisTarihleriGetir();
-
-            int[] saatlikSiparisSayilari = new int[24];
-
-            foreach (var tarih in siparisTarihleri)
-            {
-                saatlikSiparisSayilari[tarih.Hour]++;
-            }
-
-            orderChart.Series = new SeriesCollection
-    {
-        new ColumnSeries
-        {
-            Title = "Sipariş Sayısı",
-            Values = new ChartValues<int>(saatlikSiparisSayilari)
         }
-    };
-
-            orderChart.AxisX.Clear();
-            orderChart.AxisX.Add(new Axis
-            {
-                Title = "Saat",
-                Labels = Enumerable.Range(0, 24).Select(h => h.ToString("00:00")).ToArray()
-            });
-
-            orderChart.AxisY.Clear();
-            orderChart.AxisY.Add(new Axis
-            {
-                Title = "Sipariş Adedi"
-            });
-        }
-
-       
     }
 }
