@@ -33,11 +33,11 @@ namespace CafeFlow
             orderReportPnl.HorizontalScroll.Maximum = 0;
             orderReportPnl.AutoScrollMinSize = new Size(0, 0);
 
-            this.Resize += (s, e) =>
-            {
-                orderReportPnl.Location = new Point(0, orderReportPnl.Location.Y); // Sol kenarı her zaman 0’da tut
-                orderReportPnl.Height = this.ClientSize.Height - 30; // Sadece yükseklik değişir
-            };
+            // this.Resize += (s, e) =>
+            // {
+                // orderReportPnl.Location = new Point(orderReportPnl.Location.Y);
+                // orderReportPnl.Height = this.ClientSize.Height - 30;
+            // };
 
             using (MySqlConnection connection = db.GetConnection())
             {
@@ -152,10 +152,10 @@ namespace CafeFlow
             dailyTurnoverPnl.HorizontalScroll.Maximum = 0;
             dailyTurnoverPnl.AutoScrollMinSize = new Size(0, 0);
 
-            this.Resize += (s, e) =>
-            {
-                dailyTurnoverPnl.Width = this.ClientSize.Width - 300;
-            };
+            // this.Resize += (s, e) =>
+            // {
+                // dailyTurnoverPnl.Width = this.ClientSize.Width - 300;
+            // };
 
             using (MySqlConnection connection = db.GetConnection())
             {
@@ -226,5 +226,15 @@ namespace CafeFlow
             };
         }
 
+        private void refreshReportsBtn_Click(object sender, EventArgs e)
+        {
+            RefreshReports();
+        }
+
+        private void RefreshReports()
+        {
+            LoadOrderCards();
+            LoadTurnoverCards();
+        }
     }
 }
