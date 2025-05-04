@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace CafeFlow
 {
@@ -13,12 +15,36 @@ namespace CafeFlow
         private HubConnection hubConnection;
         private DatabaseConnection dbConnection;
 
+        // Renk paleti tanımlamaları
+        private readonly Color formBackColor = Color.FromArgb(34, 33, 74);
+        private readonly Color cardBackColor = Color.FromArgb(45, 45, 90);
+        private readonly Color textColor = Color.FromArgb(240, 240, 245);
+        private readonly Color highlightColor = Color.FromArgb(79, 79, 135);
+        private readonly Color accentColor = Color.FromArgb(95, 77, 221);
+
         public Orders()
         {
             InitializeComponent();
             dbConnection = new DatabaseConnection();
+
+            // Form tasarımını ayarla
+            ApplyFormStyling();
+
             SetupSignalR();
             LoadInitialOrders();
+        }
+
+        private void ApplyFormStyling()
+        {
+            // Form özelliklerini ayarla
+            this.BackColor = formBackColor;
+            this.Text = "CafeFlow - Sipariş Yönetimi";
+            this.MinimumSize = new Size(950, 600);
+
+            // FlowLayoutPanel özelliklerini ayarla
+            orderLayoutPanel.BackColor = formBackColor;
+            orderLayoutPanel.Padding = new Padding(15);
+            orderLayoutPanel.AutoScroll = true;
         }
 
         private async void SetupSignalR()
@@ -40,7 +66,7 @@ namespace CafeFlow
             // Bağlantı durumu değiştiğinde log ekle
             hubConnection.Closed += async (error) =>
             {
-                MessageBox.Show("SignalR bağlantısı kapandı: " + (error?.Message ?? "Bilinmeyen hata"));
+                ShowNotification("SignalR bağlantısı kapandı: " + (error?.Message ?? "Bilinmeyen hata"), MessageBoxIcon.Warning);
                 await Task.Delay(5000); // 5 saniye bekle ve yeniden bağlanmayı dene
                 await hubConnection.StartAsync();
             };
@@ -50,7 +76,7 @@ namespace CafeFlow
                 this.Invoke((Action)(() =>
                 {
                     AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi, durum);
-                    MessageBox.Show($"Yeni sipariş alındı: #{orderId} - {isim}, Durum: {durum}"); // Test için
+                    ShowNotification($"Yeni sipariş alındı: #{orderId} - {isim}", MessageBoxIcon.Information);
                 }));
             });
 
@@ -60,8 +86,13 @@ namespace CafeFlow
             }
             catch (Exception ex)
             {
-                MessageBox.Show("SignalR bağlantı hatası: " + ex.Message);
+                ShowNotification("SignalR bağlantı hatası: " + ex.Message, MessageBoxIcon.Error);
             }
+        }
+
+        private void ShowNotification(string message, MessageBoxIcon icon)
+        {
+            MessageBox.Show(message, "CafeFlow Bildirim", MessageBoxButtons.OK, icon);
         }
 
         private async Task LoadInitialOrders()
@@ -71,8 +102,7 @@ namespace CafeFlow
                 using (var connection = dbConnection.GetConnection())
                 {
                     await connection.OpenAsync();
-                    string query = "SELECT id, isim, masa_no, telefon, siparis_aciklamasi, toplam_tutar, siparis_tarihi, durum " +
-                                  "FROM Siparisler ORDER BY siparis_tarihi DESC LIMIT 50";
+                    string query = "SELECT id, isim, masa_no, telefon, siparis_aciklamasi, toplam_tutar, siparis_tarihi, durum  FROM Siparisler WHERE durum = 'Ödeme tamamlandı' ORDER BY siparis_tarihi DESC";
                     using (var command = new MySqlCommand(query, connection))
                     {
                         using (var reader = await command.ExecuteReaderAsync())
@@ -96,134 +126,124 @@ namespace CafeFlow
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Başlangıç siparişleri yüklenirken hata: " + ex.Message);
+                ShowNotification("Başlangıç siparişleri yüklenirken hata: " + ex.Message, MessageBoxIcon.Error);
             }
         }
 
         private async void AddOrderToPanel(int orderId, string isim, int masaNo, string telefon, string aciklama, decimal toplamTutar, DateTime siparisTarihi, string durum)
         {
-            Panel orderPanel = new Panel
+            // Özel yuvarlak köşeli panel oluştur
+            RoundedPanel orderPanel = new RoundedPanel
             {
-                Size = new System.Drawing.Size(300, 220),
-                BorderStyle = BorderStyle.FixedSingle,
-                Margin = new Padding(5)
+                Size = new Size(270, 460), // Yüksekliği 2 katına çıkarıldı
+                Margin = new Padding(10),
+                BackColor = cardBackColor,
+                CornerRadius = 15,
+                Tag = orderId
             };
 
-            Label lblIsim = new Label
+            // Sipariş numarası ve tarih için başlık paneli
+            Panel headerPanel = new Panel
             {
-                Text = $"İsim: {isim}",
-                Location = new System.Drawing.Point(5, 5),
-                AutoSize = true,
-                ForeColor = System.Drawing.Color.White
+                Dock = DockStyle.Top,
+                Height = 30,
+                BackColor = accentColor
             };
-            Label lblMasaNo = new Label
+
+            Label lblHeader = new Label
             {
-                Text = $"Masa: {masaNo}",
-                Location = new System.Drawing.Point(5, 25),
-                AutoSize = true,
-                ForeColor = System.Drawing.Color.White
+                Text = $"Sipariş #{orderId}",
+                Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                ForeColor = Color.White
             };
-            Label lblTelefon = new Label
+            headerPanel.Controls.Add(lblHeader);
+
+            // İçerik paneli
+            TableLayoutPanel contentPanel = new TableLayoutPanel
             {
-                Text = $"Telefon: {telefon}",
-                Location = new System.Drawing.Point(5, 45),
-                AutoSize = true,
-                ForeColor = System.Drawing.Color.White
+                Dock = DockStyle.Fill,
+                ColumnCount = 1,
+                RowCount = 7,
+                Padding = new Padding(10, 5, 10, 5),
+                RowStyles = {
+            new RowStyle(SizeType.AutoSize),
+            new RowStyle(SizeType.AutoSize),
+            new RowStyle(SizeType.AutoSize),
+            new RowStyle(SizeType.AutoSize),
+            new RowStyle(SizeType.AutoSize),
+            new RowStyle(SizeType.AutoSize),
+            new RowStyle(SizeType.Percent, 100)
+        }
             };
+
+            // Labels oluştur ve hizala
+            Label lblIsim = CreateInfoLabel("İsim", isim);
+            Label lblMasaNo = CreateInfoLabel("Masa", masaNo.ToString());
+            Label lblTelefon = CreateInfoLabel("Telefon", telefon);
+
+            // Kaydırılabilir açıklama paneli
+            Panel scrollableDescriptionPanel = new Panel
+            {
+                Size = new Size(240, 200), // Yüksekliği artırıldı
+                AutoScroll = true,
+                BackColor = formBackColor, // Arka plan rengi formun arka plan rengine uyumlu hale getirildi
+                Padding = new Padding(5)
+            };
+
             Label lblAciklama = new Label
             {
-                Text = $"Açıklama: {aciklama}",
-                Location = new System.Drawing.Point(5, 65),
+                Text = aciklama,
                 AutoSize = true,
-                ForeColor = System.Drawing.Color.White
-            };
-            Label lblTutar = new Label
-            {
-                Text = $"Tutar: {toplamTutar} TL",
-                Location = new System.Drawing.Point(5, 85),
-                AutoSize = true,
-                ForeColor = System.Drawing.Color.White
-            };
-            Label lblTarih = new Label
-            {
-                Text = $"Tarih: {siparisTarihi.ToString("dd/MM/yyyy HH:mm")}",
-                Location = new System.Drawing.Point(5, 105),
-                AutoSize = true,
-                ForeColor = System.Drawing.Color.White
-            };
-            Label lblDurum = new Label
-            {
-                Text = $"Durum: {durum}",
-                Location = new System.Drawing.Point(5, 135),
-                AutoSize = true,
-                ForeColor = System.Drawing.Color.White
+                Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                ForeColor = textColor
             };
 
-            // Add ComboBox for status selection
+            scrollableDescriptionPanel.Controls.Add(lblAciklama);
+
+            Label lblTutar = CreateInfoLabel("Tutar", $"{toplamTutar:N2} TL");
+            Label lblTarih = CreateInfoLabel("Tarih", siparisTarihi.ToString("dd/MM/yyyy HH:mm"));
+
+            // Status ComboBox ve başlık
+            Panel statusPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Height = 50
+            };
+
+            Label lblDurumTitle = new Label
+            {
+                Text = "Durum:",
+                AutoSize = true,
+                Location = new Point(0, 3),
+                Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                ForeColor = textColor
+            };
+            statusPanel.Controls.Add(lblDurumTitle);
+
             ComboBox statusComboBox = new ComboBox
             {
-                Location = new System.Drawing.Point(5, 170),
-                Size = new System.Drawing.Size(150, 40),
-                DropDownStyle = ComboBoxStyle.DropDownList
+                Location = new Point(0, 25),
+                Size = new Size(260, 30),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 9),
+                BackColor = highlightColor,
+                ForeColor = textColor,
+                FlatStyle = FlatStyle.Flat
             };
             statusComboBox.Items.AddRange(new string[] { "Ödeme Tamamlandı", "Hazırlanıyor", "Sipariş Hazır" });
+            statusPanel.Controls.Add(statusComboBox);
 
             // Durum değerini temizle ve eşleştir
-            string cleanedDurum = durum?.Trim(); // Boşlukları temizle
-            if (cleanedDurum != null)
-            {
-                // Görünmeyen karakterleri temizle (örneğin, yeni satır veya fazladan boşluklar)
-                cleanedDurum = cleanedDurum.Replace("\r", "").Replace("\n", "").Trim();
-            }
+            string cleanedDurum = durum?.Trim().Replace("\r", "").Replace("\n", "");
+            string matchedDurum = FindMatchingStatus(cleanedDurum, statusComboBox, orderId);
+            statusComboBox.SelectedItem = matchedDurum;
 
-            string matchedDurum = null;
-            foreach (string item in statusComboBox.Items)
-            {
-                if (string.Equals(item, cleanedDurum, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    matchedDurum = item; // Eşleşen durumu bul
-                    break;
-                }
-            }
-
-            // Eşleşme varsa combobox'ta seç, yoksa varsayılan olarak "Ödeme Tamamlandı" seç
-            if (matchedDurum != null)
-            {
-                statusComboBox.SelectedItem = matchedDurum;
-            }
-            else
-            {
-                // Eşleşme başarısızsa, durumu manuel olarak standart bir formata çevirmeyi dene
-                if (cleanedDurum != null)
-                {
-                    if (cleanedDurum.ToLower().Contains("hazirlaniyor"))
-                        matchedDurum = "Hazırlanıyor";
-                    else if (cleanedDurum.ToLower().Contains("siparis hazir"))
-                        matchedDurum = "Sipariş Hazır";
-                    else if (cleanedDurum.ToLower().Contains("odeme tamamlandi"))
-                        matchedDurum = "Ödeme Tamamlandı";
-                }
-
-                if (matchedDurum != null)
-                {
-                    statusComboBox.SelectedItem = matchedDurum;
-                }
-                else
-                {
-                    statusComboBox.SelectedIndex = 0; // İlk seçenek: "Ödeme Tamamlandı"
-                    MessageBox.Show($"Sipariş #{orderId} için durum '{durum}' eşleşmedi. Varsayılan olarak 'Ödeme Tamamlandı' seçildi. Veritabanı durumu: '{durum}'");
-                }
-            }
-
-            // lblDurum ile statusComboBox'ın tutarlı olduğundan emin ol
-            lblDurum.Text = $"Durum: {statusComboBox.SelectedItem.ToString()}";
-
-            // Handle status change
+            // Status değişikliğini ele al
             statusComboBox.SelectedIndexChanged += async (sender, e) =>
             {
                 string newStatus = statusComboBox.SelectedItem.ToString();
-                lblDurum.Text = $"Durum: {newStatus}";
-
                 try
                 {
                     // Update the status in the database
@@ -238,33 +258,131 @@ namespace CafeFlow
                             await command.ExecuteNonQueryAsync();
                         }
                     }
+
+                    // Durum değişikliğini visual olarak belirt
+                    orderPanel.BackColor = newStatus == "Sipariş Hazır" ?
+                        Color.FromArgb(45, 90, 45) : cardBackColor;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Durum güncellenirken hata: " + ex.Message);
+                    ShowNotification("Durum güncellenirken hata: " + ex.Message, MessageBoxIcon.Error);
                 }
             };
 
-            orderPanel.Controls.Add(lblIsim);
-            orderPanel.Controls.Add(lblMasaNo);
-            orderPanel.Controls.Add(lblTelefon);
-            orderPanel.Controls.Add(lblAciklama);
-            orderPanel.Controls.Add(lblTutar);
-            orderPanel.Controls.Add(lblTarih);
-            orderPanel.Controls.Add(lblDurum);
-            orderPanel.Controls.Add(statusComboBox);
+            // Siparişin durumuna göre renk değiştir
+            if (matchedDurum == "Sipariş Hazır")
+            {
+                orderPanel.BackColor = Color.FromArgb(45, 90, 45);
+            }
 
-            // Add the panel to FlowLayoutPanel (side by side, wraps to next row)
+            // Panelleri ekle
+            contentPanel.Controls.Add(lblIsim, 0, 0);
+            contentPanel.Controls.Add(lblMasaNo, 0, 1);
+            contentPanel.Controls.Add(lblTelefon, 0, 2);
+            contentPanel.Controls.Add(scrollableDescriptionPanel, 0, 3); // Kaydırılabilir açıklama panelini ekle
+            contentPanel.Controls.Add(lblTutar, 0, 4);
+            contentPanel.Controls.Add(lblTarih, 0, 5);
+            contentPanel.Controls.Add(statusPanel, 0, 6);
+
+            orderPanel.Controls.Add(contentPanel);
+            orderPanel.Controls.Add(headerPanel);
+
+            // Paneli ekle ve en üste taşı
             orderLayoutPanel.Controls.Add(orderPanel);
             orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0);
             orderLayoutPanel.Refresh();
-            orderLayoutPanel.Invalidate(); // Redraw the panel
+        }
+
+
+
+        private Label CreateInfoLabel(string title, string value)
+        {
+            Label lbl = new Label
+            {
+                Text = $"{title}: {value}",
+                Dock = DockStyle.Fill,
+                AutoSize = true,
+                Font = new Font("Segoe UI", 9, FontStyle.Regular),
+                ForeColor = textColor,
+                Margin = new Padding(0, 3, 0, 3)
+            };
+            return lbl;
+        }
+
+        private string TrimText(string text, int maxLength)
+        {
+            if (string.IsNullOrEmpty(text)) return "";
+            return text.Length <= maxLength ? text : text.Substring(0, maxLength) + "...";
+        }
+
+        private string FindMatchingStatus(string durum, ComboBox statusComboBox, int orderId)
+        {
+            if (string.IsNullOrEmpty(durum)) return "Ödeme Tamamlandı";
+
+            // Tam eşleşme ara
+            foreach (string item in statusComboBox.Items)
+            {
+                if (string.Equals(item, durum, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return item;
+                }
+            }
+
+            // Kısmi eşleşme ara
+            if (durum.ToLower().Contains("hazirlaniyor"))
+                return "Hazırlanıyor";
+            else if (durum.ToLower().Contains("hazir"))
+                return "Sipariş Hazır";
+            else if (durum.ToLower().Contains("odeme") || durum.ToLower().Contains("ödeme"))
+                return "Ödeme Tamamlandı";
+
+            // Eşleşme yoksa varsayılan seç
+            return "Ödeme Tamamlandı";
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             hubConnection?.StopAsync().Wait();
             base.OnFormClosing(e);
+        }
+    }
+
+    // Yuvarlak köşeli panel sınıfı
+    public class RoundedPanel : Panel
+    {
+        private int _cornerRadius = 20;
+
+        public int CornerRadius
+        {
+            get { return _cornerRadius; }
+            set { _cornerRadius = value; Invalidate(); }
+        }
+
+        public RoundedPanel()
+        {
+            this.DoubleBuffered = true;
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                path.AddArc(0, 0, CornerRadius, CornerRadius, 180, 90);
+                path.AddArc(Width - CornerRadius, 0, CornerRadius, CornerRadius, 270, 90);
+                path.AddArc(Width - CornerRadius, Height - CornerRadius, CornerRadius, CornerRadius, 0, 90);
+                path.AddArc(0, Height - CornerRadius, CornerRadius, CornerRadius, 90, 90);
+                path.CloseAllFigures();
+
+                this.Region = new Region(path);
+
+                using (SolidBrush brush = new SolidBrush(this.BackColor))
+                {
+                    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    e.Graphics.FillPath(brush, path);
+                }
+            }
         }
     }
 }
