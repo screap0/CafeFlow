@@ -15,6 +15,10 @@ namespace CafeFlow
         public Register()
         {
             InitializeComponent();
+
+            btn_kayitol.Text = "Kayıt Ol";
+            btn_kayitol.BackColor = Color.MediumSeaGreen;
+            btn_kayitol.ForeColor = Color.White;
         }
         DatabaseConnection databaseConnection = new DatabaseConnection();
 
@@ -44,14 +48,6 @@ namespace CafeFlow
                 login.Show();
                 this.Close();
             }
-           
-            
-
-            
-
-
-
-
         }
 
         private void txt_sifretekrar_Click(object sender, EventArgs e)

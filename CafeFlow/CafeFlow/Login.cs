@@ -1,5 +1,4 @@
-﻿using Mysqlx;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,9 +17,13 @@ namespace CafeFlow
         {
 
             InitializeComponent();
+
+            btn_girisyap.Text = "Giriş Yap";
+            btn_girisyap.BackColor = Color.MediumSeaGreen;
+            btn_girisyap.ForeColor = Color.White;
         }
 
-        private void ıconButton1_Click(object sender, EventArgs e)
+        private void btn_girisyap_Click(object sender, EventArgs e)
         {
             DatabaseConnection dbConnection = new DatabaseConnection();
             bool gecerli = dbConnection.KullaniciBilgileriniKontrolEt(txt_kullaniciadi.Text, txt_sifre.Text);
