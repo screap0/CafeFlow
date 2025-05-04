@@ -394,8 +394,7 @@ public class DatabaseConnection
                     }
                 }
 
-                // En çok satan ilk 5 ürünü al
-                return productCounts.OrderByDescending(x => x.Value).Take(5).ToDictionary(x => x.Key, x => x.Value);
+                return productCounts.OrderByDescending(x => x.Value).Take(7).ToDictionary(x => x.Key, x => x.Value);
             }
             catch (Exception ex)
             {
@@ -403,5 +402,116 @@ public class DatabaseConnection
                 return new Dictionary<string, int>();
             }
         }
+    }
+
+    public Dictionary<string, decimal> GetSalesByDayOfWeek()
+    {
+        Dictionary<string, decimal> salesByDay = new Dictionary<string, decimal>();
+
+        using (MySqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT DAYNAME(siparis_tarihi) as day_name, SUM(toplam_tutar) as total_revenue " +
+                              "FROM Siparisler " +
+                              "GROUP BY DAYNAME(siparis_tarihi)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string dayName = reader.GetString("day_name");
+                        decimal totalRevenue = reader.GetDecimal("total_revenue");
+
+                        // MySQL DAYNAME genelde İngilizce döner (örneğin "Sunday"), Türkçeye çevirelim
+                        Dictionary<string, string> dayNameMap = new Dictionary<string, string>
+                    {
+                        { "Monday", "Pazartesi" },
+                        { "Tuesday", "Salı" },
+                        { "Wednesday", "Çarşamba" },
+                        { "Thursday", "Perşembe" },
+                        { "Friday", "Cuma" },
+                        { "Saturday", "Cumartesi" },
+                        { "Sunday", "Pazar" }
+                    };
+                        string translatedDayName = dayNameMap.ContainsKey(dayName) ? dayNameMap[dayName] : dayName;
+                        salesByDay[translatedDayName] = totalRevenue;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while retrieving sales by day of week: " + ex.Message);
+            }
+        }
+
+        return salesByDay;
+    }
+
+    public Dictionary<DateTime, decimal> GetLast7DaysProfits()
+    {
+        Dictionary<DateTime, decimal> profits = new Dictionary<DateTime, decimal>();
+
+        using (MySqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT DATE(siparis_tarihi) as sale_date, SUM(toplam_tutar) as total_revenue " +
+                              "FROM Siparisler " +
+                              "WHERE siparis_tarihi >= DATE_SUB(NOW(), INTERVAL 7 DAY) " +
+                              "GROUP BY DATE(siparis_tarihi)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime saleDate = reader.GetDateTime("sale_date");
+                        decimal totalRevenue = reader.IsDBNull(reader.GetOrdinal("total_revenue")) ? 0 : reader.GetDecimal("total_revenue");
+                        profits[saleDate] = totalRevenue;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while retrieving last 7 days profits: " + ex.Message);
+            }
+        }
+
+        return profits;
+    }
+
+    public Dictionary<string, int> GetLowStockProducts()
+    {
+        Dictionary<string, int> lowStockProducts = new Dictionary<string, int>();
+
+        using (MySqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT UrunAdi, Miktar FROM Stok WHERE Miktar > 0 ORDER BY Miktar ASC LIMIT 7";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string productName = reader.GetString("UrunAdi");
+                        int quantity = reader.GetInt32("Miktar");
+                        lowStockProducts[productName] = quantity;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while retrieving low stock products: " + ex.Message);
+            }
+        }
+
+        return lowStockProducts;
     }
 }
