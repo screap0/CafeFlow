@@ -514,4 +514,113 @@ public class DatabaseConnection
 
         return lowStockProducts;
     }
+
+    public Dictionary<DateTime, decimal> GetMonthlyProfits(DateTime startDate, DateTime endDate)
+    {
+        Dictionary<DateTime, decimal> monthlyProfits = new Dictionary<DateTime, decimal>();
+        using (MySqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT DATE_FORMAT(siparis_tarihi, '%Y-%m-01') as month, SUM(toplam_tutar) as total_revenue " +
+                              "FROM Siparisler " +
+                              "WHERE siparis_tarihi BETWEEN @startDate AND @endDate " +
+                              "GROUP BY DATE_FORMAT(siparis_tarihi, '%Y-%m-01')";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@startDate", startDate);
+                    cmd.Parameters.AddWithValue("@endDate", endDate.AddDays(1).AddSeconds(-1));
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime month = DateTime.Parse(reader.GetString("month"));
+                            decimal totalRevenue = reader.IsDBNull(reader.GetOrdinal("total_revenue")) ? 0 : reader.GetDecimal("total_revenue");
+                            monthlyProfits[month] = totalRevenue;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while retrieving monthly profits: " + ex.Message);
+            }
+        }
+        return monthlyProfits;
+    }
+
+    public Dictionary<int, decimal> GetSalesPerHour(DateTime startDate, DateTime endDate)
+    {
+        Dictionary<int, decimal> hourlySales = new Dictionary<int, decimal>();
+        for (int hour = 0; hour < 24; hour++) hourlySales[hour] = 0; // 0-23 saatleri için başlangıç değeri 0
+
+        using (MySqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT HOUR(siparis_tarihi) as hour, SUM(toplam_tutar) as total_revenue " +
+                              "FROM Siparisler " +
+                              "WHERE siparis_tarihi BETWEEN @startDate AND @endDate " +
+                              "GROUP BY HOUR(siparis_tarihi)";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@startDate", startDate);
+                    cmd.Parameters.AddWithValue("@endDate", endDate.AddDays(1).AddSeconds(-1));
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int hour = reader.GetInt32("hour");
+                            decimal totalRevenue = reader.IsDBNull(reader.GetOrdinal("total_revenue")) ? 0 : reader.GetDecimal("total_revenue");
+                            hourlySales[hour] = totalRevenue;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while retrieving hourly sales: " + ex.Message);
+            }
+        }
+        return hourlySales;
+    }
+
+    public Dictionary<string, Tuple<int, decimal>> GetSalesByCategory(DateTime startDate, DateTime endDate)
+    {
+        Dictionary<string, Tuple<int, decimal>> categoryStats = new Dictionary<string, Tuple<int, decimal>>();
+        using (MySqlConnection conn = GetConnection())
+        {
+            try
+            {
+                conn.Open();
+                string query = "SELECT m.kategori, COUNT(s.id) as order_count, SUM(s.toplam_tutar) as total_revenue " +
+                              "FROM Siparisler s " +
+                              "JOIN Menu m ON s.siparis_aciklamasi LIKE CONCAT('%', m.urun_ismi, '%') " +
+                              "WHERE s.siparis_tarihi BETWEEN @startDate AND @endDate " +
+                              "GROUP BY m.kategori";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@startDate", startDate);
+                    cmd.Parameters.AddWithValue("@endDate", endDate.AddDays(1).AddSeconds(-1));
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string category = reader.IsDBNull(reader.GetOrdinal("kategori")) ? "Bilinmeyen" : reader.GetString("kategori");
+                            int orderCount = reader.GetInt32("order_count");
+                            decimal totalRevenue = reader.IsDBNull(reader.GetOrdinal("total_revenue")) ? 0 : reader.GetDecimal("total_revenue");
+                            categoryStats[category] = new Tuple<int, decimal>(orderCount, totalRevenue);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while retrieving sales by category: " + ex.Message);
+            }
+        }
+        return categoryStats;
+    }
 }

@@ -1,240 +1,230 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CafeFlow
 {
     public partial class Reports : Form
     {
-        DatabaseConnection db = new DatabaseConnection();
-
+        private DatabaseConnection db = new DatabaseConnection();
         public Reports()
         {
             InitializeComponent();
-            LoadOrderCards();
-            LoadTurnoverCards();
+
+            this.Load += new EventHandler(Reports_Load);
+            btnRefresh.Click += new EventHandler(btnRefresh_Click);
+          
+            startDatePicker.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+            startDatePicker.ForeColor = Color.DarkSlateGray;
+            startDatePicker.Width = 200;
+            startDatePicker.Height = 30;
+            
+            endDatePicker.ShowUpDown = false;
+            endDatePicker.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+            endDatePicker.ForeColor = Color.DarkSlateGray;
+            endDatePicker.Width = 200;
+            endDatePicker.Height = 30;
         }
 
-        private void LoadOrderCards()
+        private void Reports_Load(object sender, EventArgs e)
         {
-            orderReportPnl.AutoScroll = true;
-            orderReportPnl.FlowDirection = FlowDirection.TopDown;
-            orderReportPnl.WrapContents = false;
+            startDatePicker.Value = DateTime.Now.AddDays(-30);
+            endDatePicker.Value = DateTime.Now;
 
-            orderReportPnl.HorizontalScroll.Enabled = false;
-            orderReportPnl.HorizontalScroll.Visible = false;
-            orderReportPnl.HorizontalScroll.Maximum = 0;
-            orderReportPnl.AutoScrollMinSize = new Size(0, 0);
+            LoadEarningAnalysisChart(startDatePicker.Value, endDatePicker.Value);
+            LoadSalePerHourChart(startDatePicker.Value, endDatePicker.Value);
+            LoadCategoryPerformanceChart(startDatePicker.Value, endDatePicker.Value);
+        }
 
-            // this.Resize += (s, e) =>
-            // {
-                // orderReportPnl.Location = new Point(orderReportPnl.Location.Y);
-                // orderReportPnl.Height = this.ClientSize.Height - 30;
-            // };
-
-            using (MySqlConnection connection = db.GetConnection())
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            if (endDatePicker.Value < startDatePicker.Value)
             {
-                try
-                {
-                    connection.Open();
-                    string query = "SELECT * FROM Siparisler ORDER BY siparis_tarihi DESC LIMIT 50";
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Panel card = new Panel
-                            {
-                                Width = orderReportPnl.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 10,
-                                Height = 170,
-                                BorderStyle = BorderStyle.FixedSingle,
-                                Margin = new Padding(10),
-                                BackColor = Color.White
-                            };
-
-                            card.Width = orderReportPnl.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 10;
-
-                            Label lblName = new Label
-                            {
-                                Text = "Name: " + reader["isim"].ToString(),
-                                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                                Location = new Point(10, 10),
-                                AutoSize = true
-                            };
-
-                            Label lblTable = new Label
-                            {
-                                Text = "Table No: " + reader["masa_no"].ToString(),
-                                Location = new Point(10, 35),
-                                AutoSize = true
-                            };
-
-                            Label lblPhone = new Label
-                            {
-                                Text = "Phone: " + reader["telefon"].ToString(),
-                                Location = new Point(10, 55),
-                                AutoSize = true
-                            };
-
-                            Label lblOrder = new Label
-                            {
-                                Text = "Order: " + reader["siparis_aciklamasi"].ToString(),
-                                Location = new Point(10, 75),
-                                AutoSize = true
-                            };
-
-                            Label lblTotal = new Label
-                            {
-                                Text = "Total: ₺" + Convert.ToDecimal(reader["toplam_tutar"]).ToString("N2"),
-                                Location = new Point(10, 95),
-                                AutoSize = true
-                            };
-
-                            Label lblDate = new Label
-                            {
-                                Text = "Date: " + Convert.ToDateTime(reader["siparis_tarihi"]).ToString("g"),
-                                Location = new Point(10, 115),
-                                AutoSize = true
-                            };
-
-                            Label lblStatus = new Label
-                            {
-                                Text = "Status: " + reader["durum"].ToString(),
-                                Location = new Point(10, 135),
-                                AutoSize = true
-                            };
-
-                            card.Controls.Add(lblName);
-                            card.Controls.Add(lblTable);
-                            card.Controls.Add(lblPhone);
-                            card.Controls.Add(lblOrder);
-                            card.Controls.Add(lblTotal);
-                            card.Controls.Add(lblDate);
-                            card.Controls.Add(lblStatus);
-
-                            orderReportPnl.Controls.Add(card);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error while loading order cards: " + ex.Message);
-                }
+                MessageBox.Show("Bitiş tarihi, başlangıç tarihinden önce olamaz!", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
-            orderReportPnl.ClientSizeChanged += (s, e) =>
-            {
-                foreach (Control ctrl in orderReportPnl.Controls)
-                {
-                    if (ctrl is Panel card)
-                    {
-                        card.Width = orderReportPnl.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 10;
-                    }
-                }
-            };
+            // MessageBox.Show($"Başlangıç: {startDatePicker.Value:dd MMMM yyyy}\nBitiş: {endDatePicker.Value:dd MMMM yyyy}");
+
+            LoadEarningAnalysisChart(startDatePicker.Value, endDatePicker.Value);
+            LoadSalePerHourChart(startDatePicker.Value, endDatePicker.Value);
+            LoadCategoryPerformanceChart(startDatePicker.Value, endDatePicker.Value);
         }
 
-        private void LoadTurnoverCards()
+        private void LoadEarningAnalysisChart(DateTime startDate, DateTime endDate)
         {
-            dailyTurnoverPnl.AutoScroll = true;
-            dailyTurnoverPnl.FlowDirection = FlowDirection.TopDown;
-            dailyTurnoverPnl.WrapContents = false;
-
-            dailyTurnoverPnl.HorizontalScroll.Enabled = false;
-            dailyTurnoverPnl.HorizontalScroll.Visible = false;
-            dailyTurnoverPnl.HorizontalScroll.Maximum = 0;
-            dailyTurnoverPnl.AutoScrollMinSize = new Size(0, 0);
-
-            // this.Resize += (s, e) =>
-            // {
-                // dailyTurnoverPnl.Width = this.ClientSize.Width - 300;
-            // };
-
-            using (MySqlConnection connection = db.GetConnection())
+            try
             {
-                try
+                var monthlyProfits = db.GetMonthlyProfits(startDate, endDate);
+
+                earningAnalysisChart.Series.Clear();
+                earningAnalysisChart.ChartAreas.Clear();
+                earningAnalysisChart.Legends.Clear();
+
+                ChartArea chartArea = new ChartArea
                 {
-                    connection.Open();
-                    string query = @"
-                SELECT 
-                    DATE(siparis_tarihi) AS siparis_gunu, 
-                    SUM(toplam_tutar) AS gunluk_ciro 
-                FROM Siparisler 
-                GROUP BY DATE(siparis_tarihi) 
-                ORDER BY siparis_gunu DESC 
-                LIMIT 30";
+                    BackColor = System.Drawing.Color.WhiteSmoke,
+                    AxisY = { Title = "Gelir", TitleForeColor = Color.Black, LabelStyle = { Format = "{0:N0}" } },
+                };
+                earningAnalysisChart.ChartAreas.Add(chartArea);
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Panel card = new Panel
-                            {
-                                Width = dailyTurnoverPnl.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 10,
-                                Height = 80,
-                                BorderStyle = BorderStyle.FixedSingle,
-                                Margin = new Padding(10),
-                                BackColor = Color.LightGoldenrodYellow
-                            };
-
-                            Label lblDate = new Label
-                            {
-                                Text = "Date: " + Convert.ToDateTime(reader["siparis_gunu"]).ToString("D"),
-                                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                                Location = new Point(10, 10),
-                                AutoSize = true
-                            };
-
-                            Label lblTurnover = new Label
-                            {
-                                Text = "Total Turnover: ₺" + Convert.ToDecimal(reader["gunluk_ciro"]).ToString("N2"),
-                                Font = new Font("Segoe UI", 10, FontStyle.Regular),
-                                Location = new Point(10, 35),
-                                AutoSize = true
-                            };
-
-                            card.Controls.Add(lblDate);
-                            card.Controls.Add(lblTurnover);
-
-                            dailyTurnoverPnl.Controls.Add(card);
-                        }
-                    }
-                }
-                catch (Exception ex)
+                Series series = new Series
                 {
-                    MessageBox.Show("Error while loading turnover cards: " + ex.Message);
+                    Name = "Aylık Gelir",
+                    ChartType = SeriesChartType.Line,
+                    Color = Color.DodgerBlue,
+                    BorderWidth = 2,
+                    MarkerStyle = MarkerStyle.Circle,
+                    MarkerSize = 6,
+                    MarkerColor = Color.DarkBlue
+                };
+
+                foreach (var month in monthlyProfits)
+                {
+                    series.Points.AddXY(month.Key.ToString("MMM yyyy"), month.Value);
                 }
+
+                earningAnalysisChart.Series.Add(series);
+
+                Legend legend = new Legend
+                {
+                    Docking = Docking.Bottom,
+                    Alignment = StringAlignment.Center,
+                    BackColor = Color.Transparent,
+                    IsDockedInsideChartArea = false
+                };
+                earningAnalysisChart.Legends.Add(legend);
+                series.Legend = legend.Name;
+                earningAnalysisChart.Invalidate();
             }
-
-            dailyTurnoverPnl.ClientSizeChanged += (s, e) =>
+            catch (Exception ex)
             {
-                foreach (Control ctrl in dailyTurnoverPnl.Controls)
+                MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+            }
+        }
+
+        private void LoadSalePerHourChart(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var hourlySales = db.GetSalesPerHour(startDate, endDate);
+
+                salePerHourChart.Series.Clear();
+                salePerHourChart.ChartAreas.Clear();
+                salePerHourChart.Legends.Clear();
+
+                ChartArea chartArea = new ChartArea
                 {
-                    if (ctrl is Panel card)
-                    {
-                        card.Width = dailyTurnoverPnl.ClientSize.Width - SystemInformation.VerticalScrollBarWidth - 10;
-                    }
+                    BackColor = System.Drawing.Color.WhiteSmoke,
+                    AxisY = { Title = "Gelir", TitleForeColor = Color.DarkSlateGray, LabelStyle = { Format = "{0:N0}" }, Minimum = 0 }
+                };
+                salePerHourChart.ChartAreas.Add(chartArea);
+
+                Series series = new Series
+                {
+                    Name = "Saatlik Satışlar",
+                    ChartType = SeriesChartType.Column,
+                    Color = Color.Coral,
+                    BorderWidth = 1,
+                    BorderColor = Color.DarkOrange
+                };
+
+                foreach (var hour in hourlySales.OrderBy(h => h.Key))
+                {
+                    int hourValue = hour.Key;
+                    DateTime formattedHour = new DateTime(2000, 1, 1, hourValue, 0, 0);
+                    series.Points.AddXY(formattedHour.ToString("hh:mm tt"), hour.Value);
                 }
-            };
+
+                salePerHourChart.Series.Add(series);
+
+                Legend legend = new Legend
+                {
+                    Docking = Docking.Bottom,
+                    Alignment = StringAlignment.Center,
+                    BackColor = Color.Transparent,
+                    IsDockedInsideChartArea = false
+                };
+                salePerHourChart.Legends.Add(legend);
+                series.Legend = legend.Name;
+
+                salePerHourChart.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+            }
         }
 
-        private void refreshReportsBtn_Click(object sender, EventArgs e)
+        private void LoadCategoryPerformanceChart(DateTime startDate, DateTime endDate)
         {
-            RefreshReports();
-        }
+            try
+            {
+                var categoryStats = db.GetSalesByCategory(startDate, endDate);
 
-        private void RefreshReports()
-        {
-            LoadOrderCards();
-            LoadTurnoverCards();
+                categoryPerformanceChart.Series.Clear();
+                categoryPerformanceChart.ChartAreas.Clear();
+                categoryPerformanceChart.Legends.Clear();
+                categoryPerformanceChart.Annotations.Clear();
+
+                ChartArea chartArea = new ChartArea
+                {
+                    AxisX = { Title = "Kategori", TitleForeColor = Color.DarkSlateGray },
+                    AxisY = { Title = "Toplam Satış (TL)", TitleForeColor = Color.DarkSlateGray, LabelStyle = { Format = "{0:N0}" }, Minimum = 0 }
+                };
+                categoryPerformanceChart.ChartAreas.Add(chartArea);
+
+                Series series = new Series
+                {
+                    Name = "Category Sales",
+                    ChartType = SeriesChartType.Pie,
+                    IsValueShownAsLabel = true,
+                    LabelFormat = "{0:N0} TL",
+                    Font = new System.Drawing.Font("Arial", 8),
+                };
+
+                if (categoryStats.Any())
+                {
+                    foreach (var category in categoryStats)
+                    {
+                        series.Points.AddXY(category.Key, category.Value.Item2);
+                    }
+
+                    categoryPerformanceChart.Series.Add(series);
+
+                    Legend legend = new Legend
+                    {
+                        Docking = Docking.Right,
+                        Alignment = StringAlignment.Center,
+                        BackColor = Color.Transparent,
+                        IsDockedInsideChartArea = false
+                    };
+                    categoryPerformanceChart.Legends.Add(legend);
+                    series.Legend = legend.Name;
+                }
+                else
+                {
+                    var noDataText = new TextAnnotation
+                    {
+                        Text = "Veri Yok",
+                        Alignment = ContentAlignment.MiddleCenter,
+                        Font = new System.Drawing.Font("Arial", 12, System.Drawing.FontStyle.Bold),
+                        AxisX = chartArea.AxisX,
+                        AxisY = chartArea.AxisY,
+                        IsSizeAlwaysRelative = false
+                    };
+                    categoryPerformanceChart.Annotations.Add(noDataText);
+                }
+
+                categoryPerformanceChart.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while setting up the category performance chart: " + ex.Message);
+            }
         }
     }
 }
