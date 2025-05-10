@@ -179,5 +179,11 @@ namespace CafeFlow
             ActivateButton(sender, RGBColors.color3);
             OpenChildForm(new Reports());
         }
+
+        private void beeperBtn_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBColors.color3);
+            OpenChildForm(new ArduinoController());
+        }
     }
 }

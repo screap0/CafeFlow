@@ -14,8 +14,9 @@ namespace CafeFlow
     {
         private HubConnection hubConnection;
         private DatabaseConnection dbConnection;
+        ArduinoController arduinoController = new ArduinoController();
 
-        // Renk paleti tanımlamaları
+
         private readonly Color formBackColor = Color.FromArgb(34, 33, 74);
         private readonly Color cardBackColor = Color.FromArgb(45, 45, 90);
         private readonly Color textColor = Color.FromArgb(240, 240, 245);
@@ -27,7 +28,7 @@ namespace CafeFlow
             InitializeComponent();
             dbConnection = new DatabaseConnection();
 
-            // Form tasarımını ayarla
+            
             ApplyFormStyling();
 
             SetupSignalR();
@@ -36,12 +37,12 @@ namespace CafeFlow
 
         private void ApplyFormStyling()
         {
-            // Form özelliklerini ayarla
+           
             this.BackColor = formBackColor;
             this.Text = "CafeFlow - Sipariş Yönetimi";
             this.MinimumSize = new Size(950, 600);
 
-            // FlowLayoutPanel özelliklerini ayarla
+           
             orderLayoutPanel.BackColor = formBackColor;
             orderLayoutPanel.Padding = new Padding(15);
             orderLayoutPanel.AutoScroll = true;
@@ -66,7 +67,7 @@ namespace CafeFlow
             // Bağlantı durumu değiştiğinde log ekle
             hubConnection.Closed += async (error) =>
             {
-                ShowNotification("SignalR bağlantısı kapandı: " + (error?.Message ?? "Bilinmeyen hata"), MessageBoxIcon.Warning);
+               // ShowNotification("SignalR bağlantısı kapandı: " + (error?.Message ?? "Bilinmeyen hata"), MessageBoxIcon.Warning);
                 await Task.Delay(5000); // 5 saniye bekle ve yeniden bağlanmayı dene
                 await hubConnection.StartAsync();
             };
@@ -132,17 +133,16 @@ namespace CafeFlow
 
         private async void AddOrderToPanel(int orderId, string isim, int masaNo, string telefon, string aciklama, decimal toplamTutar, DateTime siparisTarihi, string durum)
         {
-            // Özel yuvarlak köşeli panel oluştur
             RoundedPanel orderPanel = new RoundedPanel
             {
-                Size = new Size(270, 460), // Yüksekliği 2 katına çıkarıldı
+                Size = new Size(270, 460), 
                 Margin = new Padding(10),
                 BackColor = cardBackColor,
                 CornerRadius = 15,
                 Tag = orderId
             };
 
-            // Sipariş numarası ve tarih için başlık paneli
+           
             Panel headerPanel = new Panel
             {
                 Dock = DockStyle.Top,
@@ -160,7 +160,7 @@ namespace CafeFlow
             };
             headerPanel.Controls.Add(lblHeader);
 
-            // İçerik paneli
+            
             TableLayoutPanel contentPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -178,17 +178,17 @@ namespace CafeFlow
         }
             };
 
-            // Labels oluştur ve hizala
+         
             Label lblIsim = CreateInfoLabel("İsim", isim);
             Label lblMasaNo = CreateInfoLabel("Masa", masaNo.ToString());
             Label lblTelefon = CreateInfoLabel("Telefon", telefon);
 
-            // Kaydırılabilir açıklama paneli
+           
             Panel scrollableDescriptionPanel = new Panel
             {
-                Size = new Size(240, 200), // Yüksekliği artırıldı
+                Size = new Size(240, 200),
                 AutoScroll = true,
-                BackColor = formBackColor, // Arka plan rengi formun arka plan rengine uyumlu hale getirildi
+                BackColor = formBackColor, 
                 Padding = new Padding(5)
             };
 
@@ -205,7 +205,7 @@ namespace CafeFlow
             Label lblTutar = CreateInfoLabel("Tutar", $"{toplamTutar:N2} TL");
             Label lblTarih = CreateInfoLabel("Tarih", siparisTarihi.ToString("dd/MM/yyyy HH:mm"));
 
-            // Status ComboBox ve başlık
+         
             Panel statusPanel = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -235,18 +235,18 @@ namespace CafeFlow
             statusComboBox.Items.AddRange(new string[] { "Ödeme Tamamlandı", "Hazırlanıyor", "Sipariş Hazır" });
             statusPanel.Controls.Add(statusComboBox);
 
-            // Durum değerini temizle ve eşleştir
+            
             string cleanedDurum = durum?.Trim().Replace("\r", "").Replace("\n", "");
             string matchedDurum = FindMatchingStatus(cleanedDurum, statusComboBox, orderId);
             statusComboBox.SelectedItem = matchedDurum;
 
-            // Status değişikliğini ele al
+            
             statusComboBox.SelectedIndexChanged += async (sender, e) =>
             {
                 string newStatus = statusComboBox.SelectedItem.ToString();
                 try
                 {
-                    // Update the status in the database
+                   
                     using (var connection = dbConnection.GetConnection())
                     {
                         await connection.OpenAsync();
@@ -259,9 +259,21 @@ namespace CafeFlow
                         }
                     }
 
-                    // Durum değişikliğini visual olarak belirt
+                    
                     orderPanel.BackColor = newStatus == "Sipariş Hazır" ?
                         Color.FromArgb(45, 90, 45) : cardBackColor;
+
+                    if (newStatus == "Sipariş Hazır")
+                    {
+                        try
+                        {
+                            arduinoController.MasaNo(masaNo);
+                        }
+                        catch (Exception ex)
+                        {
+                            ShowNotification($"Arduino'ya masa numarası gönderilirken hata: {ex.Message}", MessageBoxIcon.Error);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -269,17 +281,19 @@ namespace CafeFlow
                 }
             };
 
-            // Siparişin durumuna göre renk değiştir
+
             if (matchedDurum == "Sipariş Hazır")
             {
+                
                 orderPanel.BackColor = Color.FromArgb(45, 90, 45);
+
             }
 
-            // Panelleri ekle
+           
             contentPanel.Controls.Add(lblIsim, 0, 0);
             contentPanel.Controls.Add(lblMasaNo, 0, 1);
             contentPanel.Controls.Add(lblTelefon, 0, 2);
-            contentPanel.Controls.Add(scrollableDescriptionPanel, 0, 3); // Kaydırılabilir açıklama panelini ekle
+            contentPanel.Controls.Add(scrollableDescriptionPanel, 0, 3); 
             contentPanel.Controls.Add(lblTutar, 0, 4);
             contentPanel.Controls.Add(lblTarih, 0, 5);
             contentPanel.Controls.Add(statusPanel, 0, 6);
@@ -287,7 +301,7 @@ namespace CafeFlow
             orderPanel.Controls.Add(contentPanel);
             orderPanel.Controls.Add(headerPanel);
 
-            // Paneli ekle ve en üste taşı
+           
             orderLayoutPanel.Controls.Add(orderPanel);
             orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0);
             orderLayoutPanel.Refresh();
@@ -319,7 +333,7 @@ namespace CafeFlow
         {
             if (string.IsNullOrEmpty(durum)) return "Ödeme Tamamlandı";
 
-            // Tam eşleşme ara
+            
             foreach (string item in statusComboBox.Items)
             {
                 if (string.Equals(item, durum, StringComparison.CurrentCultureIgnoreCase))
@@ -328,7 +342,7 @@ namespace CafeFlow
                 }
             }
 
-            // Kısmi eşleşme ara
+           
             if (durum.ToLower().Contains("hazirlaniyor"))
                 return "Hazırlanıyor";
             else if (durum.ToLower().Contains("hazir"))
@@ -336,7 +350,7 @@ namespace CafeFlow
             else if (durum.ToLower().Contains("odeme") || durum.ToLower().Contains("ödeme"))
                 return "Ödeme Tamamlandı";
 
-            // Eşleşme yoksa varsayılan seç
+            
             return "Ödeme Tamamlandı";
         }
 
@@ -347,7 +361,7 @@ namespace CafeFlow
         }
     }
 
-    // Yuvarlak köşeli panel sınıfı
+  
     public class RoundedPanel : Panel
     {
         private int _cornerRadius = 20;

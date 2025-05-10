@@ -238,6 +238,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArduinoController.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArduinoController.Designer.cs">
+      <DependentUpon>ArduinoController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -304,6 +310,9 @@
     <Compile Include="StokEkle.Designer.cs">
       <DependentUpon>StokEkle.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ArduinoController.resx">
+      <DependentUpon>ArduinoController.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
