@@ -31,6 +31,10 @@ namespace CafeFlow
             }
             menuItemTemplate.Visible = false; // Şablon paneli gizli tut
             kategoricb.Items.AddRange(new[] { "Sicak Icecekler", "Soguk Icecekler", "Ozel Secim" });
+
+            flowLayoutPanel1.FlowDirection = FlowDirection.LeftToRight;
+            flowLayoutPanel1.WrapContents = true;
+            flowLayoutPanel1.AutoScroll = true;
         }
 
             

@@ -11,6 +11,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 namespace CafeFlow
 {
     public partial class ArduinoController : Form
@@ -30,7 +31,15 @@ namespace CafeFlow
             btnConnect.Click += new EventHandler(btnConnect_Click);
             btnTestConnection.Click += new EventHandler(btnTestConnection_Click);
             btnClearLog.Click += new EventHandler(btnClearLog_Click);
+
+            this.Load += new EventHandler(ArdunioController_Load);
         }
+
+        private void ArdunioController_Load(object sender, EventArgs e)
+        {
+            MakeLedStatusCircular();
+        }
+
         public void MasaNo(int MasaNo)
         {
             if (MasaNo == 1)
@@ -155,7 +164,13 @@ namespace CafeFlow
             AddToLog("Log temizlendi");
         }
 
-        
+        private void MakeLedStatusCircular()
+        {
+            GraphicsPath path = new GraphicsPath();
+            path.AddEllipse(0, 0, ledStatus.Width, ledStatus.Height);
+            ledStatus.Region = new Region(path);
+        }
+
     }
 }
 
