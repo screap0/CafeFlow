@@ -271,19 +271,10 @@ namespace CafeFlow
             Label lblTarih = CreateInfoLabel("Tarih", siparisTarihi.ToString("dd/MM/yyyy HH:mm"));
 
             Panel statusPanel = new Panel { Dock = DockStyle.Fill, Height = 50 };
-            Label lblDurumTitle = new Label
-            {
-                Text = "Durum:",
-                AutoSize = true,
-                Location = new Point(0, 3),
-                Font = new Font("Segoe UI", 8, FontStyle.Regular),
-                ForeColor = textColor
-            };
-            statusPanel.Controls.Add(lblDurumTitle);
 
             ComboBox statusComboBox = new ComboBox
             {
-                Location = new Point(0, 20),
+                Location = new Point(0, 0),
                 Size = new Size(cardWidth - 30, 30),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Font = new Font("Segoe UI", 10, FontStyle.Regular),
