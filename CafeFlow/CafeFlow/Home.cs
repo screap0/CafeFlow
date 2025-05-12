@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +16,6 @@ namespace CafeFlow
 {
     public partial class Home : Form
     {
-        // Fields
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
@@ -28,7 +26,6 @@ namespace CafeFlow
             leftBorderBtn = new Panel();
             leftBorderBtn.Size = new Size(7, 60);
             panelMenu.Controls.Add(leftBorderBtn);
-            // Form
             this.Text = string.Empty;
             this.ControlBox = false;
             this.DoubleBuffered = true;
@@ -50,7 +47,6 @@ namespace CafeFlow
             if (senderBtn != null)
             {
                 DisableButton();
-                // Button
                 currentBtn = (IconButton)senderBtn;
                 currentBtn.BackColor = System.Drawing.Color.FromArgb(37, 36, 81);
                 currentBtn.ForeColor = color;
@@ -58,12 +54,10 @@ namespace CafeFlow
                 currentBtn.IconColor = color;
                 currentBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
                 currentBtn.ImageAlign = ContentAlignment.MiddleRight;
-                // Left Border Button
                 leftBorderBtn.BackColor = color;
                 leftBorderBtn.Location = new Point(0, currentBtn.Location.Y);
                 leftBorderBtn.Visible = true;
                 leftBorderBtn.BringToFront();
-                // Icon Current Child Form
                 iconCurrentChildForm.IconChar = currentBtn.IconChar;
                 iconCurrentChildForm.IconColor = color;
             }
@@ -86,8 +80,7 @@ namespace CafeFlow
         {
             if (currentChildForm != null)
             {
-                // Open Only Form
-                currentChildForm.Close();
+                currentChildForm.Close(); // Mevcut formu kapat
             }
             currentChildForm = childForm;
             childForm.TopLevel = false;
@@ -98,6 +91,13 @@ namespace CafeFlow
             childForm.BringToFront();
             childForm.Show();
             lblTitleChildForm.Text = childForm.Text;
+
+            // Eğer Orders formu ise, bağlantıyı kontrol et ve gerekirse başlat
+            if (childForm is Orders)
+            {
+                var ordersForm = (Orders)childForm;
+                ordersForm.SetupSignalRIfNeeded(); // Bağlantıyı kontrol et
+            }
         }
 
         private void orderBtn_Click(object sender, EventArgs e)
@@ -127,7 +127,6 @@ namespace CafeFlow
             lblTitleChildForm.Text = "Home";
         }
 
-        // Drag Form
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
 

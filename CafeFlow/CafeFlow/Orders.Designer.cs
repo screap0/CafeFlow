@@ -36,17 +36,19 @@
             this.orderLayoutPanel.AutoScroll = true;
             this.orderLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.orderLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.orderLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
             this.orderLayoutPanel.Name = "orderLayoutPanel";
-            this.orderLayoutPanel.Size = new System.Drawing.Size(800, 450);
+            this.orderLayoutPanel.Size = new System.Drawing.Size(1006, 594);
             this.orderLayoutPanel.TabIndex = 0;
             // 
             // Orders
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1006, 594);
             this.Controls.Add(this.orderLayoutPanel);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Orders";
             this.Text = "Orders";
             this.ResumeLayout(false);

@@ -24,16 +24,17 @@
             // 
             // labelUrunAdi
             // 
+            this.labelUrunAdi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelUrunAdi.ForeColor = System.Drawing.Color.White;
             this.labelUrunAdi.Location = new System.Drawing.Point(20, 20);
             this.labelUrunAdi.Name = "labelUrunAdi";
             this.labelUrunAdi.Size = new System.Drawing.Size(80, 20);
             this.labelUrunAdi.TabIndex = 0;
-            this.labelUrunAdi.Text = "Ürün Adı:";
+            this.labelUrunAdi.Text = "Ürün Adı";
             // 
             // urunTxt
             // 
-            this.urunTxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.urunTxt.BackColor = System.Drawing.Color.WhiteSmoke;
             this.urunTxt.ForeColor = System.Drawing.Color.White;
             this.urunTxt.Location = new System.Drawing.Point(20, 40);
             this.urunTxt.Name = "urunTxt";
@@ -42,16 +43,17 @@
             // 
             // labelMiktar
             // 
+            this.labelMiktar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelMiktar.ForeColor = System.Drawing.Color.White;
             this.labelMiktar.Location = new System.Drawing.Point(20, 70);
             this.labelMiktar.Name = "labelMiktar";
             this.labelMiktar.Size = new System.Drawing.Size(80, 20);
             this.labelMiktar.TabIndex = 2;
-            this.labelMiktar.Text = "Miktar:";
+            this.labelMiktar.Text = "Miktar";
             // 
             // miktarTxt
             // 
-            this.miktarTxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.miktarTxt.BackColor = System.Drawing.Color.WhiteSmoke;
             this.miktarTxt.ForeColor = System.Drawing.Color.White;
             this.miktarTxt.Location = new System.Drawing.Point(20, 90);
             this.miktarTxt.Name = "miktarTxt";
@@ -60,16 +62,17 @@
             // 
             // labelAciklama
             // 
+            this.labelAciklama.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.labelAciklama.ForeColor = System.Drawing.Color.White;
             this.labelAciklama.Location = new System.Drawing.Point(20, 120);
             this.labelAciklama.Name = "labelAciklama";
             this.labelAciklama.Size = new System.Drawing.Size(80, 20);
             this.labelAciklama.TabIndex = 4;
-            this.labelAciklama.Text = "Açıklama:";
+            this.labelAciklama.Text = "Açıklama";
             // 
             // aciklamaTxt
             // 
-            this.aciklamaTxt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.aciklamaTxt.BackColor = System.Drawing.Color.WhiteSmoke;
             this.aciklamaTxt.ForeColor = System.Drawing.Color.White;
             this.aciklamaTxt.Location = new System.Drawing.Point(20, 140);
             this.aciklamaTxt.Multiline = true;
@@ -79,9 +82,11 @@
             // 
             // ekleBtn
             // 
-            this.ekleBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.ekleBtn.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ekleBtn.FlatAppearance.BorderSize = 0;
             this.ekleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ekleBtn.ForeColor = System.Drawing.Color.White;
+            this.ekleBtn.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ekleBtn.ForeColor = System.Drawing.Color.Black;
             this.ekleBtn.Location = new System.Drawing.Point(20, 220);
             this.ekleBtn.Name = "ekleBtn";
             this.ekleBtn.Size = new System.Drawing.Size(240, 40);

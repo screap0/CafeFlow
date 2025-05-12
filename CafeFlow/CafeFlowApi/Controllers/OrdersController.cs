@@ -35,10 +35,29 @@ namespace CafeFlowApi.Controllers
 
             try
             {
-                // Veritabanına kayıt yapılmıyor!
-                // Sadece istemcilere SignalR ile bildirim gönderiliyor.
+                int orderId;
+                using (var connection = _dbConnection.GetConnection())
+                {
+                    await connection.OpenAsync();
+                    string query = "INSERT INTO Siparisler (isim, masa_no, telefon, siparis_aciklamasi, toplam_tutar, siparis_tarihi, durum) VALUES (@isim, @masaNo, @telefon, @siparisAciklamasi, @toplamTutar, @siparisTarihi, @durum); SELECT LAST_INSERT_ID();";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@isim", order.Isim);
+                        command.Parameters.AddWithValue("@masaNo", order.MasaNo);
+                        command.Parameters.AddWithValue("@telefon", order.Telefon);
+                        command.Parameters.AddWithValue("@siparisAciklamasi", order.SiparisAciklamasi);
+                        command.Parameters.AddWithValue("@toplamTutar", order.ToplamTutar);
+                        command.Parameters.AddWithValue("@siparisTarihi", order.SiparisTarihi);
+                        command.Parameters.AddWithValue("@durum", order.Durum ?? "Ödeme Tamamlandı");
+
+                        orderId = Convert.ToInt32(await command.ExecuteScalarAsync());
+                    }
+                }
+
+                _logger.LogInformation("Gönderilen orderId: {OrderId}", orderId); // Log ekle
+
                 await _hubContext.Clients.All.SendAsync("ReceiveOrderUpdate",
-                    0, // ID bilinmediğinden 0 gönderiliyor veya hiç gönderme
+                    orderId,
                     order.Isim,
                     order.MasaNo,
                     order.Telefon,
@@ -47,14 +66,13 @@ namespace CafeFlowApi.Controllers
                     order.SiparisTarihi,
                     order.Durum ?? "Ödeme Tamamlandı");
 
-                return Ok(new { message = "Bildirim gönderildi (veritabanına kayıt yok)" });
+                return Ok(new { message = "Sipariş eklendi ve bildirim gönderildi", orderId });
             }
             catch (Exception ex)
             {
                 return BadRequest(new { message = "Hata: " + ex.Message });
             }
         }
-
 
         public class Order
         {
