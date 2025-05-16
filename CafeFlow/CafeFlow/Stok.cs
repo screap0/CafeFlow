@@ -10,10 +10,14 @@ namespace CafeFlow
     {
         DatabaseConnection db = new DatabaseConnection();
         int seciliStokID = -1;
+        string kullaniciadi;
+        string txtform;
 
-        public Stok()
+        public Stok(string kullaniciadi)
         {
             InitializeComponent();
+            this.kullaniciadi = kullaniciadi;
+            txtform = "Stok";
 
             // Butonlara olay bağlama
             yenileBtn.Click += YenileBtn_Click;
@@ -45,6 +49,7 @@ namespace CafeFlow
                 catch (Exception ex)
                 {
                     MessageBox.Show("Stoklar yüklenirken hata: " + ex.Message);
+                    db.Log(txtform,"Error: "+ex,DateTime.Now,kullaniciadi);
                 }
             }
         }
@@ -99,12 +104,14 @@ namespace CafeFlow
                     }
 
                     MessageBox.Show("Stok başarıyla güncellendi.");
+                    db.Log(txtform, "Stok güncellendi: " + "Ürün Adı:" + urun + " Ürün Miktarı: " + miktar + " Ürün Açıklaması: " + aciklama, DateTime.Now, kullaniciadi);
                     StoklariYukle();
                     Temizle();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Güncelleme sırasında hata: " + ex.Message);
+                    db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
                 }
             }
         }
@@ -133,12 +140,14 @@ namespace CafeFlow
                         }
 
                         MessageBox.Show("Stok başarıyla silindi.");
+                        db.Log(txtform, "Stok silindi: " + "Stok ID: " + seciliStokID, DateTime.Now, kullaniciadi);
                         StoklariYukle();
                         Temizle();
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Silme sırasında hata: " + ex.Message);
+                        db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
                     }
                 }
             }
@@ -154,7 +163,7 @@ namespace CafeFlow
 
         private void ekleBtn_Click(object sender, EventArgs e)
         {
-            StokEkle stokEkleFormu = new StokEkle();
+            StokEkle stokEkleFormu = new StokEkle(kullaniciadi);
             stokEkleFormu.ShowDialog(); // Modal olarak açar, ana form kilitlenir
             StoklariYukle(); // Yeni stok eklenmişse listeyi yeniler
         }

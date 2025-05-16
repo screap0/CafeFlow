@@ -7,10 +7,14 @@ namespace CafeFlow
     public partial class StokEkle : Form
     {
         DatabaseConnection db = new DatabaseConnection();
-
-        public StokEkle()
+        string kullaniciadi;
+        string txtform;
+        public StokEkle(string kullaniciadi)
         {
             InitializeComponent();
+            this.kullaniciadi = kullaniciadi;
+            txtform = "StokEkle";
+
             ekleBtn.Click += EkleBtn_Click;
         }
 
@@ -45,11 +49,13 @@ namespace CafeFlow
                     }
 
                     MessageBox.Show("Stok başarıyla eklendi.");
+                    db.Log(txtform, "Stok eklendi: " + "Ürün Adı:"+urun+"Ürün Miktarı: "+miktar+"Ürün Acıklaması: "+aciklama, DateTime.Now, kullaniciadi);
                     this.Close(); // Formu kapat
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Stok eklenirken hata oluştu: " + ex.Message);
+                    db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
                 }
             }
         }

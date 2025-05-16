@@ -12,20 +12,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Data.SqlClient;
 namespace CafeFlow
 {
     public partial class ArduinoController : Form
     {
         private string ipAddress;
         private int port ;
+        string kullaniciadi;
+        string txtform;
+       DatabaseConnection sql=new DatabaseConnection();
 
-        public ArduinoController()
+        public ArduinoController(string kullaniciadi)
         {
             InitializeComponent();
             txtIPAddress.Text = "192.168.202.231"; 
             txtPort.Text = port.ToString();
+            kullaniciadi = this.kullaniciadi;
+            txtform = "ArduinoController";
 
-            
+
             btnStartCallSystem.Click += new EventHandler(btnStartCallSystem_Click);
             btnStopCallSystem.Click += new EventHandler(btnStopCallSystem_Click);
             btnConnect.Click += new EventHandler(btnConnect_Click);
@@ -73,6 +79,8 @@ namespace CafeFlow
 
                     AddToLog($"ESP Cevabı: {response}");
                     toolStripStatusLabel.Text = $"Komut başarıyla gönderildi: {command}, Cevap: {response}";
+                    sql.Log(txtform,"Esp Komutu Başarıyla Gönderildi", DateTime.Now, kullaniciadi);
+
 
                     UpdateConnectionStatus(true);
                 }
@@ -83,6 +91,7 @@ namespace CafeFlow
                 AddToLog(errorMessage);
                 toolStripStatusLabel.Text = "Bağlantı hatası!";
                 MessageBox.Show(errorMessage, "Bağlantı Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                sql.Log(txtform, "Esp Bağlantı Hatası: "+errorMessage, DateTime.Now, kullaniciadi);
 
                 UpdateConnectionStatus(false);
             }
@@ -140,6 +149,7 @@ namespace CafeFlow
                         AddToLog("Bağlantı başarılı!");
                         toolStripStatusLabel.Text = "Arduino'ya bağlantı kuruldu";
                         MessageBox.Show("Arduino'ya başarıyla bağlandı!", "Bağlantı Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        sql.Log(txtform, "Arduino'ya başarıyla bağlandı!", DateTime.Now, kullaniciadi);
                     }
                 }
             }
@@ -150,6 +160,8 @@ namespace CafeFlow
                 AddToLog(errorMessage);
                 toolStripStatusLabel.Text = "Bağlantı başarısız!";
                 MessageBox.Show(errorMessage, "Bağlantı Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                sql.Log(txtform, " Bağlantı Hatası: " + errorMessage, DateTime.Now, kullaniciadi);
+
             }
         }
 

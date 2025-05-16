@@ -19,14 +19,21 @@ namespace CafeFlow
     {
         private readonly DatabaseConnection dbConnection;
         private string selectedImagePath; // Seçilen resmin yerel dosya yolu
-        public MenuEkle()
+        string kullaniciadi;
+        string txtform;
+        DatabaseConnection sql = new DatabaseConnection();
+        public MenuEkle(string kullaniciadi)
         {
             InitializeComponent();
             dbConnection = new DatabaseConnection();
             // tutartxt için giriş kısıtlamaları
             // tutartxt için giriş kısıtlamaları
             kategoricb.Items.AddRange(new[] { "Sicak Icecekler", "Soguk Icecekler", "Ozel Secim" });
+            txtform = "MenuEkle";
+            this.kullaniciadi= kullaniciadi;
         }
+
+       
 
         private void minimizeBtn_Click(object sender, EventArgs e)
         {
@@ -117,6 +124,7 @@ namespace CafeFlow
 
                 FtpWebResponse response = (FtpWebResponse)request.GetResponse();
                 response.Close();
+                string urun;
 
                 // Veritabanına ürünü ekle
                 using (MySqlConnection conn = dbConnection.GetConnection())
@@ -131,11 +139,12 @@ namespace CafeFlow
                         cmd.Parameters.AddWithValue("@tutar", tutar);
                         cmd.Parameters.AddWithValue("@resimYolu", imagePath);
                         cmd.ExecuteNonQuery();
+                         urun= uruntxt.Text;
                     }
                 }
 
                 // Formu sıfırla
-                Menu menu = new Menu();
+                Menu menu = new Menu(kullaniciadi);
                 menu.LoadMenuItems();
                 
                 uruntxt.Clear();
@@ -145,10 +154,13 @@ namespace CafeFlow
                 selectedImagePath = null;
 
                 MessageBox.Show("Ürün başarıyla eklendi!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                sql.Log(txtform, "Ürün eklendi: " + urun, DateTime.Now, kullaniciadi);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ürün ekleme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+
             }
         }
     }

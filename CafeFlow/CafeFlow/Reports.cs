@@ -10,9 +10,13 @@ namespace CafeFlow
     public partial class Reports : Form
     {
         private DatabaseConnection db = new DatabaseConnection();
-        public Reports()
+        string kullaniciadi;
+        string txtform;
+        public Reports(string kullaniciadi)
         {
             InitializeComponent();
+            this.kullaniciadi = kullaniciadi;
+            txtform= "Reports";
 
             this.Load += new EventHandler(Reports_Load);
             btnRefresh.Click += new EventHandler(btnRefresh_Click);
@@ -103,6 +107,8 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+                db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+
             }
         }
 
@@ -156,6 +162,8 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+                db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+
             }
         }
 
@@ -224,6 +232,8 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while setting up the category performance chart: " + ex.Message);
+                db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+
             }
         }
     }

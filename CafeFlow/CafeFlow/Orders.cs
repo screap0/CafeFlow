@@ -14,7 +14,9 @@ namespace CafeFlow
     {
         private static HubConnection hubConnection; // Statik bağlantı
         private DatabaseConnection dbConnection;
-        ArduinoController arduinoController = new ArduinoController();
+        string kullaniciadi;
+        string txtform;
+
 
         private readonly Color formBackColor = Color.FromArgb(34, 33, 74);
         private readonly Color cardBackColor = Color.FromArgb(45, 45, 90);
@@ -22,10 +24,12 @@ namespace CafeFlow
         private readonly Color highlightColor = Color.FromArgb(79, 79, 135);
         private readonly Color accentColor = Color.FromArgb(95, 77, 221);
 
-        public Orders()
+        public Orders(string kullaniciadi)
         {
             InitializeComponent();
             dbConnection = new DatabaseConnection();
+            this.kullaniciadi= kullaniciadi;
+            txtform = "Orders";
 
             ApplyFormStyling();
             SetupSignalRIfNeeded();
@@ -37,6 +41,7 @@ namespace CafeFlow
 
             this.Resize += Orders_Resize;
         }
+       
 
         private void ApplyFormStyling()
         {
@@ -89,6 +94,7 @@ namespace CafeFlow
                         {
                             await hubConnection.StartAsync();
                             this.Invoke((Action)(() => ShowNotification("SignalR bağlantısı başarıyla kuruldu.", MessageBoxIcon.Information)));
+                            dbConnection.Log(txtform, "SignalR bağlantısı başarıyla kuruldu.", DateTime.Now, kullaniciadi);
                             break;
                         }
                         catch (Exception ex)
@@ -98,6 +104,7 @@ namespace CafeFlow
                             if (retryCount == maxRetries)
                             {
                                 this.Invoke((Action)(() => ShowNotification("SignalR bağlantısı sağlanamadı. Lütfen sunucu durumunu kontrol edin.", MessageBoxIcon.Error)));
+                                dbConnection.Log(txtform, "Error: " + "SignalR bağlantısı sağlanamadı. Lütfen sunucu durumunu kontrol edin.", DateTime.Now, kullaniciadi);
                                 break;
                             }
                             await Task.Delay(5000);
@@ -154,10 +161,12 @@ namespace CafeFlow
                             catch (Exception ex)
                             {
                                 ShowNotification("Sipariş kontrol edilirken hata: " + ex.Message, MessageBoxIcon.Error);
+                                dbConnection.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
                             }
 
                             AddOrderToPanel(orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi, durum);
                             ShowNotification($"Yeni sipariş alındı: #{orderId} - {isim}", MessageBoxIcon.Information);
+                            dbConnection.Log(txtform, "Yeni sipariş alındı: " + orderId + " - " + isim, DateTime.Now, kullaniciadi);
                         }));
                     });
             }
@@ -198,6 +207,7 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 ShowNotification("Başlangıç siparişleri yüklenirken hata: " + ex.Message, MessageBoxIcon.Error);
+                dbConnection.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
             }
         }
 
@@ -311,17 +321,21 @@ namespace CafeFlow
                     {
                         try
                         {
+                            ArduinoController arduinoController = new ArduinoController(kullaniciadi);
                             arduinoController.MasaNo(masaNo);
+                            dbConnection.Log(txtform, $"Arduino'ya masa numarası gönderildi: {masaNo}", DateTime.Now, kullaniciadi);
                         }
                         catch (Exception ex)
                         {
                             ShowNotification($"Arduino'ya masa numarası gönderilirken hata: {ex.Message}", MessageBoxIcon.Error);
+                            dbConnection.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     ShowNotification("Durum güncellenirken hata: " + ex.Message, MessageBoxIcon.Error);
+                    dbConnection.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
                 }
             };
 
@@ -409,6 +423,7 @@ namespace CafeFlow
             if (durum.ToLower().Contains("hazirlaniyor")) return "Hazırlanıyor";
             if (durum.ToLower().Contains("hazir")) return "Sipariş Hazır";
             if (durum.ToLower().Contains("odeme") || durum.ToLower().Contains("ödeme")) return "Ödeme Tamamlandı";
+
 
             return "Ödeme Tamamlandı";
         }

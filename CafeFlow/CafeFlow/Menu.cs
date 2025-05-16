@@ -16,14 +16,20 @@ namespace CafeFlow
 {
     public partial class Menu : Form
     {
+        string kullaniciadi;
+        string txtform;
+        DatabaseConnection sql = new DatabaseConnection();
         private readonly DatabaseConnection dbConnection;
         private readonly Panel menuItemTemplate; // menuItem şablonu
         private Panel selectedPanel; // Şu an seçili olan panel
-        public Menu()
+        public Menu(string kullaniciadi)
         {
             InitializeComponent();
             dbConnection = new DatabaseConnection();
             menuItemTemplate = menuItem; // Form tasarımında oluşturduğun menuItem paneli
+            txtform = "Menu";
+            this.kullaniciadi = kullaniciadi;
+
             if (menuItemTemplate == null)
             {
                 MessageBox.Show("menuItem paneli bulunamadı! Tasarımda 'menuItem' adında bir panel olduğundan emin olun.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -136,6 +142,7 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show($"Veritabanı hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
             }
         }
 
@@ -295,6 +302,7 @@ namespace CafeFlow
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Resim yükleme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
                 }
             }
         }
@@ -339,6 +347,7 @@ namespace CafeFlow
                         cmd.Parameters.Add("@tutar", MySqlDbType.Decimal).Value = tutar;
                         cmd.Parameters.Add("@oldUrunIsmi", MySqlDbType.VarChar).Value = oldData.UrunIsmi;
                         cmd.ExecuteNonQuery();
+                        dbConnection.Log(txtform, "Menü güncellendi: " + "Eski Ürün Adı:" + oldData.UrunIsmi + " Yeni Ürün Adı:" + uruntxt.Text + " Yeni Kategori:" + kategoricb.SelectedItem.ToString() + " Yeni Açıklama:" + aciklamatxt.Text + " Yeni Tutar:" + tutartxt.Text, DateTime.Now, kullaniciadi);
                     }
                 }
 
@@ -357,12 +366,13 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show($"Güncelleme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MenuEkle menuEkle = new MenuEkle();
+            MenuEkle menuEkle = new MenuEkle( kullaniciadi);
             menuEkle.Show();
         }
 
@@ -379,6 +389,7 @@ namespace CafeFlow
             DialogResult result = MessageBox.Show($"Ürün '{data.UrunIsmi}' silinecek. Emin misiniz?", "Silme Onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result != DialogResult.Yes)
             {
+
                 return;
             }
 
@@ -398,6 +409,7 @@ namespace CafeFlow
                         request.Credentials = new NetworkCredential(ftpUser, ftpPass);
                         using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
                         {
+
                             response.Close();
                         }
                     }
@@ -405,6 +417,7 @@ namespace CafeFlow
                     {
                         // Resim yoksa veya silme başarısızsa, hata mesajı göster ama işlemi durdurma
                         MessageBox.Show($"Resim silme hatası: {ex.Message}. Ürün silme işlemine devam ediliyor.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       sql.Log(txtform, "Resim silme hatası: " + ex.Message, DateTime.Now, kullaniciadi);
                     }
                 }
 
@@ -420,11 +433,13 @@ namespace CafeFlow
                         if (rowsAffected == 0)
                         {
                             MessageBox.Show("Silme başarısız! Ürün bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            sql.Log(txtform, "Silme başarısız! Ürün bulunamadı: " + data.UrunIsmi, DateTime.Now, kullaniciadi);
+
                             return;
                         }
                     }
                 }
-
+                string urun= data.UrunIsmi;
                 // Panelleri tekrar yükle
                 LoadMenuItems();
 
@@ -436,10 +451,13 @@ namespace CafeFlow
                 selectedPanel = null;
 
                 MessageBox.Show("Ürün başarıyla silindi!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                sql.Log(txtform, "Ürün silindi: " + urun, DateTime.Now, kullaniciadi);
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Silme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
             }
         }
 

@@ -7,11 +7,15 @@ namespace CafeFlow
     public partial class Dashboard : Form
     {
         private DatabaseConnection db = new DatabaseConnection();
-
-        public Dashboard()
+        string kullaniciadi;
+        string txtform;
+        DatabaseConnection sql=new DatabaseConnection();
+        public Dashboard(string kullaniciadi)
         {
             InitializeComponent();
             this.Load += new EventHandler(Dashboard_Load);
+            this.kullaniciadi = kullaniciadi;
+            txtform = "Dashboard";
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -76,6 +80,8 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+
             }
 
             //Günlere göre satış dağılımı grafiği
@@ -132,6 +138,7 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
             }
 
             //Son 7 günlük ciro grafiği
@@ -183,6 +190,7 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
             }
 
             //Stoğu biten ürün grafiği
@@ -228,6 +236,7 @@ namespace CafeFlow
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while setting up the chart: " + ex.Message);
+                sql.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
             }
         }
     }

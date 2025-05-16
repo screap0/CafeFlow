@@ -623,4 +623,30 @@ public class DatabaseConnection
         }
         return categoryStats;
     }
+
+    public bool Log(string logEkrani, string logMesaji, DateTime logTarihi, string kullanci)
+    {
+        using (MySqlConnection connection = GetConnection())
+        {
+            try
+            {
+                connection.Open();
+                string query = "INSERT INTO Log (LogTarihi, LogEkrani, LogMesaji, Kullanici) VALUES (@logTarihi, @logEkrani, @logMesaji, @kullanici)";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@logTarihi", logTarihi);
+                    command.Parameters.AddWithValue("@logEkrani", logEkrani);
+                    command.Parameters.AddWithValue("@logMesaji", logMesaji);
+                    command.Parameters.AddWithValue("@kullanici", kullanci);
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Log hatası: " + ex.Message);
+                return false;
+            }
+        }
+    }
 }

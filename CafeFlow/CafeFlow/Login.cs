@@ -13,6 +13,7 @@ namespace CafeFlow
 {
     public partial class Login : Form
     {
+        
         public Login()
         {
 
@@ -28,8 +29,8 @@ namespace CafeFlow
             DatabaseConnection dbConnection = new DatabaseConnection();
             bool gecerli = dbConnection.KullaniciBilgileriniKontrolEt(txt_kullaniciadi.Text, txt_sifre.Text);
             if (gecerli)
-            {
-                Home home= new Home();
+            {   string kullaniciadi = txt_kullaniciadi.Text;
+                Home home= new Home(kullaniciadi);
                 this.Hide();
                 home.Show();
             }

@@ -19,8 +19,9 @@ namespace CafeFlow
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
+        string kullaniciadi;
 
-        public Home()
+        public Home(string kullaniciadi)
         {
             InitializeComponent();
             leftBorderBtn = new Panel();
@@ -30,6 +31,7 @@ namespace CafeFlow
             this.ControlBox = false;
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+            this.kullaniciadi = kullaniciadi;
         }
 
         private struct RGBColors
@@ -103,13 +105,13 @@ namespace CafeFlow
         private void orderBtn_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color1);
-            OpenChildForm(new Orders());
+            OpenChildForm(new Orders(kullaniciadi));
         }
 
         private void dashboardBtn_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color2);
-            OpenChildForm(new Dashboard());
+            OpenChildForm(new Dashboard(kullaniciadi));
         }
 
         private void btnLogo_Click(object sender, EventArgs e)
@@ -164,25 +166,25 @@ namespace CafeFlow
         private void menuBtn_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color3);
-            OpenChildForm(new Menu());
+            OpenChildForm(new Menu(kullaniciadi));
         }
 
         private void ıconButton5_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color5);
-            OpenChildForm(new Stok());
+            OpenChildForm(new Stok(kullaniciadi));
         }
 
         private void reportBtn_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color3);
-            OpenChildForm(new Reports());
+            OpenChildForm(new Reports(kullaniciadi));
         }
 
         private void beeperBtn_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBColors.color3);
-            OpenChildForm(new ArduinoController());
+            OpenChildForm(new ArduinoController(kullaniciadi));
         }
     }
 }
