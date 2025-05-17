@@ -18,8 +18,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewStok = new System.Windows.Forms.DataGridView();
             this.panelSag = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ekleBtn = new System.Windows.Forms.Button();
+            this.guncelleBtn = new System.Windows.Forms.Button();
+            this.yenileBtn = new System.Windows.Forms.Button();
+            this.silBtn = new System.Windows.Forms.Button();
+            this.tahminiBtn = new System.Windows.Forms.Button();
             this.labelBaslik = new System.Windows.Forms.Label();
             this.labelUrun = new System.Windows.Forms.Label();
             this.urunTxt = new System.Windows.Forms.TextBox();
@@ -27,16 +35,16 @@
             this.miktarTxt = new System.Windows.Forms.TextBox();
             this.labelAciklama = new System.Windows.Forms.Label();
             this.aciklamaTxt = new System.Windows.Forms.TextBox();
-            this.ekleBtn = new System.Windows.Forms.Button();
-            this.guncelleBtn = new System.Windows.Forms.Button();
-            this.silBtn = new System.Windows.Forms.Button();
-            this.yenileBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelTahmin = new System.Windows.Forms.Panel();
+            this.dataGridViewTahmin = new System.Windows.Forms.DataGridView();
+            this.raporBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStok)).BeginInit();
             this.panelSag.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panelTahmin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTahmin)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewStok
@@ -65,13 +73,14 @@
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.dataGridViewStok.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewStok.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewStok.Size = new System.Drawing.Size(782, 598);
+            this.dataGridViewStok.Size = new System.Drawing.Size(782, 398);
             this.dataGridViewStok.TabIndex = 0;
             // 
             // panelSag
             // 
             this.panelSag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
             this.panelSag.Controls.Add(this.tableLayoutPanel1);
+            this.panelSag.Controls.Add(this.tahminiBtn);
             this.panelSag.Controls.Add(this.labelBaslik);
             this.panelSag.Controls.Add(this.labelUrun);
             this.panelSag.Controls.Add(this.urunTxt);
@@ -84,6 +93,98 @@
             this.panelSag.Name = "panelSag";
             this.panelSag.Size = new System.Drawing.Size(180, 598);
             this.panelSag.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.ekleBtn, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.guncelleBtn, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.yenileBtn, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.silBtn, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.raporBtn, 0, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 463);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(180, 135);
+            this.tableLayoutPanel1.TabIndex = 11;
+            // 
+            // ekleBtn
+            // 
+            this.ekleBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(89)))));
+            this.ekleBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ekleBtn.FlatAppearance.BorderSize = 0;
+            this.ekleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ekleBtn.ForeColor = System.Drawing.Color.White;
+            this.ekleBtn.Location = new System.Drawing.Point(3, 3);
+            this.ekleBtn.Name = "ekleBtn";
+            this.ekleBtn.Size = new System.Drawing.Size(84, 61);
+            this.ekleBtn.TabIndex = 7;
+            this.ekleBtn.Text = "Ekle";
+            this.ekleBtn.UseVisualStyleBackColor = false;
+            this.ekleBtn.Click += new System.EventHandler(this.ekleBtn_Click);
+            // 
+            // guncelleBtn
+            // 
+            this.guncelleBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.guncelleBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.guncelleBtn.FlatAppearance.BorderSize = 0;
+            this.guncelleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guncelleBtn.ForeColor = System.Drawing.Color.White;
+            this.guncelleBtn.Location = new System.Drawing.Point(93, 3);
+            this.guncelleBtn.Name = "guncelleBtn";
+            this.guncelleBtn.Size = new System.Drawing.Size(84, 61);
+            this.guncelleBtn.TabIndex = 8;
+            this.guncelleBtn.Text = "Güncelle";
+            this.guncelleBtn.UseVisualStyleBackColor = false;
+            // 
+            // yenileBtn
+            // 
+            this.yenileBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.yenileBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.yenileBtn.FlatAppearance.BorderSize = 0;
+            this.yenileBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.yenileBtn.ForeColor = System.Drawing.Color.White;
+            this.yenileBtn.Location = new System.Drawing.Point(3, 70);
+            this.yenileBtn.Name = "yenileBtn";
+            this.yenileBtn.Size = new System.Drawing.Size(84, 62);
+            this.yenileBtn.TabIndex = 10;
+            this.yenileBtn.Text = "Yenile";
+            this.yenileBtn.UseVisualStyleBackColor = false;
+            // 
+            // silBtn
+            // 
+            this.silBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(17)))), ((int)(((byte)(65)))));
+            this.silBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.silBtn.FlatAppearance.BorderSize = 0;
+            this.silBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.silBtn.ForeColor = System.Drawing.Color.White;
+            this.silBtn.Location = new System.Drawing.Point(93, 70);
+            this.silBtn.Name = "silBtn";
+            this.silBtn.Size = new System.Drawing.Size(84, 62);
+            this.silBtn.TabIndex = 9;
+            this.silBtn.Text = "Sil";
+            this.silBtn.UseVisualStyleBackColor = false;
+            // 
+            // tahminiBtn
+            // 
+            this.tahminiBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(140)))), ((int)(((byte)(0)))));
+            this.tahminiBtn.FlatAppearance.BorderSize = 0;
+            this.tahminiBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tahminiBtn.ForeColor = System.Drawing.Color.White;
+            this.tahminiBtn.Location = new System.Drawing.Point(10, 420);
+            this.tahminiBtn.Name = "tahminiBtn";
+            this.tahminiBtn.Size = new System.Drawing.Size(160, 30);
+            this.tahminiBtn.TabIndex = 12;
+            this.tahminiBtn.Text = "Tahminleri Güncelle";
+            this.tahminiBtn.UseVisualStyleBackColor = false;
+            this.tahminiBtn.Click += new System.EventHandler(this.TahminiBtn_Click);
             // 
             // labelBaslik
             // 
@@ -160,90 +261,65 @@
             this.aciklamaTxt.Size = new System.Drawing.Size(160, 20);
             this.aciklamaTxt.TabIndex = 6;
             // 
-            // ekleBtn
-            // 
-            this.ekleBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(177)))), ((int)(((byte)(89)))));
-            this.ekleBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ekleBtn.FlatAppearance.BorderSize = 0;
-            this.ekleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ekleBtn.ForeColor = System.Drawing.Color.White;
-            this.ekleBtn.Location = new System.Drawing.Point(3, 3);
-            this.ekleBtn.Name = "ekleBtn";
-            this.ekleBtn.Size = new System.Drawing.Size(84, 61);
-            this.ekleBtn.TabIndex = 7;
-            this.ekleBtn.Text = "Ekle";
-            this.ekleBtn.UseVisualStyleBackColor = false;
-            this.ekleBtn.Click += new System.EventHandler(this.ekleBtn_Click);
-            // 
-            // guncelleBtn
-            // 
-            this.guncelleBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.guncelleBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.guncelleBtn.FlatAppearance.BorderSize = 0;
-            this.guncelleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.guncelleBtn.ForeColor = System.Drawing.Color.White;
-            this.guncelleBtn.Location = new System.Drawing.Point(93, 3);
-            this.guncelleBtn.Name = "guncelleBtn";
-            this.guncelleBtn.Size = new System.Drawing.Size(84, 61);
-            this.guncelleBtn.TabIndex = 8;
-            this.guncelleBtn.Text = "Güncelle";
-            this.guncelleBtn.UseVisualStyleBackColor = false;
-            // 
-            // silBtn
-            // 
-            this.silBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(17)))), ((int)(((byte)(65)))));
-            this.silBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.silBtn.FlatAppearance.BorderSize = 0;
-            this.silBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.silBtn.ForeColor = System.Drawing.Color.White;
-            this.silBtn.Location = new System.Drawing.Point(93, 70);
-            this.silBtn.Name = "silBtn";
-            this.silBtn.Size = new System.Drawing.Size(84, 62);
-            this.silBtn.TabIndex = 9;
-            this.silBtn.Text = "Sil";
-            this.silBtn.UseVisualStyleBackColor = false;
-            // 
-            // yenileBtn
-            // 
-            this.yenileBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.yenileBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.yenileBtn.FlatAppearance.BorderSize = 0;
-            this.yenileBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.yenileBtn.ForeColor = System.Drawing.Color.White;
-            this.yenileBtn.Location = new System.Drawing.Point(3, 70);
-            this.yenileBtn.Name = "yenileBtn";
-            this.yenileBtn.Size = new System.Drawing.Size(84, 62);
-            this.yenileBtn.TabIndex = 10;
-            this.yenileBtn.Text = "Yenile";
-            this.yenileBtn.UseVisualStyleBackColor = false;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.dataGridViewStok);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(782, 598);
+            this.panel1.Size = new System.Drawing.Size(782, 398);
             this.panel1.TabIndex = 2;
             // 
-            // tableLayoutPanel1
+            // panelTahmin
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.ekleBtn, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.guncelleBtn, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.yenileBtn, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.silBtn, 1, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 463);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(180, 135);
-            this.tableLayoutPanel1.TabIndex = 11;
+            this.panelTahmin.Controls.Add(this.dataGridViewTahmin);
+            this.panelTahmin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTahmin.Location = new System.Drawing.Point(0, 398);
+            this.panelTahmin.Name = "panelTahmin";
+            this.panelTahmin.Size = new System.Drawing.Size(782, 200);
+            this.panelTahmin.TabIndex = 3;
+            // 
+            // dataGridViewTahmin
+            // 
+            this.dataGridViewTahmin.AllowUserToAddRows = false;
+            this.dataGridViewTahmin.AllowUserToDeleteRows = false;
+            this.dataGridViewTahmin.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(100)))));
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(60)))), ((int)(((byte)(70)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            this.dataGridViewTahmin.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewTahmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(44)))), ((int)(((byte)(52)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTahmin.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridViewTahmin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewTahmin.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewTahmin.MultiSelect = false;
+            this.dataGridViewTahmin.Name = "dataGridViewTahmin";
+            this.dataGridViewTahmin.ReadOnly = true;
+            this.dataGridViewTahmin.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewTahmin.Size = new System.Drawing.Size(782, 200);
+            this.dataGridViewTahmin.TabIndex = 0;
+            // 
+            // raporBtn
+            // 
+            this.raporBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.raporBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.raporBtn.FlatAppearance.BorderSize = 0;
+            this.raporBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.raporBtn.ForeColor = System.Drawing.Color.White;
+            this.raporBtn.Location = new System.Drawing.Point(3, 138);
+            this.raporBtn.Name = "raporBtn";
+            this.raporBtn.Size = new System.Drawing.Size(84, 62);
+            this.raporBtn.TabIndex = 13;
+            this.raporBtn.Text = "Rapor";
+            this.raporBtn.UseVisualStyleBackColor = false;
+            this.raporBtn.Click += new System.EventHandler(this.RaporBtn_Click);
             // 
             // Stok
             // 
@@ -251,6 +327,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.ClientSize = new System.Drawing.Size(962, 598);
+            this.Controls.Add(this.panelTahmin);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelSag);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -259,10 +336,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStok)).EndInit();
             this.panelSag.ResumeLayout(false);
             this.panelSag.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panelTahmin.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTahmin)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         private System.Windows.Forms.DataGridView dataGridViewStok;
@@ -278,13 +356,15 @@
         private System.Windows.Forms.Button guncelleBtn;
         private System.Windows.Forms.Button silBtn;
         private System.Windows.Forms.Button yenileBtn;
+        private System.Windows.Forms.Button tahminiBtn;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panelTahmin;
+        private System.Windows.Forms.DataGridView dataGridViewTahmin;
+        private System.Windows.Forms.Button raporBtn;
 
-        // Filtreleme için olay (boş bırakıldı, backend kodunda doldurulacak)
         private void urunTxt_TextChanged(object sender, System.EventArgs e)
         {
         }
-
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

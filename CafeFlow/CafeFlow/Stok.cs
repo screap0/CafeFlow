@@ -26,9 +26,11 @@ namespace CafeFlow
             dataGridViewStok.CellClick += DataGridViewStok_CellClick;
             ekleBtn.Click += ekleBtn_Click;
             dataGridViewStok.RowPrePaint += dataGridViewStok_RowPrePaint;
+            tahminiBtn.Click += TahminiBtn_Click;
 
             // Sayfa yüklendiğinde verileri getir
             StoklariYukle();
+            TahminleriYukle();
         }
 
         private void StoklariYukle()
@@ -49,7 +51,69 @@ namespace CafeFlow
                 catch (Exception ex)
                 {
                     MessageBox.Show("Stoklar yüklenirken hata: " + ex.Message);
-                    db.Log(txtform,"Error: "+ex,DateTime.Now,kullaniciadi);
+                    db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+                }
+            }
+        }
+
+        private void TahminleriYukle()
+        {
+            using (MySqlConnection conn = db.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT 
+                            s.StokID, 
+                            s.UrunAdi, 
+                            s.Miktar, 
+                            s.Aciklama,
+                            AVG(sh.Miktar) as OrtalamaTuketim,
+                            (s.Miktar / NULLIF(AVG(sh.Miktar), 0)) as TahminiGun
+                        FROM Stok s
+                        LEFT JOIN StokHareket sh ON s.StokID = sh.StokID
+                        WHERE sh.HareketTuru = 'Güncelle' AND sh.Tarih >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+                        GROUP BY s.StokID, s.UrunAdi, s.Miktar, s.Aciklama
+                        HAVING TahminiGun <= 30 OR s.Miktar <= 10";
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn);
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+                    dataGridViewTahmin.DataSource = table;
+                    dataGridViewTahmin.Refresh();
+                    dataGridViewTahmin.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Tahminler yüklenirken hata: " + ex.Message);
+                    db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+                }
+            }
+        }
+
+        private void LogStokHareket(int stokID, string urunAdi, int miktar, string hareketTuru, string aciklama)
+        {
+            using (MySqlConnection conn = db.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "INSERT INTO StokHareket (StokID, UrunAdi, Miktar, HareketTuru, Aciklama, Tarih, KullaniciAdi) " +
+                                   "VALUES (@stokID, @urunAdi, @miktar, @hareketTuru, @aciklama, NOW(), @kullaniciAdi)";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@stokID", stokID);
+                        cmd.Parameters.AddWithValue("@urunAdi", urunAdi);
+                        cmd.Parameters.AddWithValue("@miktar", miktar);
+                        cmd.Parameters.AddWithValue("@hareketTuru", hareketTuru);
+                        cmd.Parameters.AddWithValue("@aciklama", aciklama);
+                        cmd.Parameters.AddWithValue("@kullaniciAdi", kullaniciadi);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    db.Log(txtform, "Stok hareket loglama hatası: " + ex, DateTime.Now, kullaniciadi);
                 }
             }
         }
@@ -57,6 +121,7 @@ namespace CafeFlow
         private void YenileBtn_Click(object sender, EventArgs e)
         {
             StoklariYukle();
+            TahminleriYukle();
             Temizle();
         }
 
@@ -104,8 +169,10 @@ namespace CafeFlow
                     }
 
                     MessageBox.Show("Stok başarıyla güncellendi.");
+                    LogStokHareket(seciliStokID, urun, miktar, "Güncelle", aciklama);
                     db.Log(txtform, "Stok güncellendi: " + "Ürün Adı:" + urun + " Ürün Miktarı: " + miktar + " Ürün Açıklaması: " + aciklama, DateTime.Now, kullaniciadi);
                     StoklariYukle();
+                    TahminleriYukle();
                     Temizle();
                 }
                 catch (Exception ex)
@@ -140,8 +207,10 @@ namespace CafeFlow
                         }
 
                         MessageBox.Show("Stok başarıyla silindi.");
+                        LogStokHareket(seciliStokID, urunTxt.Text, Convert.ToInt32(miktarTxt.Text), "Sil", aciklamaTxt.Text);
                         db.Log(txtform, "Stok silindi: " + "Stok ID: " + seciliStokID, DateTime.Now, kullaniciadi);
                         StoklariYukle();
+                        TahminleriYukle();
                         Temizle();
                     }
                     catch (Exception ex)
@@ -164,9 +233,20 @@ namespace CafeFlow
         private void ekleBtn_Click(object sender, EventArgs e)
         {
             StokEkle stokEkleFormu = new StokEkle(kullaniciadi);
-            stokEkleFormu.ShowDialog(); // Modal olarak açar, ana form kilitlenir
-            StoklariYukle(); // Yeni stok eklenmişse listeyi yeniler
+            stokEkleFormu.FormClosed += (s, args) =>
+            {
+                StoklariYukle();
+                TahminleriYukle();
+            };
+            stokEkleFormu.ShowDialog();
         }
+
+        private void TahminiBtn_Click(object sender, EventArgs e)
+        {
+            TahminleriYukle();
+            MessageBox.Show("Stok tahminleri güncellendi.");
+        }
+
         private void dataGridViewStok_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             if (dataGridViewStok.Rows[e.RowIndex].Cells["Miktar"].Value != null)
@@ -179,12 +259,73 @@ namespace CafeFlow
                 }
                 else
                 {
-                    // Normal renk geri yükle (isteğe bağlı)
                     dataGridViewStok.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(34, 44, 52);
                     dataGridViewStok.Rows[e.RowIndex].DefaultCellStyle.ForeColor = Color.White;
                 }
             }
         }
 
+        private void RaporBtn_Click(object sender, EventArgs e)
+        {
+            if (seciliStokID == -1)
+            {
+                MessageBox.Show("Lütfen rapor için bir stok seçin.");
+                return;
+            }
+
+            using (MySqlConnection conn = db.GetConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT 
+                            s.UrunAdi,
+                            s.Miktar as MevcutStok,
+                            COALESCE(SUM(CASE 
+                                WHEN sh.HareketTuru = 'Güncelle' 
+                                AND sh.Tarih >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+                                THEN sh.Miktar 
+                                ELSE 0 
+                            END), 0) as Son30GunSatis,
+                            CASE 
+                                WHEN s.Miktar < COALESCE(SUM(CASE 
+                                    WHEN sh.HareketTuru = 'Güncelle' 
+                                    AND sh.Tarih >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+                                    THEN sh.Miktar 
+                                    ELSE 0 
+                                END), 0) THEN 'UYARI: Stok miktarı son 30 günlük satıştan az!'
+                                ELSE 'Stok yeterli'
+                            END as Durum
+                        FROM Stok s
+                        LEFT JOIN StokHareket sh ON s.StokID = sh.StokID
+                        WHERE s.StokID = @stokID
+                        GROUP BY s.StokID, s.UrunAdi, s.Miktar";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@stokID", seciliStokID);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string rapor = $"Stok Raporu\n\n" +
+                                             $"Ürün Adı: {reader["UrunAdi"]}\n" +
+                                             $"Mevcut Stok: {reader["MevcutStok"]}\n" +
+                                             $"Son 30 Günlük Satış: {reader["Son30GunSatis"]}\n" +
+                                             $"Durum: {reader["Durum"]}";
+
+                                MessageBox.Show(rapor, "Stok Raporu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Rapor oluşturulurken hata: " + ex.Message);
+                    db.Log(txtform, "Error: " + ex, DateTime.Now, kullaniciadi);
+                }
+            }
+        }
     }
 }
