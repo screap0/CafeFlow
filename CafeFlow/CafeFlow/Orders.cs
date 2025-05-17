@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 
 namespace CafeFlow
 {
@@ -17,19 +18,34 @@ namespace CafeFlow
         string kullaniciadi;
         string txtform;
 
-
         private readonly Color formBackColor = Color.FromArgb(34, 33, 74);
         private readonly Color cardBackColor = Color.FromArgb(45, 45, 90);
         private readonly Color textColor = Color.FromArgb(240, 240, 245);
         private readonly Color highlightColor = Color.FromArgb(79, 79, 135);
         private readonly Color accentColor = Color.FromArgb(95, 77, 221);
 
+        private bool isDragging = false;
+        private Point startPoint;
+        private Point initialScrollPosition;
+
         public Orders(string kullaniciadi)
         {
             InitializeComponent();
             dbConnection = new DatabaseConnection();
-            this.kullaniciadi= kullaniciadi;
+            this.kullaniciadi = kullaniciadi;
             txtform = "Orders";
+
+            // FlowLayoutPanel ayarları
+            orderLayoutPanel.AutoScroll = true;
+            orderLayoutPanel.WrapContents = false;
+            orderLayoutPanel.FlowDirection = FlowDirection.LeftToRight;
+            orderLayoutPanel.VerticalScroll.Enabled = false;
+            orderLayoutPanel.VerticalScroll.Visible = false;
+
+            // Fare olaylarını orderLayoutPanel'e bağla
+            orderLayoutPanel.MouseDown += OrderLayoutPanel_MouseDown;
+            orderLayoutPanel.MouseMove += OrderLayoutPanel_MouseMove;
+            orderLayoutPanel.MouseUp += OrderLayoutPanel_MouseUp;
 
             ApplyFormStyling();
             SetupSignalRIfNeeded();
@@ -41,7 +57,43 @@ namespace CafeFlow
 
             this.Resize += Orders_Resize;
         }
-       
+
+        // Fare olayları için işleyiciler
+        private void OrderLayoutPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                startPoint = e.Location;
+                initialScrollPosition = orderLayoutPanel.AutoScrollPosition;
+            }
+        }
+
+        private void OrderLayoutPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                // Fare hareket farkını hesapla
+                int deltaX = e.X - startPoint.X;
+
+                // Yumuşatma faktörü (titremeyi azaltmak için)
+                deltaX = (int)(deltaX * 0.95);
+
+                // Yeni kaydırma pozisyonunu ayarla
+                orderLayoutPanel.AutoScrollPosition = new Point(
+                    Math.Max(0, -(initialScrollPosition.X + deltaX)),
+                    0
+                );
+            }
+        }
+
+        private void OrderLayoutPanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
+        }
 
         private void ApplyFormStyling()
         {
@@ -116,7 +168,7 @@ namespace CafeFlow
             // Yeni dinleyiciyi ekle
             if (hubConnection != null)
             {
-                  hubConnection.On<int, string, int, string, string, decimal, DateTime, string>(
+                hubConnection.On<int, string, int, string, string, decimal, DateTime, string>(
                     "ReceiveOrderUpdate",
                     async (orderId, isim, masaNo, telefon, aciklama, toplamTutar, siparisTarihi, durum) =>
                     {
@@ -231,6 +283,11 @@ namespace CafeFlow
                 Tag = orderId
             };
 
+            // RoundedPanel'e fare olaylarını bağla
+            orderPanel.MouseDown += OrderLayoutPanel_MouseDown;
+            orderPanel.MouseMove += OrderLayoutPanel_MouseMove;
+            orderPanel.MouseUp += OrderLayoutPanel_MouseUp;
+
             Panel headerPanel = new Panel { Dock = DockStyle.Top, Height = 30, BackColor = accentColor };
             Label lblHeader = new Label
             {
@@ -241,6 +298,13 @@ namespace CafeFlow
                 ForeColor = Color.White
             };
             headerPanel.Controls.Add(lblHeader);
+            // headerPanel'e olay bağla
+            headerPanel.MouseDown += OrderLayoutPanel_MouseDown;
+            headerPanel.MouseMove += OrderLayoutPanel_MouseMove;
+            headerPanel.MouseUp += OrderLayoutPanel_MouseUp;
+            lblHeader.MouseDown += OrderLayoutPanel_MouseDown;
+            lblHeader.MouseMove += OrderLayoutPanel_MouseMove;
+            lblHeader.MouseUp += OrderLayoutPanel_MouseUp;
 
             TableLayoutPanel contentPanel = new TableLayoutPanel
             {
@@ -250,10 +314,25 @@ namespace CafeFlow
                 Padding = new Padding(10, 5, 10, 20),
                 RowStyles = { new RowStyle(SizeType.AutoSize), new RowStyle(SizeType.AutoSize), new RowStyle(SizeType.AutoSize), new RowStyle(SizeType.AutoSize), new RowStyle(SizeType.AutoSize), new RowStyle(SizeType.AutoSize), new RowStyle(SizeType.Percent, 100) }
             };
+            // contentPanel'e olay bağla
+            contentPanel.MouseDown += OrderLayoutPanel_MouseDown;
+            contentPanel.MouseMove += OrderLayoutPanel_MouseMove;
+            contentPanel.MouseUp += OrderLayoutPanel_MouseUp;
 
             Label lblIsim = CreateInfoLabel("İsim", isim);
+            lblIsim.MouseDown += OrderLayoutPanel_MouseDown;
+            lblIsim.MouseMove += OrderLayoutPanel_MouseMove;
+            lblIsim.MouseUp += OrderLayoutPanel_MouseUp;
+
             Label lblMasaNo = CreateInfoLabel("Masa", masaNo.ToString());
+            lblMasaNo.MouseDown += OrderLayoutPanel_MouseDown;
+            lblMasaNo.MouseMove += OrderLayoutPanel_MouseMove;
+            lblMasaNo.MouseUp += OrderLayoutPanel_MouseUp;
+
             Label lblTelefon = CreateInfoLabel("Telefon", telefon);
+            lblTelefon.MouseDown += OrderLayoutPanel_MouseDown;
+            lblTelefon.MouseMove += OrderLayoutPanel_MouseMove;
+            lblTelefon.MouseUp += OrderLayoutPanel_MouseUp;
 
             int otherElementsHeight = 30 + (5 * 20) + 50 + 25;
             int descriptionHeight = panelHeight - otherElementsHeight;
@@ -267,6 +346,10 @@ namespace CafeFlow
                 Padding = new Padding(5),
                 Tag = "DescriptionPanel"
             };
+            // scrollableDescriptionPanel'e olay bağla
+            scrollableDescriptionPanel.MouseDown += OrderLayoutPanel_MouseDown;
+            scrollableDescriptionPanel.MouseMove += OrderLayoutPanel_MouseMove;
+            scrollableDescriptionPanel.MouseUp += OrderLayoutPanel_MouseUp;
 
             Label lblAciklama = new Label
             {
@@ -276,11 +359,24 @@ namespace CafeFlow
                 ForeColor = textColor
             };
             scrollableDescriptionPanel.Controls.Add(lblAciklama);
+            lblAciklama.MouseDown += OrderLayoutPanel_MouseDown;
+            lblAciklama.MouseMove += OrderLayoutPanel_MouseMove;
+            lblAciklama.MouseUp += OrderLayoutPanel_MouseUp;
 
             Label lblTutar = CreateInfoLabel("Tutar", $"{toplamTutar:N2} TL");
+            lblTutar.MouseDown += OrderLayoutPanel_MouseDown;
+            lblTutar.MouseMove += OrderLayoutPanel_MouseMove;
+            lblTutar.MouseUp += OrderLayoutPanel_MouseUp;
+
             Label lblTarih = CreateInfoLabel("Tarih", siparisTarihi.ToString("dd/MM/yyyy HH:mm"));
+            lblTarih.MouseDown += OrderLayoutPanel_MouseDown;
+            lblTarih.MouseMove += OrderLayoutPanel_MouseMove;
+            lblTarih.MouseUp += OrderLayoutPanel_MouseUp;
 
             Panel statusPanel = new Panel { Dock = DockStyle.Fill, Height = 50 };
+            statusPanel.MouseDown += OrderLayoutPanel_MouseDown;
+            statusPanel.MouseMove += OrderLayoutPanel_MouseMove;
+            statusPanel.MouseUp += OrderLayoutPanel_MouseUp;
 
             ComboBox statusComboBox = new ComboBox
             {
@@ -292,6 +388,11 @@ namespace CafeFlow
                 ForeColor = textColor,
                 FlatStyle = FlatStyle.Flat
             };
+
+            // ComboBox'a fare olaylarını bağla
+            statusComboBox.MouseDown += OrderLayoutPanel_MouseDown;
+            statusComboBox.MouseMove += OrderLayoutPanel_MouseMove;
+            statusComboBox.MouseUp += OrderLayoutPanel_MouseUp;
 
             statusComboBox.Items.AddRange(new string[] { "Ödeme Tamamlandı", "Hazırlanıyor", "Sipariş Hazır" });
             string cleanedDurum = durum?.Trim().Replace("\r", "").Replace("\n", "");
@@ -357,7 +458,10 @@ namespace CafeFlow
 
             orderLayoutPanel.Controls.Add(orderPanel);
             orderLayoutPanel.Controls.SetChildIndex(orderPanel, 0);
-            orderLayoutPanel.Refresh();
+
+            // AutoScrollMinSize'ı güncelle (sadece yatay)
+            int totalWidth = orderLayoutPanel.Controls.Cast<Control>().Sum(c => c.Width + c.Margin.Left + c.Margin.Right);
+            orderLayoutPanel.AutoScrollMinSize = new Size(totalWidth, 0);
         }
 
         private void Orders_Resize(object sender, EventArgs e)
@@ -423,7 +527,6 @@ namespace CafeFlow
             if (durum.ToLower().Contains("hazirlaniyor")) return "Hazırlanıyor";
             if (durum.ToLower().Contains("hazir")) return "Sipariş Hazır";
             if (durum.ToLower().Contains("odeme") || durum.ToLower().Contains("ödeme")) return "Ödeme Tamamlandı";
-
 
             return "Ödeme Tamamlandı";
         }
