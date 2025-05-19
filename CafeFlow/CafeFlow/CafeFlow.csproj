@@ -310,6 +310,12 @@
     <Compile Include="StokEkle.Designer.cs">
       <DependentUpon>StokEkle.cs</DependentUpon>
     </Compile>
+    <Compile Include="StokTakip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StokTakip.Designer.cs">
+      <DependentUpon>StokTakip.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ArduinoController.resx">
       <DependentUpon>ArduinoController.cs</DependentUpon>
     </EmbeddedResource>
@@ -352,6 +358,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StokEkle.resx">
       <DependentUpon>StokEkle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StokTakip.resx">
+      <DependentUpon>StokTakip.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

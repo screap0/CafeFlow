@@ -48,6 +48,7 @@
             this.panelShadow = new System.Windows.Forms.Panel();
             this.panelDesktop = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.stokanalizBtn = new FontAwesome.Sharp.IconButton();
             this.panelMenu.SuspendLayout();
             this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnLogo)).BeginInit();
@@ -60,6 +61,7 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(30)))), ((int)(((byte)(68)))));
+            this.panelMenu.Controls.Add(this.stokanalizBtn);
             this.panelMenu.Controls.Add(this.beeperBtn);
             this.panelMenu.Controls.Add(this.ıconButton5);
             this.panelMenu.Controls.Add(this.menuBtn);
@@ -303,7 +305,7 @@
             this.navLbl.ForeColor = System.Drawing.Color.Gainsboro;
             this.navLbl.Location = new System.Drawing.Point(55, 30);
             this.navLbl.Name = "navLbl";
-            this.navLbl.Size = new System.Drawing.Size(15, 13);
+            this.navLbl.Size = new System.Drawing.Size(17, 17);
             this.navLbl.TabIndex = 2;
             this.navLbl.Text = ">";
             // 
@@ -314,7 +316,7 @@
             this.lblTitleChildForm.ForeColor = System.Drawing.Color.Gainsboro;
             this.lblTitleChildForm.Location = new System.Drawing.Point(76, 31);
             this.lblTitleChildForm.Name = "lblTitleChildForm";
-            this.lblTitleChildForm.Size = new System.Drawing.Size(38, 13);
+            this.lblTitleChildForm.Size = new System.Drawing.Size(45, 17);
             this.lblTitleChildForm.TabIndex = 1;
             this.lblTitleChildForm.Text = "Home";
             // 
@@ -363,6 +365,29 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // stokanalizBtn
+            // 
+            this.stokanalizBtn.Dock = System.Windows.Forms.DockStyle.Top;
+            this.stokanalizBtn.FlatAppearance.BorderSize = 0;
+            this.stokanalizBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stokanalizBtn.Font = new System.Drawing.Font("Nirmala UI", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stokanalizBtn.ForeColor = System.Drawing.Color.Gainsboro;
+            this.stokanalizBtn.IconChar = FontAwesome.Sharp.IconChar.ChartSimple;
+            this.stokanalizBtn.IconColor = System.Drawing.Color.Gainsboro;
+            this.stokanalizBtn.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.stokanalizBtn.IconSize = 40;
+            this.stokanalizBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.stokanalizBtn.Location = new System.Drawing.Point(0, 500);
+            this.stokanalizBtn.Name = "stokanalizBtn";
+            this.stokanalizBtn.Padding = new System.Windows.Forms.Padding(10, 0, 20, 0);
+            this.stokanalizBtn.Size = new System.Drawing.Size(220, 60);
+            this.stokanalizBtn.TabIndex = 7;
+            this.stokanalizBtn.Text = "Stok Analiz";
+            this.stokanalizBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.stokanalizBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.stokanalizBtn.UseVisualStyleBackColor = true;
+            this.stokanalizBtn.Click += new System.EventHandler(this.ıconButton1_Click);
+            // 
             // Home
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -408,5 +433,6 @@
         private FontAwesome.Sharp.IconButton maximizeBtn;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelDesktop;
+        private FontAwesome.Sharp.IconButton stokanalizBtn;
     }
 }
