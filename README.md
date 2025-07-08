@@ -50,7 +50,7 @@ CafeFlow, modern kafeler için geliştirilmiş kapsamlı bir yönetim sistemidir
 
 ### 1. Projeyi Klonlayın
 ```bash
-git clone https://github.com/kullaniciadi/CafeFlow.git
+git clone https://github.com/screap0/CafeFlow.git
 cd CafeFlow
 ```
 
